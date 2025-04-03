@@ -1,8 +1,22 @@
-spring.application.name=server
-server.port=6969
+spring:
+  application:
+    name: server
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.SQLServer2012Dialect
+server:
+  port: 6969
 
 
 #db config
-spring.datasource.url="jdbc:sqlserver://localhost:1433/CongNgheJavaLibrary"
-spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+spring.datasource:
+  url: "jdbc:sqlserver://localhost:1433/CongNgheJavaLibrary"
+  driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  username: sa
+  password: Tansang990
+
+#create, update, create-update, validate
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
 
