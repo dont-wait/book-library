@@ -1,4 +1,4 @@
-package com.nhom678.server.exception;
+package com.nhom678.server.exceptions;
 
 import com.nhom678.server.dto.ApiResponse;
 import org.springframework.http.ResponseEntity;

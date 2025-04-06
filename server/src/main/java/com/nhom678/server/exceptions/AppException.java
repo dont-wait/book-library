@@ -1,4 +1,4 @@
-package com.nhom678.server.exception;
+package com.nhom678.server.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;
