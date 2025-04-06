@@ -10,5 +10,5 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 public class Admin extends Person{
-
+    
 }
