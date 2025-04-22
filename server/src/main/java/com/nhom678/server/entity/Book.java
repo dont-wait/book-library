@@ -1,15 +1,15 @@
 package com.nhom678.server.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.awt.*;
+import java.util.Date;
 
 @Entity
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "Book")
@@ -23,5 +23,23 @@ public class Book {
     @Column(name = "BookName", nullable = false)
     String bookName;
 
+    @Column(name = "Description")
+    String description;
+
+    @Column(name = "BookImage")
+    byte[] bookImage; //blob
+
+    @Column(name = "Quantity")
+    int quantity; //number of book in storage
+
+    @ManyToOne
+    @JoinColumn(name = "PublisherId", nullable = false)
+    Publisher publisher;
+
+    @Column(name = "PublisherDate")
+    Date publishcationDate;
+
+    @Column(name = "ISBN", nullable = false, unique = true, length = 20)
+    String isbn;
 
 }
