@@ -9,13 +9,10 @@ interface Book {
   ISBN: string;
   PublishedDate: string;
 }
-
 const App = () => {
   const [books, setBook] = useState<Book[]>([])
   //useState cap nhat trang thai
   //useEffect chay khi component duoc render
-  
-
   useEffect(
     () => {
       const getBooks = async () => {

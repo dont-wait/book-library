@@ -1,0 +1,94 @@
+{
+  "books": [
+  {
+    "BookName": "Ngôn ngữ lập trình Java cơ bản",
+    "Title": "Ngôn ngữ lập trình Java cơ bản",
+    "Author": "Hoang Tran",
+    "ImageBook": "http://books.google.com/books/content?id=igvwDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "CategoryId": "Computers",
+    "ISBN": "",
+    "PublishedDate": ""
+  },
+  {
+    "BookName": "Lập trình Hướng đối tượng với Java",
+    "Title": "Lập trình Hướng đối tượng với Java",
+    "Author": "Hoàng Trần",
+    "ImageBook": "http://books.google.com/books/content?id=HAMBEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "CategoryId": "Computers",
+    "ISBN": "",
+    "PublishedDate": ""
+  },
+  {
+    "BookName": "Lập trình Socket cho giao thức TCP với Java.",
+    "Title": "Lập trình Socket cho giao thức TCP với Java.",
+    "Author": "Hoang Tran",
+    "ImageBook": "http://books.google.com/books/content?id=YpfwDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "CategoryId": "Computers",
+    "ISBN": "",
+    "PublishedDate": ""
+  },
+  {
+    "BookName": "Lập trình xử lý cơ sở dữ liệu trong Java",
+    "Title": "Lập trình xử lý cơ sở dữ liệu trong Java",
+    "Author": "Hoang Tran",
+    "ImageBook": "http://books.google.com/books/content?id=SfryDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "CategoryId": "Computers",
+    "ISBN": "",
+    "PublishedDate": ""
+  },
+  {
+    "BookName": "Phân tán đối tượng trong Java bằng RMI",
+    "Title": "Phân tán đối tượng trong Java bằng RMI",
+    "Author": "Hoang Tran",
+    "ImageBook": "http://books.google.com/books/content?id=-qXyDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "CategoryId": "Computers",
+    "ISBN": "",
+    "PublishedDate": ""
+  },
+  {
+    "BookName": "Java Journeys: From Bytecode to Brilliance",
+    "Title": "Java Journeys: From Bytecode to Brilliance",
+    "Author": "Betty J. Baker",
+    "ImageBook": "http://books.google.com/books/content?id=ftM7EQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "CategoryId": "Computers",
+    "ISBN": "",
+    "PublishedDate": "2025-01-02"
+  },
+  {
+    "BookName": "Lập trình ứng dụng cho giao thức UDP với Java",
+    "Title": "Lập trình ứng dụng cho giao thức UDP với Java",
+    "Author": "Hoang Tran",
+    "ImageBook": "http://books.google.com/books/content?id=g03yDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "CategoryId": "Computers",
+    "ISBN": "",
+    "PublishedDate": ""
+  },
+  {
+    "BookName": "Các luồng vào ra trong Java",
+    "Title": "Các luồng vào ra trong Java",
+    "Author": "hoangtn",
+    "ImageBook": "http://books.google.com/books/content?id=CTPwDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "CategoryId": "Computers",
+    "ISBN": "",
+    "PublishedDate": ""
+  },
+  {
+"BookName": "Lập trình đa tuyến đoạn với Java",
+    "Title": "Lập trình đa tuyến đoạn với Java",
+    "Author": "hoangtn",
+    "ImageBook": "http://books.google.com/books/content?id=1jPwDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "CategoryId": "Computers",
+    "ISBN": "",
+    "PublishedDate": ""
+  },
+  {
+    "BookName": "Java 6 Programming Black Book (New Edition) w/CD",
+    "Title": "Java 6 Programming Black Book (New Edition) w/CD",
+    "Author": "Kogent Solution Inc.",
+    "ImageBook": "http://books.google.com/books/content?id=SSyuJa04uv8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "CategoryId": "Java (Computer program language)",
+    "ISBN": "817722736X",
+    "PublishedDate": "2007-06-28"
+  }
+  ]
+}

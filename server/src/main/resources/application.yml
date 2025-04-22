@@ -45,6 +45,4 @@ openapi:
     version: 1.0.0
     server: http://localhost:6969
 
-manage:
-  security:
-    enable: null
+

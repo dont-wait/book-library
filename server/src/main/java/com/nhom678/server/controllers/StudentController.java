@@ -43,7 +43,7 @@ public class StudentController {
 
     @GetMapping
     ResponseEntity<ApiResponse<List<StudentResponse>>> getAllStudents() {
-        ApiResponse<List<StudentResponse>> apiResponse = new ApiResponse<>();
+    ApiResponse<List<StudentResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setResult(studentService.getAllStudents());
         return ResponseEntity.ok(apiResponse);
     }
