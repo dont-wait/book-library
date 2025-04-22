@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> handlingRunTimeException(RuntimeException e) {
         ApiResponse apiResponse = new ApiResponse();
+
         apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
         apiResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
         return ResponseEntity.badRequest().body(apiResponse);
@@ -21,9 +22,10 @@ public class GlobalExceptionHandler {
 
     //Ha`m nay minh xac dinh duoc loi, Minh dinh nghia truoc cac loi nay o AppException roi
     @ExceptionHandler(value = AppException.class)
-    ResponseEntity<ApiResponse> handlingRunTimeException(AppException appException) {
+    ResponseEntity<ApiResponse> handlingAppException(AppException appException) {
         ApiResponse apiResponse = new ApiResponse();
         ErrorCode errorCode = appException.getErrorCode();
+
         apiResponse.setCode(errorCode.getCode());
         apiResponse.setMessage(errorCode.getMessage());
         return ResponseEntity.badRequest().body(apiResponse);

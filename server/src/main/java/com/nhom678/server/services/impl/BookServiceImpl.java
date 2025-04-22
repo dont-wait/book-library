@@ -1,4 +1,7 @@
 package com.nhom678.server.services.impl;
 
-public class BookServiceImpl {
+import com.nhom678.server.services.BookService;
+
+public class BookServiceImpl implements BookService {
+
 }
