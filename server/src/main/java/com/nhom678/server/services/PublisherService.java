@@ -10,8 +10,8 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 public interface PublisherService {
-    //PublisherResponse createPublisher(PublisherCreateRequest request);
-    PublisherResponse updatePublisher(String publisherName, PublisherUpdateRequest request);
+    PublisherResponse createPublisher(PublisherCreateRequest request);
+    //PublisherResponse updatePublisher(String publisherName, PublisherUpdateRequest request);
     PublisherResponse getPublisherByName(String publisherName);
     List<PublisherResponse> getAllPublisher();
     void deletePublisher(String publisherName);
