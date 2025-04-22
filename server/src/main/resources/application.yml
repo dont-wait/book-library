@@ -19,30 +19,8 @@ spring:
 
 server:
   port: 6969
+  servlet:
+    context-path: /api/v1
 
-springdoc:
-  api-docs:
-    path: /api/v1/api-docs
-    enabled: true
-  swagger-ui:
-    path: /api/v1/api-docs
-    enabled: true
-    operationsSorter: method
-    tagsSorter: alpha
-    tryItOutEnabled: true
-    filter: true
-    displayRequestDuration: true
-    docExpansion: none
-    defaultModelsExpandDepth: -1
-    defaultModelExpandDepth: 3
-  show-actuator: false
-  packages-to-scan: com.nhom678.server
-  paths-to-match: /api/**
-openapi:
-  service:
-    api-docs: public-api
-    title: My API Title
-    version: 1.0.0
-    server: http://localhost:6969
 
 

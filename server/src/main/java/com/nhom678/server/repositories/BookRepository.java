@@ -7,10 +7,7 @@ import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
     Optional<Book> findBookByIsbn(String isbn);
-
     Boolean existsBookByIsbn(String isbn);
-    Boolean existsBookId(Integer id);
-
     void deleteBookByIsbn(String isbn);
     void deleteBookByBookName(String bookName);
 }

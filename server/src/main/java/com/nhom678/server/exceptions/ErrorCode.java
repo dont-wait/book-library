@@ -10,10 +10,10 @@ public enum ErrorCode {
     INVALID_ID_KEY(1001, "Invalid Message key, you should check your key", HttpStatus.BAD_REQUEST), //Sai sot trong dat viec dat Message tai DTO
     EMAIL_EXISTED(1002, "Email already existed", HttpStatus.CONFLICT),
     PHONE_EXISTED(1002, "Phone already existed", HttpStatus.CONFLICT),
-    PUBLISHERID_EXISTED(1002, "PublisherId already existed", HttpStatus.CONFLICT),
+    PUBLISHERNAME_EXISTED(1002, "Publisher Name already existed", HttpStatus.CONFLICT),
     ID_EXISTED(1002, "Id already existed", HttpStatus.CONFLICT),
     STUDENT_NOT_FOUND(1003, "Student not found", HttpStatus.NOT_FOUND),
-    PUBLISHER_NOT_FOUND(1003, "PublisherID not found", HttpStatus.NOT_FOUND),
+    PUBLISHER_NOT_FOUND(1003, "Publisher name not found", HttpStatus.NOT_FOUND),
     ID_NOT_FOUND(1003, "Person not found", HttpStatus.NOT_FOUND),
     BOOK_IMAGE_REQUIRED(1004, "Book image is required", HttpStatus.BAD_REQUEST),
     BOOK_NAME_REQUIRED(1004, "Book name is required", HttpStatus.BAD_REQUEST),
