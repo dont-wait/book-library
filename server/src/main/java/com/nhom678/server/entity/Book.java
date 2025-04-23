@@ -36,6 +36,11 @@ public class Book {
     @JoinColumn(name = "publisher_id", nullable = false)
     Publisher publisher;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    Category category;
+
+
     @Column(name = "publishcation_date")
     Date publishcationDate;
 

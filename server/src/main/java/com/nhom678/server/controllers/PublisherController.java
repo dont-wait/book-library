@@ -42,7 +42,7 @@ public class PublisherController {
                 .build();
     }
 
-    @DeleteMapping("{publisherName}")
+    @DeleteMapping("/{publisherName}")
     ApiResponse<String> deletePublisher(@PathVariable String publisherName) {
         publisherService.deletePublisher(publisherName);
         return ApiResponse.<String>builder()

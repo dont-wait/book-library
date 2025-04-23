@@ -62,7 +62,7 @@ public class PublisherServiceImpl implements PublisherService {
     @Override
     @Transactional
     public void deletePublisher(String publisherName) {
-        if (!publisherRepository.existsPublisherByPublisherName(publisherName)) {
+        if (publisherRepository.findPublisherByPublisherName(publisherName).isEmpty()) {
             throw new AppException(ErrorCode.PUBLISHER_NOT_FOUND);
         }
         publisherRepository.deletePublishersByPublisherName(publisherName);
