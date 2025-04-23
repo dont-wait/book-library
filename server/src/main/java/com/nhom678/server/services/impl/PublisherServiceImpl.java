@@ -11,6 +11,9 @@ import com.nhom678.server.mapper.PublisherMapper;
 import com.nhom678.server.repositories.PublisherRepository;
 import com.nhom678.server.services.PublisherService;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,15 +22,12 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PublisherServiceImpl implements PublisherService {
 
-    private final PublisherRepository publisherRepository;
-    private final PublisherMapper publisherMapper;
-    @Autowired
-    public PublisherServiceImpl(PublisherRepository publisherRepository, PublisherMapper publisherMapper) {
-        this.publisherRepository = publisherRepository;
-        this.publisherMapper = publisherMapper;
-    }
+    PublisherRepository publisherRepository;
+    PublisherMapper publisherMapper;
 
     @Override
     public PublisherResponse createPublisher(PublisherCreateRequest request) {

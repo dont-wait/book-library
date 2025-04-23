@@ -3,7 +3,6 @@ package com.nhom678.server.dto.request.book;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -16,7 +15,7 @@ public class BookUpdateRequest {
 
     String description;
 
-    @NotNull(message = "BOOK_IMAGE_REQUIRED")
+    @NotNull(message = "BOOK_IMAGE_URL_REQUIRED")
     byte[] bookImage;
 
     @NotNull

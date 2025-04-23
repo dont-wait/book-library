@@ -17,29 +17,28 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BookId", nullable = false)
+    @Column(name = "book_id")
     int bookId;
 
-    @Column(name = "BookName", nullable = false)
+    @Column(name = "book_name", nullable = false)
     String bookName;
 
-    @Column(name = "Description")
+    @Column(name = "description")
     String description;
 
-    @Column(name = "BookImage")
-    byte[] bookImage; //blob
+    @Column(name = "book_image_url")
+    String bookImageURL; //link to image
 
-    @Column(name = "Quantity")
+    @Column(name = "quantity")
     int quantity; //number of book in storage
 
     @ManyToOne
-    @JoinColumn(name = "PublisherId", nullable = false)
+    @JoinColumn(name = "publisher_id", nullable = false)
     Publisher publisher;
 
-    @Column(name = "PublisherDate")
+    @Column(name = "publishcation_date")
     Date publishcationDate;
 
-    @Column(name = "ISBN", nullable = false, unique = true, length = 20)
+    @Column(name = "isbn", nullable = false, unique = true, length = 20)
     String isbn;
-
 }

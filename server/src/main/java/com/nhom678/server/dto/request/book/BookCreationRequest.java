@@ -1,31 +1,37 @@
 package com.nhom678.server.dto.request.book;
 
+import com.nhom678.server.dto.request.publisher.PublisherCreateRequest;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
-
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookCreationRequest {
 
     @NotBlank(message = "BOOK_NAME_REQUIRED")
     @Size(min = 1, message = "BOOK_NAME_TOO_SHORT")
-    private String bookName;
+    String bookName;
 
-    private String description;
+    String description;
 
-    @NotNull(message = "BOOK_IMAGE_REQUIRED")
-    private byte[] bookImage;
+    @NotNull(message = "BOOK_IMAGE_URL_REQUIRED")
+
+    String bookImageURL;
 
     @Min(value = 0, message = "QUANTITY_CANNOT_BE_NEGATIVE")
-    private int quantity;
+    int quantity;
 
     @NotNull(message = "PUBLISHER_REQUIRED")
-    private Long publisherId;
+    PublisherCreateRequest publisher;
 
-    private Date publicationDate;
+    Date publishcationDate;
 
     @NotBlank(message = "ISBN_REQUIRED")
-    private String isbn;
+    String isbn;
 }

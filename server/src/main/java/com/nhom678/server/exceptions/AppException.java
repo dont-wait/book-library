@@ -1,10 +1,8 @@
 package com.nhom678.server.exceptions;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class AppException extends RuntimeException {
 
     private ErrorCode errorCode;
