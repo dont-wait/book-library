@@ -6,19 +6,19 @@ spring:
   application:
     name: server
   datasource:
-    url: ${DB_URL}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DB_USERNAME}
-    password: ${DB_PASS}
+    url: "jdbc:sqlserver://localhost:1433;databaseName=CongNgheJavaLibrary;encrypt=true;trustServerCertificate=true"
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: Tansang990
   jpa:
     properties:
-      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+      hibernate.dialect: org.hibernate.dialect.SQLServer2012Dialect
     hibernate:
       ddl-auto: update
       show-sql: true
 
 server:
-  port: ${PORT}
+  port: 6969
   servlet:
     context-path: /api/v1
 
