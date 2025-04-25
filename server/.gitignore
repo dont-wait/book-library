@@ -18,6 +18,10 @@ target/
 *.iws
 *.iml
 *.ipr
+<<<<<<< Updated upstream
+=======
+*.env
+>>>>>>> Stashed changes
 
 ### NetBeans ###
 /nbproject/private/
