@@ -6,14 +6,13 @@ spring:
   application:
     name: server
   datasource:
-    url: "jdbc:sqlserver://localhost:1433;databaseName=CongNgheJavaLibrary;encrypt=true;trustServerCertificate=true"
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    username: sa
-    password: Tansang990
+    url: ${DB_URL}
+    driver-class-name: ${DRIVER_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASS}
   jpa:
     properties:
-      hibernate.dialect: org.hibernate.dialect.SQLServer2012Dialect
-    hibernate:
+      hibernate.dialect: ${DIALECT}
       ddl-auto: update
       show-sql: true
 
