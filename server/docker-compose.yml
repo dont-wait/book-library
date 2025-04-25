@@ -1,0 +1,43 @@
+services:
+  mysql:
+    image: mysql:9.3.0
+    container_name: huit-library-container
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_DATABASE: DB-HUIT-LIBRARY
+    ports:
+      - "3310:3306"
+    volumes:
+      - db-data:var/lib/mysql
+      - ./HUIT-LIBRARY.sql:/docker-entrypoint-initdb.d/HUIT-LIBRARY.sql
+    networks:
+      - HUIT-LIBRARY-network
+  java-app:
+    image: maven:3.8.1-openjdk-17
+    container_name: java_app_container
+    working_dir: /app
+    command: ["mvn", "spring-boot:run"]
+    depends_on:
+      - mysql
+    networks:
+      - HUIT-LIBRARY-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_library
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "100:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 500M
+    networks:
+      - HUIT-LIBRARY-network
+
+networks:
+  HUIT-LIBRARY-network:
+    name: HUIT-LIBRARY
+    driver: bridge
