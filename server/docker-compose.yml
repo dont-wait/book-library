@@ -9,21 +9,37 @@ services:
     ports:
       - "3310:3306"
     volumes:
-      - db-data:var/lib/mysql
-      - ./HUIT-LIBRARY.sql:/docker-entrypoint-initdb.d/HUIT-LIBRARY.sql
+      - db-data:/var/lib/mysql
+      - ./HUIT-LIBRARY.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - HUIT-LIBRARY-network
+
   java-app:
-    image: maven:3.8.1-openjdk-17
+    image: eclipse-temurin:17-jdk-alpine
     container_name: java_app_container
     working_dir: /app
-    command: ["mvn", "spring-boot:run"]
+    volumes:
+      - ./:/app
+    command: ["./mvnw", "spring-boot:run"]
     depends_on:
       - mysql
+      - redis
     networks:
       - HUIT-LIBRARY-network
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: redis_cache
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - HUIT-LIBRARY-network
+
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin_library
     restart: always
     depends_on:
@@ -41,3 +57,7 @@ networks:
   HUIT-LIBRARY-network:
     name: HUIT-LIBRARY
     driver: bridge
+
+volumes:
+  db-data:
+  redis-data:
