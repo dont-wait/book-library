@@ -37,7 +37,21 @@ services:
       - redis-data:/data
     networks:
       - HUIT-LIBRARY-network
-
+  nginx:
+      image: nginx:alpine
+      container_name: nginx_proxy
+      restart: always
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - ./nginx/conf.d:/etc/nginx/conf.d
+        - ./nginx/ssl:/etc/nginx/ssl
+        - ./static:/usr/share/nginx/html
+      depends_on:
+        - java-app
+      networks:
+        - HUIT-LIBRARY-network
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin_library
