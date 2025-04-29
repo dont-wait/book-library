@@ -20,7 +20,7 @@ public class BookController {
 
     BookService bookService;
 
-    @PostMapping("publisher/{publisherId}")
+    @PostMapping
     ApiResponse<BookResponse> createBook(@Valid  @RequestBody BookCreationRequest request, @PathVariable int publisherId) {
         return ApiResponse.<BookResponse>builder()
                 .result(bookService.createBook(request, publisherId))
