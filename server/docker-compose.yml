@@ -1,18 +1,20 @@
+version: '3.3'
 services:
   mysql:
     image: mysql:9.3.0
-    container_name: huit-library-container
+    container_name: db_container
     restart: always
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_DATABASE: DB-HUIT-LIBRARY
+      MYSQL_ROOT_PASSWORD: 'sa123'
+      MYSQL_ROOT_HOST: "%"
     ports:
       - "3310:3306"
     volumes:
-      - db-data:/var/lib/mysql
-      - ./HUIT-LIBRARY.sql:/docker-entrypoint-initdb.d/init.sql
+      - db-data:/var/lib/mysqld
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
-      - HUIT-LIBRARY-network
+      - server
 
   java-app:
     image: eclipse-temurin:17-jdk-alpine
@@ -25,7 +27,7 @@ services:
       - mysql
       - redis
     networks:
-      - HUIT-LIBRARY-network
+      - server
 
   redis:
     image: redis:7.0-alpine
@@ -36,22 +38,24 @@ services:
     volumes:
       - redis-data:/data
     networks:
-      - HUIT-LIBRARY-network
+      - server
+
   nginx:
-      image: nginx:alpine
-      container_name: nginx_proxy
-      restart: always
-      ports:
-        - "80:80"
-        - "443:443"
-      volumes:
-        - ./nginx/conf.d:/etc/nginx/conf.d
-        - ./nginx/ssl:/etc/nginx/ssl
-        - ./static:/usr/share/nginx/html
-      depends_on:
-        - java-app
-      networks:
-        - HUIT-LIBRARY-network
+    image: nginx:alpine
+    container_name: nginx_proxy
+    restart: always
+    ports:
+      - "90:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./static:/usr/share/nginx/html
+    depends_on:
+      - java-app
+    networks:
+      - server
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin_library
@@ -61,17 +65,16 @@ services:
     ports:
       - "100:80"
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: db_container
       PMA_PORT: 3306
       UPLOAD_LIMIT: 500M
     networks:
-      - HUIT-LIBRARY-network
-
-networks:
-  HUIT-LIBRARY-network:
-    name: HUIT-LIBRARY
-    driver: bridge
+      - server
 
 volumes:
   db-data:
   redis-data:
+
+networks:
+  server:
+    driver: bridge

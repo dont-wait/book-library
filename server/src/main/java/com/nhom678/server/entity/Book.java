@@ -26,7 +26,7 @@ public class Book {
     @Column(name = "description")
     String description;
 
-    @Column(name = "book_image_url")
+    @Column(name = "book_image")
     String bookImageURL; //link to image
 
     @Column(name = "quantity")
