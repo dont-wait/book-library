@@ -1,0 +1,11 @@
+IF THiS FIRST TIME YOU CLONE REPO HAVE DOCKER-COMPOSE.yml
+
+In step by step, you will create all table store in db automatic
+
+1. Run command: docker compose -f ./docker-compose.yml up -d
+2. After run that you will have One for all container name "server", run it when you wnat connect db-container and awesome my container
+
+IF YOU UPDATED MY init.sql, BELOW STEP BY STEP TO UPDATE db for new init.sql file
+1. Run command: docker compose down -v, this command will drop container, im not sure, im just newbie docker user :))
+2. Run command in case 1: docker compose -f ./docker-compose.yml up -d
+3. Enjoy time with docker
