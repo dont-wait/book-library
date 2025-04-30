@@ -1,170 +1,108 @@
--- Bảng vai trò
-CREATE TABLE role (
-                      role_id INT(10) NOT NULL AUTO_INCREMENT,
-                      role_name VARCHAR(255) NOT NULL,
-                      PRIMARY KEY (role_id)
-) ENGINE=InnoDB;
-
--- Bảng tác giả
 CREATE TABLE author (
-                        author_id INT(10) NOT NULL AUTO_INCREMENT,
-                        author_name VARCHAR(255) NOT NULL,
-                        bio VARCHAR(255),
-                        PRIMARY KEY (author_id)
-) ENGINE=InnoDB;
-
--- Trạng thái sách
-CREATE TABLE status_book (
-                             status_book_id INT(10) NOT NULL AUTO_INCREMENT,
-                             status_book_name VARCHAR(255) NOT NULL UNIQUE,
-                             PRIMARY KEY (status_book_id)
-) ENGINE=InnoDB;
-
--- Trạng thái phiếu mượn/trả
-CREATE TABLE status_receipt (
-                                status_receipt_id INT(10) NOT NULL AUTO_INCREMENT,
-                                status_receipt_id_name VARCHAR(255) NOT NULL UNIQUE,
-                                PRIMARY KEY (status_receipt_id)
-) ENGINE=InnoDB;
-
--- Nhà xuất bản
-CREATE TABLE publisher (
-                           publisher_id INT(10) NOT NULL AUTO_INCREMENT,
-                           publisher_name VARCHAR(255) NOT NULL UNIQUE,
-                           PRIMARY KEY (publisher_id)
-) ENGINE=InnoDB;
-
--- Thể loại sách
-CREATE TABLE category (
-                          category_id INT(10) NOT NULL AUTO_INCREMENT,
-                          category_name VARCHAR(255) NOT NULL UNIQUE,
-                          PRIMARY KEY (category_id)
-) ENGINE=InnoDB;
-
--- Sách
+  author_id   int(10) NOT NULL AUTO_INCREMENT, 
+  author_name varchar(255) NOT NULL, 
+  bio         varchar(255), 
+  PRIMARY KEY (author_id));
 CREATE TABLE book (
-                      book_id INT(10) NOT NULL AUTO_INCREMENT,
-                      book_name VARCHAR(255) NOT NULL,
-                      description VARCHAR(255),
-                      book_image TEXT,
-                      quantity INT(10),
-                      cost DECIMAL(19, 0) NOT NULL,
-                      isbn CHAR(20) NOT NULL UNIQUE,
-                      publishcation_date DATE,
-                      category_id INT(10) NOT NULL,
-                      publisher_id INT(10) NOT NULL,
-                      position INT(11),
-                      PRIMARY KEY (book_id),
-                      FOREIGN KEY (category_id) REFERENCES category(category_id)
-                          ON UPDATE CASCADE ON DELETE CASCADE,
-                      FOREIGN KEY (publisher_id) REFERENCES publisher(publisher_id)
-                          ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB;
-
--- Liên kết sách - tác giả
+  book_id          char(10) NOT NULL, 
+  book_name        varchar(255) NOT NULL, 
+  description      varchar(255), 
+  book_image_url   text, 
+  quantity         int(10), 
+  cost             double NOT NULL, 
+  isbn             char(20) NOT NULL UNIQUE, 
+  publication_date date, 
+  rating           double, 
+  category_id      int(10) NOT NULL, 
+  publisher_id     int(10) NOT NULL, 
+  PRIMARY KEY (book_id));
 CREATE TABLE book_author (
-                             author_id INT(10) NOT NULL,
-                             book_id INT(10) NOT NULL,
-                             PRIMARY KEY (author_id, book_id),
-                             FOREIGN KEY (author_id) REFERENCES author(author_id)
-                                 ON UPDATE CASCADE ON DELETE CASCADE,
-                             FOREIGN KEY (book_id) REFERENCES book(book_id)
-                                 ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB;
-
--- Thủ thư
-CREATE TABLE librarian (
-                           librarian_id CHAR(11) NOT NULL,
-                           first_name VARCHAR(30) NOT NULL,
-                           last_name VARCHAR(50) NOT NULL,
-                           librarian_contact CHAR(11) NOT NULL UNIQUE,
-                           librarian_position VARCHAR(50) NOT NULL,
-                           PRIMARY KEY (librarian_id)
-) ENGINE=InnoDB;
-
--- Tài khoản người dùng
-CREATE TABLE user_account (
-                              user_id CHAR(11) NOT NULL,
-                              password VARCHAR(255) NOT NULL,
-                              role_id INT(10) NOT NULL,
-                              status INT(11) DEFAULT 1,
-                              PRIMARY KEY (user_id),
-                              FOREIGN KEY (role_id) REFERENCES role(role_id)
-                                  ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB;
-
--- Thành viên
-CREATE TABLE member (
-                        member_id CHAR(11) NOT NULL,
-                        first_name VARCHAR(30) NOT NULL,
-                        last_name VARCHAR(50) NOT NULL,
-                        member_genre INT(11) NOT NULL,
-                        member_contact CHAR(11) NOT NULL UNIQUE,
-                        PRIMARY KEY (member_id),
-                        FOREIGN KEY (member_id) REFERENCES user_account(user_id)
-                            ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB;
-
--- Phiếu mượn
-CREATE TABLE borrow_receipt_tbl (
-                                    borrow_receipt_id INT(11) NOT NULL AUTO_INCREMENT,
-                                    borrow_date DATE NOT NULL,
-                                    return_date DATE,
-                                    status_id INT(10) NOT NULL,
-                                    user_id CHAR(11) NOT NULL,
-                                    librarian_id CHAR(11) NOT NULL,
-                                    PRIMARY KEY (borrow_receipt_id),
-                                    FOREIGN KEY (status_id) REFERENCES status_receipt(status_receipt_id)
-                                        ON UPDATE CASCADE ON DELETE CASCADE,
-                                    FOREIGN KEY (user_id) REFERENCES user_account(user_id)
-                                        ON UPDATE CASCADE ON DELETE CASCADE,
-                                    FOREIGN KEY (librarian_id) REFERENCES librarian(librarian_id)
-                                        ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB;
-
--- Chi tiết phiếu mượn
+  Id        int(11) NOT NULL, 
+  author_id int(10) NOT NULL, 
+  book_id   char(10) NOT NULL, 
+  PRIMARY KEY (Id));
 CREATE TABLE borrow_receipt_detail (
-                                       borrow_receipt_detail_id INT(11) NOT NULL AUTO_INCREMENT,
-                                       due_date DATE NOT NULL,
-                                       status_book_id INT(10) NOT NULL,
-                                       book_id INT(10) NOT NULL,
-                                       receipt_id INT(11) NOT NULL,
-                                       PRIMARY KEY (borrow_receipt_detail_id),
-                                       FOREIGN KEY (status_book_id) REFERENCES status_book(status_book_id)
-                                           ON UPDATE CASCADE ON DELETE CASCADE,
-                                       FOREIGN KEY (book_id) REFERENCES book(book_id)
-                                           ON UPDATE CASCADE ON DELETE CASCADE,
-                                       FOREIGN KEY (receipt_id) REFERENCES borrow_receipt_tbl(borrow_receipt_id)
-                                           ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB;
-
--- Phiếu trả
-CREATE TABLE return_receipt_tbl (
-                                    return_receipt_id INT(11) NOT NULL AUTO_INCREMENT,
-                                    borrow_receipt_id INT(11) NOT NULL,
-                                    librarian_id CHAR(11) NOT NULL,
-                                    return_date DATE NOT NULL,
-                                    note VARCHAR(255),
-                                    PRIMARY KEY (return_receipt_id),
-                                    FOREIGN KEY (borrow_receipt_id) REFERENCES borrow_receipt_tbl(borrow_receipt_id)
-                                        ON UPDATE CASCADE ON DELETE CASCADE,
-                                    FOREIGN KEY (librarian_id) REFERENCES librarian(librarian_id)
-                                        ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB;
-
--- Chi tiết phiếu trả
+  borrow_receipt_detail_id int(11) NOT NULL, 
+  quantity                 int(11) NOT NULL, 
+  due_date                 date NOT NULL, 
+  status_book_id           int(10) NOT NULL, 
+  book_id                  char(10) NOT NULL, 
+  borrow_receipt_id        int(11) NOT NULL, 
+  PRIMARY KEY (borrow_receipt_detail_id));
+CREATE TABLE borrow_receipt_tbl (
+  borrow_recept_tbl_id int(11) NOT NULL, 
+  borrow_date          date NOT NULL, 
+  status_receipt_id    int(10) NOT NULL, 
+  user_id              char(11) NOT NULL, 
+  PRIMARY KEY (borrow_recept_tbl_id));
+CREATE TABLE category (
+  category_id   int(10) NOT NULL, 
+  category_name varchar(255) NOT NULL UNIQUE, 
+  PRIMARY KEY (category_id));
+CREATE TABLE librarian (
+  librarian_id       char(11) NOT NULL, 
+  first_name         varchar(30) NOT NULL, 
+  last_name          varchar(50) NOT NULL, 
+  librarian_contact  char(11) NOT NULL UNIQUE, 
+  librarian_position varchar(50) NOT NULL, 
+  PRIMARY KEY (librarian_id));
+CREATE TABLE member (
+  member_id      char(11) NOT NULL, 
+  first_name     varchar(30) NOT NULL, 
+  last_name      varchar(50) NOT NULL, 
+  member_genre   int(11) NOT NULL, 
+  member_contact char(11) NOT NULL UNIQUE, 
+  PRIMARY KEY (member_id));
+CREATE TABLE publisher (
+  publisher_id   int(10) NOT NULL AUTO_INCREMENT, 
+  publisher_name varchar(255) NOT NULL UNIQUE, 
+  PRIMARY KEY (publisher_id));
 CREATE TABLE return_receipt_detail (
-                                       return_receipt_detail_id INT(11) NOT NULL AUTO_INCREMENT,
-                                       status_book_id INT(10) NOT NULL,
-                                       borrow_receipt_detail_id INT(11) NOT NULL,
-                                       return_receipt_id INT(11) NOT NULL,
-                                       fine_cost DECIMAL(19, 0),
-                                       reason_fine VARCHAR(255),
-                                       PRIMARY KEY (return_receipt_detail_id),
-                                       FOREIGN KEY (status_book_id) REFERENCES status_book(status_book_id)
-                                           ON UPDATE CASCADE ON DELETE CASCADE,
-                                       FOREIGN KEY (borrow_receipt_detail_id) REFERENCES borrow_receipt_detail(borrow_receipt_detail_id)
-                                           ON UPDATE CASCADE ON DELETE CASCADE,
-                                       FOREIGN KEY (return_receipt_id) REFERENCES return_receipt_tbl(return_receipt_id)
-                                           ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB;
+  return_receipt_detail_id int(11) NOT NULL AUTO_INCREMENT, 
+  fine_cost                decimal(19, 0), 
+  reason_fine              varchar(255), 
+  status_book_id           int(10) NOT NULL, 
+  borrow_receipt_detail_id int(11) NOT NULL, 
+  return_receipt_id        int(11) NOT NULL, 
+  return_date              date, 
+  PRIMARY KEY (return_receipt_detail_id));
+CREATE TABLE return_receipt_tbl (
+  return_receipt_id int(11) NOT NULL, 
+  borrow_receipt_id int(11) NOT NULL, 
+  Note              varchar(255), 
+  PRIMARY KEY (return_receipt_id));
+CREATE TABLE role (
+  role_id   int(10) NOT NULL AUTO_INCREMENT, 
+  role_name varchar(255) NOT NULL, 
+  PRIMARY KEY (role_id));
+CREATE TABLE status_book (
+  status_book_id   int(10) NOT NULL AUTO_INCREMENT, 
+  status_book_name date NOT NULL UNIQUE, 
+  PRIMARY KEY (status_book_id));
+CREATE TABLE status_receipt (
+  status_receipt_id   int(10) NOT NULL AUTO_INCREMENT, 
+  status_receipt_name varchar(50) NOT NULL UNIQUE, 
+  PRIMARY KEY (status_receipt_id));
+CREATE TABLE user_account (
+  user_id    char(11) NOT NULL, 
+  password   int(10) NOT NULL, 
+  role_id    int(10) NOT NULL, 
+  is_actived int(11) DEFAULT 1 NOT NULL, 
+  PRIMARY KEY (user_id));
+ALTER TABLE user_account ADD CONSTRAINT FKuser_accou361518 FOREIGN KEY (role_id) REFERENCES role (role_id);
+ALTER TABLE book ADD CONSTRAINT FKbook85006 FOREIGN KEY (publisher_id) REFERENCES publisher (publisher_id);
+ALTER TABLE book_author ADD CONSTRAINT FKbook_autho49281 FOREIGN KEY (book_id) REFERENCES book (book_id);
+ALTER TABLE book_author ADD CONSTRAINT FKbook_autho442081 FOREIGN KEY (author_id) REFERENCES author (author_id);
+ALTER TABLE borrow_receipt_tbl ADD CONSTRAINT FKborrow_rec675274 FOREIGN KEY (status_receipt_id) REFERENCES status_receipt (status_receipt_id);
+ALTER TABLE borrow_receipt_tbl ADD CONSTRAINT FKborrow_rec114499 FOREIGN KEY (user_id) REFERENCES user_account (user_id);
+ALTER TABLE borrow_receipt_detail ADD CONSTRAINT FKborrow_rec301810 FOREIGN KEY (borrow_receipt_id) REFERENCES borrow_receipt_tbl (borrow_recept_tbl_id);
+ALTER TABLE borrow_receipt_detail ADD CONSTRAINT FKborrow_rec491550 FOREIGN KEY (book_id) REFERENCES book (book_id);
+ALTER TABLE borrow_receipt_detail ADD CONSTRAINT FKborrow_rec6242 FOREIGN KEY (status_book_id) REFERENCES status_book (status_book_id);
+ALTER TABLE book ADD CONSTRAINT FKbook866158 FOREIGN KEY (category_id) REFERENCES category (category_id);
+ALTER TABLE member ADD CONSTRAINT FKmember650963 FOREIGN KEY (member_id) REFERENCES user_account (user_id);
+ALTER TABLE user_account ADD CONSTRAINT FKuser_accou47614 FOREIGN KEY (user_id) REFERENCES librarian (librarian_id);
+ALTER TABLE return_receipt_tbl ADD CONSTRAINT FKreturn_rec899940 FOREIGN KEY (borrow_receipt_id) REFERENCES borrow_receipt_tbl (borrow_recept_tbl_id);
+ALTER TABLE return_receipt_detail ADD CONSTRAINT FKreturn_rec851242 FOREIGN KEY (return_receipt_id) REFERENCES return_receipt_tbl (return_receipt_id);
+ALTER TABLE return_receipt_detail ADD CONSTRAINT FKreturn_rec494761 FOREIGN KEY (status_book_id) REFERENCES status_book (status_book_id);
+ALTER TABLE return_receipt_detail ADD CONSTRAINT FKreturn_rec363208 FOREIGN KEY (borrow_receipt_detail_id) REFERENCES borrow_receipt_detail (borrow_receipt_detail_id);
+
