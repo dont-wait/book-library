@@ -44,7 +44,7 @@ public class BookController {
     }
 
     @DeleteMapping
-    ApiResponse<String> deleteBook(@RequestParam(required = false) String BookName) {
+    ApiResponse<String> deleteBook(@RequestParam(required = false) String BookName  ) {
         ApiResponse<String> apiResponse = new ApiResponse<>();
         bookService.deleteBook(BookName);
         apiResponse.setMessage("Success");

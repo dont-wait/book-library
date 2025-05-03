@@ -35,4 +35,13 @@ public class CategoryController {
                 .build();
     }
 
+    @DeleteMapping("/{categoryName}")
+    ApiResponse<String> deletePublisher(@PathVariable String categoryName) {
+        categoryService.deleteCategory(categoryName);
+        return ApiResponse.<String>builder()
+                .result("Category successfully deleted")
+                .message("Success")
+                .build();
+    }
+
 }
