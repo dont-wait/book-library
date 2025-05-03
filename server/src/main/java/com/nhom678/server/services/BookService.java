@@ -10,6 +10,6 @@ public interface BookService {
     BookResponse createBook(BookCreationRequest request);
     List<BookResponse> searchBookByISBNAndBookName(String isbn, String bookName);
     List<BookResponse> getAllBooks();
-    BookResponse updateBook(String bookName, BookUpdateRequest request);
+    BookResponse updateBook(Integer bookId, BookUpdateRequest request);
     void deleteBook(String bookName);
 }

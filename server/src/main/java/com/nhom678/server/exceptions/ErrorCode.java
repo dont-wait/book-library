@@ -14,6 +14,7 @@ public enum ErrorCode {
     BOOK_NAME_EXISTED(1002, "Book Name already existed", HttpStatus.CONFLICT),
     CATEGORYNAME_NOT_FOUND(1003, "Category Name not found", HttpStatus.NOT_FOUND),
     ISBN_NOT_FOUND(1003, "ISBN not found", HttpStatus.NOT_FOUND),
+    BOOK_ID_NOT_FOUND(1003, "Book id not found", HttpStatus.NOT_FOUND),
     BOOK_NAME_NOT_FOUND(1003, "Book name not found", HttpStatus.NOT_FOUND),
     BOOK_NOT_FOUND(1003, "Searched by Book name, ISBN - BOOK NOT FOUND", HttpStatus.NOT_FOUND),
     PUBLISHER_NOT_FOUND(1003, "Publisher name not found", HttpStatus.NOT_FOUND),

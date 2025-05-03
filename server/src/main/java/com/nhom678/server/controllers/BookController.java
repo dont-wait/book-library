@@ -2,6 +2,7 @@ package com.nhom678.server.controllers;
 
 import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.book.BookCreationRequest;
+import com.nhom678.server.dto.request.book.BookUpdateRequest;
 import com.nhom678.server.dto.response.BookResponse;
 import com.nhom678.server.services.BookService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
@@ -19,12 +21,21 @@ import java.util.List;
 public class BookController {
 
     BookService bookService;
+    private final RestClient.Builder builder;
 
     @PostMapping
     ApiResponse<BookResponse> createBook(@Valid @RequestBody BookCreationRequest request) {
         return ApiResponse.<BookResponse>builder()
                 .result(bookService.createBook(request))
                 .message("Success").build();
+    }
+
+    @PutMapping("{bookId}")
+    ApiResponse<BookResponse> updateBook(@PathVariable Integer bookId, @Valid @RequestBody BookUpdateRequest request) {
+        return ApiResponse.<BookResponse>builder()
+                .result(bookService.updateBook(bookId, request))
+                .message("Success")
+                .build();
     }
 
     @GetMapping("/search")

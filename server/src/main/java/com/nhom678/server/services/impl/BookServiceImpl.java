@@ -92,8 +92,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookResponse updateBook(String bookName, BookUpdateRequest request) {
-        return null;
+    public BookResponse updateBook(Integer bookId, BookUpdateRequest request) {
+        Book bookUpdate = bookRepository.findBookByBookId(bookId)
+                .orElseThrow(() -> new AppException(ErrorCode.BOOK_ID_NOT_FOUND));
+
+        bookMapper.updateBook(bookUpdate, request);
+
+        return bookMapper.toBookResponse(bookUpdate);
     }
 
     @Override
