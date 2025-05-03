@@ -32,6 +32,7 @@ public class PublisherController {
     ApiResponse<List<PublisherResponse>> getAllPublisher() {
         ApiResponse<List<PublisherResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setResult(publisherService.getAllPublisher());
+        apiResponse.setMessage("Success");
         return apiResponse;
     }
 

@@ -14,5 +14,4 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 public class UpdateCategoryRequest {
     String categoryName;
-    String categoryDescription;
 }
