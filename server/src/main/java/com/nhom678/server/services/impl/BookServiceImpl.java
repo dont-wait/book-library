@@ -106,4 +106,18 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(String bookName) {
         bookRepository.deleteBookByBookName(bookName);
     }
+
+    @Override
+    public List<BookResponse> getBooksHaveCategoryId(Integer categoryId) {
+        List<Book> listBook = new ArrayList<>();
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORYID_NOT_FOUND));
+        for (Book book : bookRepository.findAll()) {
+            if(book.getCategory().getCategoryId().equals(categoryId))
+                listBook.add(book);
+        }
+        return listBook.stream()
+                .map(bookMapper::toBookResponse)
+                .toList();
+    }
 }

@@ -47,12 +47,19 @@ public class BookController {
                 .message("Success").build();
     }
     @GetMapping
-    ApiResponse<List<BookResponse>> getBooks() {
-        ApiResponse<List<BookResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(bookService.getAllBooks());
-        apiResponse.setMessage("Success");
-        return apiResponse;
+    ApiResponse<List<BookResponse>> getBooks(@RequestParam(required = false) Integer categoryId) {
+
+        if (categoryId != null) {
+            return ApiResponse.<List<BookResponse>>builder()
+                    .result(bookService.getBooksHaveCategoryId(categoryId))
+                    .message("Success").build();
+        }
+        return ApiResponse.<List<BookResponse>>builder()
+                .result(bookService.getAllBooks())
+                .message("Success").build();
     }
+
+
 
     @DeleteMapping
     ApiResponse<String> deleteBook(@RequestParam(required = false) String BookName  ) {
