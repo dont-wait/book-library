@@ -3,11 +3,11 @@ package com.nhom678.server.controllers;
 import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.publisher.PublisherCreateRequest;
 import com.nhom678.server.dto.response.PublisherResponse;
-import com.nhom678.server.repositories.PublisherRepository;
 import com.nhom678.server.services.PublisherService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level= AccessLevel.PRIVATE, makeFinal = true)
 public class PublisherController {
+
+    @Autowired
     PublisherService publisherService;
-    private final PublisherRepository publisherRepository;
 
     @GetMapping("/{publisherName}")
     ApiResponse<PublisherResponse> getPublisherByName(@PathVariable String publisherName) {

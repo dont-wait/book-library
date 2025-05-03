@@ -16,14 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "Publisher")
+@Table(name = "publisher")
 public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PublisherId")
+    @Column(name = "publisher_id")
     int publisherId;
 
-    @Column(name = "PublisherName")
+    @Column(name = "publisher_name")
     String publisherName;
 
     @OneToMany(mappedBy = "publisher",

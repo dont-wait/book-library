@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "Book")
+@Table(name = "book")
 public class Book {
 
     @Id
@@ -26,7 +26,7 @@ public class Book {
     @Column(name = "description")
     String description;
 
-    @Column(name = "book_image")
+    @Column(name = "book_image_url")
     String bookImageURL; //link to image
 
     @Column(name = "quantity")

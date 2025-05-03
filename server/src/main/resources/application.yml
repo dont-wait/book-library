@@ -1,8 +1,5 @@
 spring:
-  security:
-    user:
-      name:
-      password: 
+
   application:
     name: server
   datasource:
@@ -13,9 +10,9 @@ spring:
   jpa:
     properties:
       hibernate.dialect: ${DIALECT}
-      ddl-auto: update
       show-sql: true
-
+    hibernate:
+      ddl-auto: update
 server:
   port: 6969
   servlet:
