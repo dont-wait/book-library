@@ -8,5 +8,4 @@ import lombok.Getter;
 public class CategoryResponse {
     int categoryId;
     String categoryName;
-    String categoryDescription;
 }

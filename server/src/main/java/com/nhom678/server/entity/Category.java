@@ -8,14 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Category")
+@Table(name = "category")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
     int categoryId;
 
-    @Column(name = "CategoryName", nullable = false, unique = true)
+    @Column(name = "category_name", nullable = false, unique = true)
     String categoryName;
 
 

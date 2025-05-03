@@ -1,108 +1,108 @@
-CREATE TABLE author (
-  author_id   int(10) NOT NULL AUTO_INCREMENT, 
-  author_name varchar(255) NOT NULL, 
-  bio         varchar(255), 
-  PRIMARY KEY (author_id));
-CREATE TABLE book (
-  book_id          char(10) NOT NULL, 
-  book_name        varchar(255) NOT NULL, 
-  description      varchar(255), 
-  book_image_url   text, 
-  quantity         int(10), 
-  cost             double NOT NULL, 
-  isbn             char(20) NOT NULL UNIQUE, 
-  publication_date date, 
-  rating           double, 
-  category_id      int(10) NOT NULL, 
-  publisher_id     int(10) NOT NULL, 
-  PRIMARY KEY (book_id));
-CREATE TABLE book_author (
-  Id        int(11) NOT NULL, 
-  author_id int(10) NOT NULL, 
-  book_id   char(10) NOT NULL, 
-  PRIMARY KEY (Id));
-CREATE TABLE borrow_receipt_detail (
-  borrow_receipt_detail_id int(11) NOT NULL, 
-  quantity                 int(11) NOT NULL, 
-  due_date                 date NOT NULL, 
-  status_book_id           int(10) NOT NULL, 
-  book_id                  char(10) NOT NULL, 
-  borrow_receipt_id        int(11) NOT NULL, 
-  PRIMARY KEY (borrow_receipt_detail_id));
-CREATE TABLE borrow_receipt_tbl (
-  borrow_recept_tbl_id int(11) NOT NULL, 
-  borrow_date          date NOT NULL, 
-  status_receipt_id    int(10) NOT NULL, 
-  user_id              char(11) NOT NULL, 
-  PRIMARY KEY (borrow_recept_tbl_id));
-CREATE TABLE category (
-  category_id   int(10) NOT NULL, 
-  category_name varchar(255) NOT NULL UNIQUE, 
-  PRIMARY KEY (category_id));
-CREATE TABLE librarian (
-  librarian_id       char(11) NOT NULL, 
-  first_name         varchar(30) NOT NULL, 
-  last_name          varchar(50) NOT NULL, 
-  librarian_contact  char(11) NOT NULL UNIQUE, 
-  librarian_position varchar(50) NOT NULL, 
-  PRIMARY KEY (librarian_id));
-CREATE TABLE member (
-  member_id      char(11) NOT NULL, 
-  first_name     varchar(30) NOT NULL, 
-  last_name      varchar(50) NOT NULL, 
-  member_genre   int(11) NOT NULL, 
-  member_contact char(11) NOT NULL UNIQUE, 
-  PRIMARY KEY (member_id));
-CREATE TABLE publisher (
-  publisher_id   int(10) NOT NULL AUTO_INCREMENT, 
-  publisher_name varchar(255) NOT NULL UNIQUE, 
-  PRIMARY KEY (publisher_id));
-CREATE TABLE return_receipt_detail (
-  return_receipt_detail_id int(11) NOT NULL AUTO_INCREMENT, 
-  fine_cost                decimal(19, 0), 
-  reason_fine              varchar(255), 
-  status_book_id           int(10) NOT NULL, 
-  borrow_receipt_detail_id int(11) NOT NULL, 
-  return_receipt_id        int(11) NOT NULL, 
-  return_date              date, 
-  PRIMARY KEY (return_receipt_detail_id));
-CREATE TABLE return_receipt_tbl (
-  return_receipt_id int(11) NOT NULL, 
-  borrow_receipt_id int(11) NOT NULL, 
-  Note              varchar(255), 
-  PRIMARY KEY (return_receipt_id));
-CREATE TABLE role (
-  role_id   int(10) NOT NULL AUTO_INCREMENT, 
-  role_name varchar(255) NOT NULL, 
-  PRIMARY KEY (role_id));
-CREATE TABLE status_book (
-  status_book_id   int(10) NOT NULL AUTO_INCREMENT, 
-  status_book_name date NOT NULL UNIQUE, 
-  PRIMARY KEY (status_book_id));
-CREATE TABLE status_receipt (
-  status_receipt_id   int(10) NOT NULL AUTO_INCREMENT, 
-  status_receipt_name varchar(50) NOT NULL UNIQUE, 
-  PRIMARY KEY (status_receipt_id));
-CREATE TABLE user_account (
-  user_id    char(11) NOT NULL, 
-  password   int(10) NOT NULL, 
-  role_id    int(10) NOT NULL, 
-  is_actived int(11) DEFAULT 1 NOT NULL, 
-  PRIMARY KEY (user_id));
-ALTER TABLE user_account ADD CONSTRAINT FKuser_accou361518 FOREIGN KEY (role_id) REFERENCES role (role_id);
-ALTER TABLE book ADD CONSTRAINT FKbook85006 FOREIGN KEY (publisher_id) REFERENCES publisher (publisher_id);
-ALTER TABLE book_author ADD CONSTRAINT FKbook_autho49281 FOREIGN KEY (book_id) REFERENCES book (book_id);
-ALTER TABLE book_author ADD CONSTRAINT FKbook_autho442081 FOREIGN KEY (author_id) REFERENCES author (author_id);
-ALTER TABLE borrow_receipt_tbl ADD CONSTRAINT FKborrow_rec675274 FOREIGN KEY (status_receipt_id) REFERENCES status_receipt (status_receipt_id);
-ALTER TABLE borrow_receipt_tbl ADD CONSTRAINT FKborrow_rec114499 FOREIGN KEY (user_id) REFERENCES user_account (user_id);
-ALTER TABLE borrow_receipt_detail ADD CONSTRAINT FKborrow_rec301810 FOREIGN KEY (borrow_receipt_id) REFERENCES borrow_receipt_tbl (borrow_recept_tbl_id);
-ALTER TABLE borrow_receipt_detail ADD CONSTRAINT FKborrow_rec491550 FOREIGN KEY (book_id) REFERENCES book (book_id);
-ALTER TABLE borrow_receipt_detail ADD CONSTRAINT FKborrow_rec6242 FOREIGN KEY (status_book_id) REFERENCES status_book (status_book_id);
-ALTER TABLE book ADD CONSTRAINT FKbook866158 FOREIGN KEY (category_id) REFERENCES category (category_id);
-ALTER TABLE member ADD CONSTRAINT FKmember650963 FOREIGN KEY (member_id) REFERENCES user_account (user_id);
-ALTER TABLE user_account ADD CONSTRAINT FKuser_accou47614 FOREIGN KEY (user_id) REFERENCES librarian (librarian_id);
-ALTER TABLE return_receipt_tbl ADD CONSTRAINT FKreturn_rec899940 FOREIGN KEY (borrow_receipt_id) REFERENCES borrow_receipt_tbl (borrow_recept_tbl_id);
-ALTER TABLE return_receipt_detail ADD CONSTRAINT FKreturn_rec851242 FOREIGN KEY (return_receipt_id) REFERENCES return_receipt_tbl (return_receipt_id);
-ALTER TABLE return_receipt_detail ADD CONSTRAINT FKreturn_rec494761 FOREIGN KEY (status_book_id) REFERENCES status_book (status_book_id);
-ALTER TABLE return_receipt_detail ADD CONSTRAINT FKreturn_rec363208 FOREIGN KEY (borrow_receipt_detail_id) REFERENCES borrow_receipt_detail (borrow_receipt_detail_id);
-
+-- CREATE TABLE author (
+--   author_id   int(10) NOT NULL AUTO_INCREMENT,
+--   author_name varchar(255) NOT NULL,
+--   bio         varchar(255),
+--   PRIMARY KEY (author_id));
+-- CREATE TABLE book (
+--   book_id          char(10) NOT NULL,
+--   book_name        varchar(255) NOT NULL,
+--   description      varchar(255),
+--   book_image_url   text,
+--   quantity         int(10),
+--   cost             double NOT NULL,
+--   isbn             char(20) NOT NULL UNIQUE,
+--   publication_date date,
+--   rating           double,
+--   category_id      int(10) NOT NULL,
+--   publisher_id     int(10) NOT NULL,
+--   PRIMARY KEY (book_id));
+-- CREATE TABLE book_author (
+--   Id        int(11) NOT NULL,
+--   author_id int(10) NOT NULL,
+--   book_id   char(10) NOT NULL,
+--   PRIMARY KEY (Id));
+-- CREATE TABLE borrow_receipt_detail (
+--   borrow_receipt_detail_id int(11) NOT NULL,
+--   quantity                 int(11) NOT NULL,
+--   due_date                 date NOT NULL,
+--   status_book_id           int(10) NOT NULL,
+--   book_id                  char(10) NOT NULL,
+--   borrow_receipt_id        int(11) NOT NULL,
+--   PRIMARY KEY (borrow_receipt_detail_id));
+-- CREATE TABLE borrow_receipt_tbl (
+--   borrow_recept_tbl_id int(11) NOT NULL,
+--   borrow_date          date NOT NULL,
+--   status_receipt_id    int(10) NOT NULL,
+--   user_id              char(11) NOT NULL,
+--   PRIMARY KEY (borrow_recept_tbl_id));
+-- CREATE TABLE category (
+--   category_id   int(10) NOT NULL,
+--   category_name varchar(255) NOT NULL UNIQUE,
+--   PRIMARY KEY (category_id));
+-- CREATE TABLE librarian (
+--   librarian_id       char(11) NOT NULL,
+--   first_name         varchar(30) NOT NULL,
+--   last_name          varchar(50) NOT NULL,
+--   librarian_contact  char(11) NOT NULL UNIQUE,
+--   librarian_position varchar(50) NOT NULL,
+--   PRIMARY KEY (librarian_id));
+-- CREATE TABLE member (
+--   member_id      char(11) NOT NULL,
+--   first_name     varchar(30) NOT NULL,
+--   last_name      varchar(50) NOT NULL,
+--   member_genre   int(11) NOT NULL,
+--   member_contact char(11) NOT NULL UNIQUE,
+--   PRIMARY KEY (member_id));
+-- CREATE TABLE publisher (
+--   publisher_id   int(10) NOT NULL AUTO_INCREMENT,
+--   publisher_name varchar(255) NOT NULL UNIQUE,
+--   PRIMARY KEY (publisher_id));
+-- CREATE TABLE return_receipt_detail (
+--   return_receipt_detail_id int(11) NOT NULL AUTO_INCREMENT,
+--   fine_cost                decimal(19, 0),
+--   reason_fine              varchar(255),
+--   status_book_id           int(10) NOT NULL,
+--   borrow_receipt_detail_id int(11) NOT NULL,
+--   return_receipt_id        int(11) NOT NULL,
+--   return_date              date,
+--   PRIMARY KEY (return_receipt_detail_id));
+-- CREATE TABLE return_receipt_tbl (
+--   return_receipt_id int(11) NOT NULL,
+--   borrow_receipt_id int(11) NOT NULL,
+--   Note              varchar(255),
+--   PRIMARY KEY (return_receipt_id));
+-- CREATE TABLE role (
+--   role_id   int(10) NOT NULL AUTO_INCREMENT,
+--   role_name varchar(255) NOT NULL,
+--   PRIMARY KEY (role_id));
+-- CREATE TABLE status_book (
+--   status_book_id   int(10) NOT NULL AUTO_INCREMENT,
+--   status_book_name date NOT NULL UNIQUE,
+--   PRIMARY KEY (status_book_id));
+-- CREATE TABLE status_receipt (
+--   status_receipt_id   int(10) NOT NULL AUTO_INCREMENT,
+--   status_receipt_name varchar(50) NOT NULL UNIQUE,
+--   PRIMARY KEY (status_receipt_id));
+-- CREATE TABLE user_account (
+--   user_id    char(11) NOT NULL,
+--   password   int(10) NOT NULL,
+--   role_id    int(10) NOT NULL,
+--   is_actived int(11) DEFAULT 1 NOT NULL,
+--   PRIMARY KEY (user_id));
+-- ALTER TABLE user_account ADD CONSTRAINT FKuser_accou361518 FOREIGN KEY (role_id) REFERENCES role (role_id);
+-- ALTER TABLE book ADD CONSTRAINT FKbook85006 FOREIGN KEY (publisher_id) REFERENCES publisher (publisher_id);
+-- ALTER TABLE book_author ADD CONSTRAINT FKbook_autho49281 FOREIGN KEY (book_id) REFERENCES book (book_id);
+-- ALTER TABLE book_author ADD CONSTRAINT FKbook_autho442081 FOREIGN KEY (author_id) REFERENCES author (author_id);
+-- ALTER TABLE borrow_receipt_tbl ADD CONSTRAINT FKborrow_rec675274 FOREIGN KEY (status_receipt_id) REFERENCES status_receipt (status_receipt_id);
+-- ALTER TABLE borrow_receipt_tbl ADD CONSTRAINT FKborrow_rec114499 FOREIGN KEY (user_id) REFERENCES user_account (user_id);
+-- ALTER TABLE borrow_receipt_detail ADD CONSTRAINT FKborrow_rec301810 FOREIGN KEY (borrow_receipt_id) REFERENCES borrow_receipt_tbl (borrow_recept_tbl_id);
+-- ALTER TABLE borrow_receipt_detail ADD CONSTRAINT FKborrow_rec491550 FOREIGN KEY (book_id) REFERENCES book (book_id);
+-- ALTER TABLE borrow_receipt_detail ADD CONSTRAINT FKborrow_rec6242 FOREIGN KEY (status_book_id) REFERENCES status_book (status_book_id);
+-- ALTER TABLE book ADD CONSTRAINT FKbook866158 FOREIGN KEY (category_id) REFERENCES category (category_id);
+-- ALTER TABLE member ADD CONSTRAINT FKmember650963 FOREIGN KEY (member_id) REFERENCES user_account (user_id);
+-- ALTER TABLE user_account ADD CONSTRAINT FKuser_accou47614 FOREIGN KEY (user_id) REFERENCES librarian (librarian_id);
+-- ALTER TABLE return_receipt_tbl ADD CONSTRAINT FKreturn_rec899940 FOREIGN KEY (borrow_receipt_id) REFERENCES borrow_receipt_tbl (borrow_recept_tbl_id);
+-- ALTER TABLE return_receipt_detail ADD CONSTRAINT FKreturn_rec851242 FOREIGN KEY (return_receipt_id) REFERENCES return_receipt_tbl (return_receipt_id);
+-- ALTER TABLE return_receipt_detail ADD CONSTRAINT FKreturn_rec494761 FOREIGN KEY (status_book_id) REFERENCES status_book (status_book_id);
+-- ALTER TABLE return_receipt_detail ADD CONSTRAINT FKreturn_rec363208 FOREIGN KEY (borrow_receipt_detail_id) REFERENCES borrow_receipt_detail (borrow_receipt_detail_id);
+--

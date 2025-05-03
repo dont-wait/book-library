@@ -8,17 +8,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
     INVALID_ID_KEY(1001, "Invalid Message key, you should check your key", HttpStatus.BAD_REQUEST), //Sai sot trong dat viec dat Message tai DTO
-    EMAIL_EXISTED(1002, "Email already existed", HttpStatus.CONFLICT),
-    PHONE_EXISTED(1002, "Phone already existed", HttpStatus.CONFLICT),
     ISBN_EXISTED(1002, "ISBN already existed", HttpStatus.CONFLICT),
     PUBLISHERNAME_EXISTED(1002, "Publisher Name already existed", HttpStatus.CONFLICT),
-    ID_EXISTED(1002, "Id already existed", HttpStatus.CONFLICT),
     CATEGORYNAME_EXISTED(1002, "Category Name already existed", HttpStatus.CONFLICT),
     CATEGORYNAME_NOT_FOUND(1003, "Category Name not found", HttpStatus.NOT_FOUND),
     ISBN_NOT_FOUND(1003, "ISBN not found", HttpStatus.NOT_FOUND),
     BOOK_NAME_NOT_FOUND(1003, "Book name not found", HttpStatus.NOT_FOUND),
     BOOK_NOT_FOUND(1003, "Searched by Book name, ISBN - BOOK NOT FOUND", HttpStatus.NOT_FOUND),
-    STUDENT_NOT_FOUND(1003, "Student not found", HttpStatus.NOT_FOUND),
     PUBLISHER_NOT_FOUND(1003, "Publisher name not found", HttpStatus.NOT_FOUND),
     ID_NOT_FOUND(1003, "Person not found", HttpStatus.NOT_FOUND),
     BOOK_IMAGE_URL_REQUIRED(1004, "Book image url is required", HttpStatus.BAD_REQUEST),
