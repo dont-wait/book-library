@@ -21,7 +21,7 @@ public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "publisher_id")
-    int publisherId;
+    Integer publisherId;
 
     @Column(name = "publisher_name")
     String publisherName;

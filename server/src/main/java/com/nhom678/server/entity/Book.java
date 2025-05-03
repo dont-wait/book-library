@@ -32,6 +32,18 @@ public class Book {
     @Column(name = "quantity")
     int quantity; //number of book in storage
 
+    @Column(name = "cost")
+    Double cost;
+
+    @Column(name = "isbn", nullable = false, unique = true, length = 20)
+    String isbn;
+
+    @Column(name = "publication_date")
+    Date publicationDate;
+
+    @Column(name = "rating")
+    Double rating;
+
     @ManyToOne
     @JoinColumn(name = "publisher_id", nullable = false)
     Publisher publisher;
@@ -40,10 +52,4 @@ public class Book {
     @JoinColumn(name = "category_id", nullable = false)
     Category category;
 
-
-    @Column(name = "publishcation_date")
-    Date publishcationDate;
-
-    @Column(name = "isbn", nullable = false, unique = true, length = 20)
-    String isbn;
 }

@@ -21,17 +21,17 @@ public class BookController {
     BookService bookService;
 
     @PostMapping
-    ApiResponse<BookResponse> createBook(@Valid  @RequestBody BookCreationRequest request, @PathVariable int publisherId) {
+    ApiResponse<BookResponse> createBook(@Valid  @RequestBody BookCreationRequest request) {
         return ApiResponse.<BookResponse>builder()
-                .result(bookService.createBook(request, publisherId))
+                .result(bookService.createBook(request))
                 .message("Success").build();
     }
     @GetMapping("/search")
     ApiResponse<BookResponse> getBook(
         @RequestParam(required = false) String isbn,
-        @RequestParam(required = false) String bookNam) {
+        @RequestParam(required = false) String bookName) {
         return ApiResponse.<BookResponse>builder()
-                .result(bookService.getBook(isbn, bookNam))
+                .result(bookService.getBook(isbn, bookName))
                 .message("Success").build();
     }
     @GetMapping

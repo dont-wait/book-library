@@ -4,11 +4,13 @@ import com.nhom678.server.dto.request.book.BookCreationRequest;
 import com.nhom678.server.dto.request.book.BookUpdateRequest;
 import com.nhom678.server.dto.response.BookResponse;
 import com.nhom678.server.entity.Book;
+import com.nhom678.server.entity.Category;
 import com.nhom678.server.entity.Publisher;
 import com.nhom678.server.exceptions.AppException;
 import com.nhom678.server.exceptions.ErrorCode;
 import com.nhom678.server.mapper.BookMapper;
 import com.nhom678.server.repositories.BookRepository;
+import com.nhom678.server.repositories.CategoryRepository;
 import com.nhom678.server.repositories.PublisherRepository;
 import com.nhom678.server.services.BookService;
 import com.nhom678.server.utils.URLUtils;
@@ -29,9 +31,10 @@ public class BookServiceImpl implements BookService {
     BookRepository bookRepository;
     BookMapper bookMapper;
     PublisherRepository publisherRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
-    public BookResponse createBook(BookCreationRequest request, int publisherId) {
+    public BookResponse createBook(BookCreationRequest request) {
 
         if(request.getBookImageURL() == null || !URLUtils.isValidUrl(request.getBookImageURL()))
             throw new AppException(ErrorCode.INVALID_FORMAT_IMAGE_URL);
@@ -39,9 +42,13 @@ public class BookServiceImpl implements BookService {
         if(bookRepository.existsBookByIsbn(request.getIsbn()))
             throw new AppException(ErrorCode.ISBN_EXISTED);
 
-        Publisher publisher = publisherRepository.findById(publisherId).orElseThrow(() -> new AppException(ErrorCode.PUBLISHER_NOT_FOUND));
+        Publisher publisher = publisherRepository.findById(request.getPublisherId())
+                .orElseThrow(() -> new AppException(ErrorCode.PUBLISHER_NOT_FOUND));
 
-        Book book = bookMapper.toBook(request, publisher.getPublisherId());
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORYNAME_NOT_FOUND));
+
+        Book book = bookMapper.toBook(request, publisher, category);
 
 
         //After save, we will response for client

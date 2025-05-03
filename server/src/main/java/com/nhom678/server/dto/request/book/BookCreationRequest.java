@@ -18,20 +18,27 @@ public class BookCreationRequest {
     @Size(min = 1, message = "BOOK_NAME_TOO_SHORT")
     String bookName;
 
+    Double cost;
+
     String description;
 
     @NotNull(message = "BOOK_IMAGE_URL_REQUIRED")
-
     String bookImageURL;
 
     @Min(value = 0, message = "QUANTITY_CANNOT_BE_NEGATIVE")
     int quantity;
 
-    @NotNull(message = "PUBLISHER_REQUIRED")
-    PublisherCreateRequest publisher;
-
-    Date publishcationDate;
-
     @NotBlank(message = "ISBN_REQUIRED")
     String isbn;
+
+    Date publicationDate;
+
+    Double rating;
+
+    @NotNull(message = "PUBLISHER_REQUIRED")
+    Integer publisherId;
+
+    @NotNull(message = "CATEGORY_REQUIRED")
+    Integer categoryId;
+
 }
