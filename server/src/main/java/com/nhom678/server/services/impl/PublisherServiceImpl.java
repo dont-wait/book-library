@@ -1,8 +1,6 @@
 package com.nhom678.server.services.impl;
 
-import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.publisher.PublisherCreateRequest;
-import com.nhom678.server.dto.request.publisher.PublisherUpdateRequest;
 import com.nhom678.server.dto.response.PublisherResponse;
 import com.nhom678.server.entity.Publisher;
 import com.nhom678.server.exceptions.AppException;
@@ -14,7 +12,6 @@ import com.nhom678.server.services.PublisherService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,14 +33,6 @@ public class PublisherServiceImpl implements PublisherService {
         Publisher publisher = publisherMapper.toPublisher(request);
         return publisherMapper.toPublisherResponse(publisherRepository.save(publisher));
     }
-
-//    @Override
-//    public PublisherResponse updatePublisher(String publisherName, PublisherUpdateRequest request) {
-//        Publisher publisher = publisherRepository.findPublisherByPublisherName(publisherName)
-//                .orElseThrow(() -> new AppException(ErrorCode.PUBLISHER_NOT_FOUND));
-//        publisherMapper.updatePublisher(publisher, request);
-//        return publisherMapper.toPublisherResponse(publisherRepository.save(publisher));
-//    }
 
     @Override
     public PublisherResponse getPublisherByName(String publisherName) {

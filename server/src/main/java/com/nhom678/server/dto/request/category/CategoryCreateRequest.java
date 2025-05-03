@@ -1,6 +1,6 @@
 package com.nhom678.server.dto.request.category;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CreateCategoryRequest {
-    @NotBlank(message = "CATEGORYNAME_NOT_BLANK")
+public class CategoryCreateRequest {
+
+
+    @NotNull
     String categoryName;
 }

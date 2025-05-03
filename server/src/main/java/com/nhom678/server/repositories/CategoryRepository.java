@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-    Boolean existsCategoryByCategoryName(String name);
-    void deleteCategoryByCategoryName(String name);
-    Optional<Category> findCategoryByCategoryName(String name);
+    Boolean existsCategoryByCategoryName(String categoryName);
+    void deleteCategoryByCategoryName(String categoryName);
+    Optional<Category> findCategoryByCategoryName(String categoryName);
 }

@@ -18,7 +18,6 @@ import java.util.List;
 @FieldDefaults(level= AccessLevel.PRIVATE, makeFinal = true)
 public class PublisherController {
 
-    @Autowired
     PublisherService publisherService;
 
     @GetMapping("/{publisherName}")
@@ -39,8 +38,9 @@ public class PublisherController {
 
     @PostMapping
     ApiResponse<PublisherResponse> createPublisher(@RequestBody PublisherCreateRequest request) {
-        return ApiResponse.<PublisherResponse>builder().result(
-                publisherService.createPublisher(request)).message("Success")
+        return ApiResponse.<PublisherResponse>builder()
+                .result(publisherService.createPublisher(request))
+                .message("Success")
                 .build();
     }
 
