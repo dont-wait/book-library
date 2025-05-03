@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BookService {
     BookResponse createBook(BookCreationRequest request);
-    BookResponse getBook(String isbn, String bookName);
+    List<BookResponse> searchBookByISBNAndBookName(String isbn, String bookName);
     List<BookResponse> getAllBooks();
     BookResponse updateBook(String bookName, BookUpdateRequest request);
     void deleteBook(String bookName);

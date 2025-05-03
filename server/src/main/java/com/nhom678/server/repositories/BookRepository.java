@@ -11,6 +11,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     Optional<Book> findBookByIsbn(String isbn);
     Optional<Book> findBookByBookName(String bookName);
     Boolean existsBookByIsbn(String isbn);
+    Boolean existsBookByBookName(String bookName);
     void deleteBookByIsbn(String isbn);
     void deleteBookByBookName(String bookName);
 }

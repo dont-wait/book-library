@@ -21,17 +21,18 @@ public class BookController {
     BookService bookService;
 
     @PostMapping
-    ApiResponse<BookResponse> createBook(@Valid  @RequestBody BookCreationRequest request) {
+    ApiResponse<BookResponse> createBook(@Valid @RequestBody BookCreationRequest request) {
         return ApiResponse.<BookResponse>builder()
                 .result(bookService.createBook(request))
                 .message("Success").build();
     }
+
     @GetMapping("/search")
-    ApiResponse<BookResponse> getBook(
+    ApiResponse<List<BookResponse>> searchBookByISBNAndBookName(
         @RequestParam(required = false) String isbn,
         @RequestParam(required = false) String bookName) {
-        return ApiResponse.<BookResponse>builder()
-                .result(bookService.getBook(isbn, bookName))
+        return ApiResponse.<List<BookResponse>>builder()
+                .result(bookService.searchBookByISBNAndBookName(isbn, bookName))
                 .message("Success").build();
     }
     @GetMapping
@@ -43,7 +44,7 @@ public class BookController {
     }
 
     @DeleteMapping
-    ApiResponse<String> deleteBook(@RequestParam String BookName) {
+    ApiResponse<String> deleteBook(@RequestParam(required = false) String BookName) {
         ApiResponse<String> apiResponse = new ApiResponse<>();
         bookService.deleteBook(BookName);
         apiResponse.setMessage("Success");

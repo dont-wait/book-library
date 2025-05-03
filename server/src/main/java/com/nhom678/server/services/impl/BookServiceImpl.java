@@ -20,6 +20,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,9 @@ public class BookServiceImpl implements BookService {
         if(bookRepository.existsBookByIsbn(request.getIsbn()))
             throw new AppException(ErrorCode.ISBN_EXISTED);
 
+        if(bookRepository.existsBookByBookName(request.getBookName()))
+            throw new AppException(ErrorCode.BOOK_NAME_EXISTED);
+
         Publisher publisher = publisherRepository.findById(request.getPublisherId())
                 .orElseThrow(() -> new AppException(ErrorCode.PUBLISHER_NOT_FOUND));
 
@@ -56,17 +60,26 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookResponse getBook(String isbn, String bookName) {
-        Book book = null;
-        if(isbn != null || !isbn.isEmpty())
-            book = bookRepository.findBookByIsbn(isbn)
-                    .orElseThrow(() -> new AppException(ErrorCode.ISBN_NOT_FOUND));
-        if(bookName != null || !bookName.isEmpty())
-            book = bookRepository.findBookByBookName(bookName)
-                    .orElseThrow(() -> new AppException(ErrorCode.BOOK_NAME_NOT_FOUND));
-        else
+    public List<BookResponse> searchBookByISBNAndBookName(String isbn, String bookName) {
+        List<Book> list = new ArrayList<>();
+
+        Boolean hasIsbn = isbn != null && !isbn.isBlank();
+        Boolean hasBookName = bookName != null && !bookName.isBlank();
+        
+        if(!hasIsbn && !hasBookName)
             throw new AppException(ErrorCode.BOOK_NOT_FOUND);
-        return bookMapper.toBookResponse(book);
+        
+        if(hasIsbn)
+            bookRepository.findBookByIsbn(isbn).ifPresent(list::add);
+        if(hasBookName)
+            bookRepository.findBookByBookName(bookName).ifPresent(list::add);
+        
+        if(list.isEmpty())
+            throw new AppException(ErrorCode.BOOK_NOT_FOUND);
+        
+        return list.stream()
+                .map(bookMapper::toBookResponse)
+                .toList();
     }
 
     @Override

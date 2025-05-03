@@ -20,7 +20,7 @@ public class Book {
     @Column(name = "book_id")
     int bookId;
 
-    @Column(name = "book_name", nullable = false)
+    @Column(name = "book_name", nullable = false, unique = true)
     String bookName;
 
     @Column(name = "description")
