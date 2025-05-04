@@ -1,6 +1,7 @@
 package com.nhom678.server.dto.request.book;
 
 import com.nhom678.server.dto.request.publisher.PublisherCreateRequest;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +16,7 @@ import java.util.Date;
 public class BookCreationRequest {
 
     @NotBlank(message = "BOOK_NAME_REQUIRED")
-    @Size(min = 1, message = "BOOK_NAME_TOO_SHORT")
+    @Size(min = 5, message = "BOOK_NAME_TOO_SHORT")
     String bookName;
 
     Double cost;
@@ -34,6 +35,8 @@ public class BookCreationRequest {
     Date publicationDate;
 
     Double rating;
+
+    String floorPosition;
 
     @NotNull(message = "PUBLISHER_REQUIRED")
     Integer publisherId;

@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.awt.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -44,6 +45,9 @@ public class Book {
     @Column(name = "rating")
     Double rating;
 
+    @Column(name = "floor_position")
+    String floorPosition;
+
     @ManyToOne
     @JoinColumn(name = "publisher_id", nullable = false)
     Publisher publisher;
@@ -51,5 +55,9 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     Category category;
+
+    @OneToMany(mappedBy = "book")
+    List<BookAuthor> bookAuthors;
+
 
 }

@@ -31,6 +31,8 @@ public class BookUpdateRequest {
 
     Double rating;
 
+    String floorPosition;
+
     @NotNull(message = "PUBLISHER_REQUIRED")
     Integer publisherId;
 

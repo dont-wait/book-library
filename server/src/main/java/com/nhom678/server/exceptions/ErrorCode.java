@@ -23,6 +23,7 @@ public enum ErrorCode {
     BOOK_IMAGE_URL_REQUIRED(1004, "Book image url is required", HttpStatus.BAD_REQUEST),
     BOOK_NAME_REQUIRED(1004, "Book name is required", HttpStatus.BAD_REQUEST),
     PUBLICATION_DATE_REQUIRED(1004, "Publication date is required", HttpStatus.BAD_REQUEST),
+    BOOK_NAME_TOO_SHORT(1004, "Book name must be at least 5 characters long", HttpStatus.BAD_REQUEST),
     ISBN_REQUIRED(1004, "ISBN is required", HttpStatus.BAD_REQUEST),
     CATEGORY_REQUIRED(1004, "Category is required", HttpStatus.BAD_REQUEST),
     QUANTITY_CANNOT_BE_NEGATIVE(1005, "Quantity cannot be negative", HttpStatus.BAD_REQUEST),

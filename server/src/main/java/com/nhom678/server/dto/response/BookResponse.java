@@ -34,6 +34,8 @@ public class BookResponse {
 
     Double rating;
 
+    String floorPosition;
+
     Integer publisherId;
 
     Integer categoryId;
