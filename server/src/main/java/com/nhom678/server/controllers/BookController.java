@@ -2,6 +2,7 @@ package com.nhom678.server.controllers;
 
 import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.book.BookCreationRequest;
+import com.nhom678.server.dto.request.book.BookSearchCriteria;
 import com.nhom678.server.dto.request.book.BookUpdateRequest;
 import com.nhom678.server.dto.response.BookResponse;
 import com.nhom678.server.services.BookService;
@@ -21,7 +22,14 @@ import java.util.List;
 public class BookController {
 
     BookService bookService;
-    private final RestClient.Builder builder;
+
+    @GetMapping
+    ApiResponse<List<BookResponse>> getAllBooks() {
+        return ApiResponse.<List<BookResponse>>builder()
+                .result(bookService.getAllBooks())
+                .message("Success")
+                .build();
+    }
 
     @PostMapping
     ApiResponse<BookResponse> createBook(@Valid @RequestBody BookCreationRequest request) {
@@ -31,38 +39,28 @@ public class BookController {
     }
 
     @PutMapping("{bookId}")
-    ApiResponse<BookResponse> updateBook(@PathVariable Integer bookId, @Valid @RequestBody BookUpdateRequest request) {
+    ApiResponse<BookResponse> updateBook(@PathVariable Integer bookId,
+                                         @Valid @RequestBody BookUpdateRequest request) {
         return ApiResponse.<BookResponse>builder()
                 .result(bookService.updateBook(bookId, request))
                 .message("Success")
                 .build();
     }
 
-    @GetMapping("/search")
-    ApiResponse<List<BookResponse>> searchBookByISBNAndBookName(
-        @RequestParam(required = false) String isbn,
-        @RequestParam(required = false) String bookName) {
+    @PostMapping("/search")
+    public ApiResponse<List<BookResponse>> searchBooks(@RequestBody BookSearchCriteria criteria) {
+        List<BookResponse> result = bookService.searchBooks(criteria);
         return ApiResponse.<List<BookResponse>>builder()
-                .result(bookService.searchBookByISBNAndBookName(isbn, bookName))
-                .message("Success").build();
+                .result(result)
+                .message("Success")
+                .build();
     }
-    @GetMapping
-    ApiResponse<List<BookResponse>> getBooks(@RequestParam(required = false) Integer categoryId) {
 
-        if (categoryId != null) {
-            return ApiResponse.<List<BookResponse>>builder()
-                    .result(bookService.getBooksHaveCategoryId(categoryId))
-                    .message("Success").build();
-        }
-        return ApiResponse.<List<BookResponse>>builder()
-                .result(bookService.getAllBooks())
-                .message("Success").build();
-    }
 
 
 
     @DeleteMapping
-    ApiResponse<String> deleteBook(@RequestParam(required = false) String BookName  ) {
+    ApiResponse<String> deleteBook(@RequestParam String BookName) {
         ApiResponse<String> apiResponse = new ApiResponse<>();
         bookService.deleteBook(BookName);
         apiResponse.setMessage("Success");
