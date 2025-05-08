@@ -36,7 +36,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{categoryName}")
-    ApiResponse<String> deletePublisher(@PathVariable String categoryName) {
+    ApiResponse<String> deleteCategory(@PathVariable String categoryName) {
         categoryService.deleteCategory(categoryName);
         return ApiResponse.<String>builder()
                 .result("Category successfully deleted")
