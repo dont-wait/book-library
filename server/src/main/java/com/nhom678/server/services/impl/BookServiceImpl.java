@@ -64,8 +64,6 @@ public class BookServiceImpl implements BookService {
         return bookMapper.toBookResponse(bookRepository.save(book));
     }
 
-
-
     @Override
     public List<BookResponse> getAllBooks() {
         return bookRepository.findAll()

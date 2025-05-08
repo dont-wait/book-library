@@ -1,7 +1,5 @@
 package com.nhom678.server.dto.request.book;
 
-import com.nhom678.server.dto.request.publisher.PublisherCreateRequest;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -43,5 +41,6 @@ public class BookCreationRequest {
 
     @NotNull(message = "CATEGORY_REQUIRED")
     Integer categoryId;
+
 
 }
