@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,7 +48,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Transactional
     public void deleteAuthor(Integer authorId) {
+        if (!authorRepository.existsById(authorId)) {
+            throw new AppException(ErrorCode.AUTHOR_NOT_FOUND);
+        }
         authorRepository.deleteAuthorByAuthorId(authorId);
     }
 }
