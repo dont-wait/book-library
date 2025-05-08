@@ -1,5 +1,6 @@
 package com.nhom678.server.dto.response;
 
+import com.nhom678.server.entity.Author;
 import com.nhom678.server.entity.Publisher;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
@@ -12,6 +13,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
+import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
@@ -39,4 +41,6 @@ public class BookResponse {
     Integer publisherId;
 
     Integer categoryId;
+
+    List<Integer> authors;
 }

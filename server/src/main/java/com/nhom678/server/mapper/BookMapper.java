@@ -10,6 +10,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
@@ -19,8 +21,16 @@ public interface BookMapper {
 
     @Mapping(target = "publisherId", source = "publisher.publisherId")
     @Mapping(target = "categoryId", source = "category.categoryId")
+    @Mapping(target = "authors", expression = "java(getAuthorIds(book))")
     BookResponse toBookResponse(Book book);
 
     void updateBook(@MappingTarget Book book, BookUpdateRequest request);
 
+    default List<Integer> getAuthorIds(Book book) {
+        if (book.getBookAuthors() == null)
+            return null;
+        return book.getBookAuthors().stream()
+                .map(ba -> ba.getAuthor().getAuthorId())
+                .toList();
+    }
 }

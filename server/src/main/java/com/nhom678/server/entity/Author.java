@@ -22,6 +22,6 @@ public class Author {
     @Column(name = "author_name")
     String authorName;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     List<BookAuthor> bookAuthors;
 }

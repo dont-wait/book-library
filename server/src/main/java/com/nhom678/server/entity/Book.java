@@ -56,7 +56,7 @@ public class Book {
     @JoinColumn(name = "category_id", nullable = false)
     Category category;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     List<BookAuthor> bookAuthors;
 
 

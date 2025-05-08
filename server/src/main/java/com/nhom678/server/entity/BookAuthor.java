@@ -1,8 +1,14 @@
 package com.nhom678.server.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "book_author")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookAuthor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

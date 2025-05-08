@@ -23,6 +23,8 @@ public enum ErrorCode {
     PUBLISHER_NOT_FOUND(1003, "Publisher name not found", HttpStatus.NOT_FOUND),
     ID_NOT_FOUND(1003, "Person not found", HttpStatus.NOT_FOUND),
     BOOK_IMAGE_URL_REQUIRED(1004, "Book image url is required", HttpStatus.BAD_REQUEST),
+    AUTHOR_IDS_REQUIRED(1004, "Author ids is required", HttpStatus.BAD_REQUEST),
+    AT_LEAST_ONE_AUTHOR_REQUIRED(1004, "At least one author is required", HttpStatus.BAD_REQUEST),
     BOOK_NAME_REQUIRED(1004, "Book name is required", HttpStatus.BAD_REQUEST),
     AUTHOR_NAME_REQUIRE(1004, "Author name is required", HttpStatus.BAD_REQUEST),
     PUBLICATION_DATE_REQUIRED(1004, "Publication date is required", HttpStatus.BAD_REQUEST),

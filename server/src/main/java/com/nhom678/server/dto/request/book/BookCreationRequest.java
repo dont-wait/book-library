@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
+import java.util.List;
+
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookCreationRequest {
@@ -42,5 +44,8 @@ public class BookCreationRequest {
     @NotNull(message = "CATEGORY_REQUIRED")
     Integer categoryId;
 
+    @NotNull(message = "AUTHOR_IDS_REQUIRED")
+    @Size(min = 1, message = "AT_LEAST_ONE_AUTHOR_REQUIRED")
+    List<Integer> authorIds;
 
 }

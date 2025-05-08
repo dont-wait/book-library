@@ -4,16 +4,11 @@ import com.nhom678.server.dto.request.book.BookCreationRequest;
 import com.nhom678.server.dto.request.book.BookSearchCriteria;
 import com.nhom678.server.dto.request.book.BookUpdateRequest;
 import com.nhom678.server.dto.response.BookResponse;
-import com.nhom678.server.entity.Book;
-import com.nhom678.server.entity.Category;
-import com.nhom678.server.entity.Publisher;
+import com.nhom678.server.entity.*;
 import com.nhom678.server.exceptions.AppException;
 import com.nhom678.server.exceptions.ErrorCode;
 import com.nhom678.server.mapper.BookMapper;
-import com.nhom678.server.repositories.BookRepository;
-import com.nhom678.server.repositories.BookSpecification;
-import com.nhom678.server.repositories.CategoryRepository;
-import com.nhom678.server.repositories.PublisherRepository;
+import com.nhom678.server.repositories.*;
 import com.nhom678.server.services.BookService;
 import com.nhom678.server.utils.URLUtils;
 import lombok.AccessLevel;
@@ -23,10 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,8 +30,11 @@ public class BookServiceImpl implements BookService {
     BookMapper bookMapper;
     PublisherRepository publisherRepository;
     private final CategoryRepository categoryRepository;
+    private final AuthorRepository authorRepository;
+    private final BookAuthorRepository bookAuthorRepository;
 
     @Override
+    @Transactional
     public BookResponse createBook(BookCreationRequest request) {
 
         if(request.getBookImageURL() == null || !URLUtils.isValidUrl(request.getBookImageURL()))
@@ -57,10 +52,23 @@ public class BookServiceImpl implements BookService {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new AppException(ErrorCode.CATEGORYNAME_NOT_FOUND));
 
+        List<Author> authors = authorRepository.findAllById(request.getAuthorIds());
+        if (authors.size() != request.getAuthorIds().size()) {
+            throw new AppException(ErrorCode.AUTHOR_NOT_FOUND);
+        }
+
         Book book = bookMapper.toBook(request, publisher, category);
 
+        List<BookAuthor> bookAuthors = authors.stream().map(author -> {
+            BookAuthor ba = new BookAuthor();
+            ba.setAuthor(author);
+            ba.setBook(book);
+            return ba;
+        }).toList();
 
         //After save, we will response for client
+        bookAuthorRepository.saveAll(bookAuthors);
+        book.setBookAuthors(bookAuthors);
         return bookMapper.toBookResponse(bookRepository.save(book));
     }
 
