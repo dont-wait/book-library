@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,9 +23,9 @@ public class BookSearchCriteria {
 
     String floorPosition;
 
-    Integer publisherId;
+    List<Integer> publisherIds;
 
-    Integer categoryId;
+    List<Integer> categoryIds;
 
-    //Integer authorId;
+    List<Integer> authorIds;
 }

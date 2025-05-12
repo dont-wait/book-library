@@ -27,13 +27,15 @@ public class BookSpecification {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("rating"), criteria.getRating()));
 
             if(criteria.getFloorPosition() != null && !criteria.getFloorPosition().isBlank())
-                predicates.add(cb.equal(root.get("floorName"), criteria.getFloorPosition()));
+                predicates.add(cb.equal(root.get("floorPosition"), criteria.getFloorPosition()));
 
-            if(criteria.getCategoryId() != null)
-                predicates.add(cb.equal(root.get("category").get("categoryId"), criteria.getCategoryId()));
+            if (criteria.getCategoryIds() != null && !criteria.getCategoryIds().isEmpty()) {
+                predicates.add(root.get("category").get("categoryId").in(criteria.getCategoryIds()));
+            }
 
-            if(criteria.getPublisherId() != null)
-                predicates.add(cb.equal(root.get("publisher").get("publisherId"), criteria.getPublisherId()));
+            if (criteria.getPublisherIds() != null && !criteria.getPublisherIds().isEmpty()) {
+                predicates.add(root.get("publisher").get("publisherId").in(criteria.getPublisherIds()));
+            }
 
             return cb.and(predicates.toArray(new Predicate[0]));
 
