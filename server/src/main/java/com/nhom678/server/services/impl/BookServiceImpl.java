@@ -29,9 +29,9 @@ public class BookServiceImpl implements BookService {
     BookRepository bookRepository;
     BookMapper bookMapper;
     PublisherRepository publisherRepository;
-    private final CategoryRepository categoryRepository;
-    private final AuthorRepository authorRepository;
-    private final BookAuthorRepository bookAuthorRepository;
+    CategoryRepository categoryRepository;
+    AuthorRepository authorRepository;
+    BookAuthorRepository bookAuthorRepository;
 
     @Override
     @Transactional
