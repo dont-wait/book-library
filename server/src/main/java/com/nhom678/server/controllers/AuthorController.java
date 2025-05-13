@@ -3,13 +3,11 @@ package com.nhom678.server.controllers;
 import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.author.AuthorCreateRequest;
 import com.nhom678.server.dto.response.AuthorResponse;
-import com.nhom678.server.dto.response.BookResponse;
 import com.nhom678.server.services.AuthorService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
