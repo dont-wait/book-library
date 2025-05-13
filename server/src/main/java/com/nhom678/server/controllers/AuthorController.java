@@ -19,8 +19,6 @@ import java.util.List;
 @RequestMapping("/authors")
 public class AuthorController {
     AuthorService authorService;
-    private final RestClient.Builder builder;
-
     @GetMapping
     ApiResponse<List<AuthorResponse>> getAllAuthor() {
         return ApiResponse.<List<AuthorResponse>>builder()
