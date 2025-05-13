@@ -47,7 +47,6 @@ public class BookController {
                 .build();
     }
 
-
     @PostMapping("/search")
     public ApiResponse<List<BookResponse>> searchBooks(@RequestBody BookSearchCriteria criteria) {
         List<BookResponse> result = bookService.searchBooks(criteria);

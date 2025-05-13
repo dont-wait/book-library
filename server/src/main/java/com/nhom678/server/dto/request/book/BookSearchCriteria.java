@@ -27,5 +27,4 @@ public class BookSearchCriteria {
 
     List<Integer> categoryIds;
 
-    List<Integer> authorIds;
 }
