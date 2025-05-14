@@ -9,6 +9,7 @@ public class ServerApplication {
 
 	public static void main(String[] args) {
 		String dotenvPath = System.getenv("DOTENV_PATH");
+		System.out.println(dotenvPath);
 		Dotenv dotenv = Dotenv.configure().directory(dotenvPath).load();
 		SpringApplication.run(ServerApplication.class, args);
 	}

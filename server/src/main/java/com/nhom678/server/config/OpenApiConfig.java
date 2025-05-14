@@ -13,6 +13,6 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("HUIT LIBRARY Documentation")
                         .version("1.0")
-                        .description("API Documentation for your Spring Boot application"));
+                        .description("API Documentation for Huit-libary-management application"));
     }
 }
