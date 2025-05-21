@@ -1,13 +1,13 @@
 package com.nhom678.server.exceptions;
 
 import com.nhom678.server.dto.ApiResponse;
+import com.nhom678.server.enums.ErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
 
         apiResponse.setCode(errorCode.getCode());
         apiResponse.setMessage(errorCode.getMessage());
+
         return ResponseEntity.badRequest().body(apiResponse);
     }
 

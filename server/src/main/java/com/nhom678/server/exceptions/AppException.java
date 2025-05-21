@@ -1,5 +1,6 @@
 package com.nhom678.server.exceptions;
 
+import com.nhom678.server.enums.ErrorCode;
 import lombok.Data;
 
 @Data

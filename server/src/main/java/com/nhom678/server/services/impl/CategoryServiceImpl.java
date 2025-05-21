@@ -4,7 +4,7 @@ import com.nhom678.server.dto.request.category.CategoryCreateRequest;
 import com.nhom678.server.dto.response.CategoryResponse;
 import com.nhom678.server.entity.Category;
 import com.nhom678.server.exceptions.AppException;
-import com.nhom678.server.exceptions.ErrorCode;
+import com.nhom678.server.enums.ErrorCode;
 import com.nhom678.server.mapper.CategoryMapper;
 import com.nhom678.server.repositories.CategoryRepository;
 import com.nhom678.server.services.CategoryService;
