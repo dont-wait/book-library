@@ -85,6 +85,20 @@ public class BookServiceImpl implements BookService {
         Book bookUpdate = bookRepository.findBookByBookId(bookId)
                 .orElseThrow(() -> new AppException(ErrorCode.BOOK_ID_NOT_FOUND));
 
+        // Check if publisher exists when publisherId is provided
+        if (request.getPublisherId() != null) {
+            Publisher publisher = publisherRepository.findById(request.getPublisherId())
+                    .orElseThrow(() -> new AppException(ErrorCode.PUBLISHER_NOT_FOUND));
+            bookUpdate.setPublisher(publisher);
+        }
+
+        // Check if category exists when categoryId is provided
+        if (request.getCategoryId() != null) {
+            Category category = categoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new AppException(ErrorCode.CATEGORYNAME_NOT_FOUND));
+            bookUpdate.setCategory(category);
+        }
+
         bookMapper.updateBook(bookUpdate, request);
 
         return bookMapper.toBookResponse(bookUpdate);

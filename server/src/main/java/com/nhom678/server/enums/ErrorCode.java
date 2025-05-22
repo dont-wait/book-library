@@ -14,6 +14,7 @@ public enum ErrorCode {
     CATEGORYNAME_EXISTED(1002, "Category Name already existed", HttpStatus.CONFLICT),
     AUTHOR_NAME_EXISTED(1002, "Author Name already existed", HttpStatus.CONFLICT),
     BOOK_NAME_EXISTED(1002, "Book Name already existed", HttpStatus.CONFLICT),
+    ID_EXISTED(1002, "Id already existed", HttpStatus.CONFLICT),
 
     CATEGORYNAME_NOT_FOUND(1003, "Category Name not found", HttpStatus.NOT_FOUND),
     CATEGORYID_NOT_FOUND(1003, "Category Id not found", HttpStatus.NOT_FOUND),
@@ -31,12 +32,16 @@ public enum ErrorCode {
     BOOK_NAME_REQUIRED(1004, "Book name is required", HttpStatus.BAD_REQUEST),
     AUTHOR_NAME_REQUIRE(1004, "Author name is required", HttpStatus.BAD_REQUEST),
     PUBLICATION_DATE_REQUIRED(1004, "Publication date is required", HttpStatus.BAD_REQUEST),
-    BOOK_NAME_TOO_SHORT(1004, "Book name must be at least 5 characters long", HttpStatus.BAD_REQUEST),
     ISBN_REQUIRED(1004, "ISBN is required", HttpStatus.BAD_REQUEST),
     CATEGORY_REQUIRED(1004, "Category is required", HttpStatus.BAD_REQUEST),
+    EMAIL_REQUIRED(1004, "Email is required", HttpStatus.BAD_REQUEST),
+    PHONE_REQUIRED(1004, "Phone is required", HttpStatus.BAD_REQUEST),
 
-    QUANTITY_CANNOT_BE_NEGATIVE(1005, "Quantity cannot be negative", HttpStatus.BAD_REQUEST),
-
+    BOOK_NAME_TOO_SHORT(1006, "Book name must be at least 5 characters long", HttpStatus.BAD_REQUEST),
+    ID_MUST_BE_10_CHARACTERS(1006, "Id must be 10 characters long", HttpStatus.BAD_REQUEST),
+    QUANTITY_CANNOT_BE_NEGATIVE(1006, "Quantity cannot be negative", HttpStatus.BAD_REQUEST),
+    PHONE_MUST_BE_OR_10_11_CHARACTERS(1006, "Phone must be 10 or 11 characters long", HttpStatus.BAD_REQUEST),
+    PASSWORD_MUST_BE_INCLUDE_SPECIFY_CHARACTER(1006, "Password must be include specify character", HttpStatus.BAD_REQUEST),
     INVALID_FORMAT_IMAGE_URL(1006, "Invalid format image url", HttpStatus.BAD_REQUEST),
     UNCATEGORIZED_EXCEPTION(6789, "Uncategorized Exception", HttpStatus.INTERNAL_SERVER_ERROR);
 
