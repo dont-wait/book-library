@@ -8,7 +8,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
     INVALID_ID_KEY(1001, "Invalid Message key, you should check your key", HttpStatus.BAD_REQUEST), //Sai sot trong dat viec dat Message tai DTO
-
+    PHONE_EXISTED(1002, "Your input phone number is existed", HttpStatus.CONFLICT),
+    EMAIL_EXISTED(1002, "Your input email is existed", HttpStatus.CONFLICT),
     ISBN_EXISTED(1002, "ISBN already existed", HttpStatus.CONFLICT),
     PUBLISHERNAME_EXISTED(1002, "Publisher Name already existed", HttpStatus.CONFLICT),
     CATEGORYNAME_EXISTED(1002, "Category Name already existed", HttpStatus.CONFLICT),
@@ -43,6 +44,7 @@ public enum ErrorCode {
     PHONE_MUST_BE_OR_10_11_CHARACTERS(1006, "Phone must be 10 or 11 characters long", HttpStatus.BAD_REQUEST),
     PASSWORD_MUST_BE_INCLUDE_SPECIFY_CHARACTER(1006, "Password must be include specify character", HttpStatus.BAD_REQUEST),
     INVALID_FORMAT_IMAGE_URL(1006, "Invalid format image url", HttpStatus.BAD_REQUEST),
+    INVALID_FORMAT_EMAIL(1006, "Invalide email format", HttpStatus.BAD_REQUEST),
     ROLE_MUST_BE_STUDENT_OR_LECTURER(1006, "Role must be student or lecturer", HttpStatus.BAD_REQUEST),
     UNCATEGORIZED_EXCEPTION(6789, "Uncategorized Exception", HttpStatus.INTERNAL_SERVER_ERROR);
     private final int code;

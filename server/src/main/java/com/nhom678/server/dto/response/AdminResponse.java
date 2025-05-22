@@ -1,10 +1,10 @@
 package com.nhom678.server.dto.response;
 
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-@Getter
+@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AdminResponse {
     String adminId;
@@ -12,4 +12,5 @@ public class AdminResponse {
     String lastName;
     String email;
     String phone;
+    String password;
 }

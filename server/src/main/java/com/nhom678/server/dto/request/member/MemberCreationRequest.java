@@ -32,7 +32,4 @@ public class MemberCreationRequest {
     @Pattern(regexp = "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$",
             message = "PASSWORD_MUST_BE_INCLUDE_SPECIFY_CHARACTER(s)(e.g., *, $, etc.)")
     String password;
-
-    @Pattern(regexp = "STUDENT|LECTURERER", message = "ROLE_MUST_BE_STUDENT_OR_LECTURER")
-    UserRole role;
 }

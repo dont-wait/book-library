@@ -1,6 +1,5 @@
 package com.nhom678.server.dto.request.admin;
 
-import com.nhom678.server.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -22,7 +21,7 @@ public class AdminCreationRequest {
     String lastName;
 
     @NotBlank(message = "EMAIL_REQUIRED")
-    @Email
+    @Email(message = "INVALID_FORMAT_EMAIL")
     String email;
 
     @NotBlank(message = "PHONE_REQUIRED")
@@ -35,6 +34,5 @@ public class AdminCreationRequest {
     @Pattern(regexp = "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$",
             message = "PASSWORD_MUST_BE_INCLUDE_SPECIFY_CHARACTER(s)(e.g., *, $, etc.)")
     String password;
-    UserRole role = UserRole.ADMIN;
 
 }

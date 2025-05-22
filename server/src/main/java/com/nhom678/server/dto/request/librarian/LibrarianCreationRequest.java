@@ -38,6 +38,4 @@ public class LibrarianCreationRequest {
 
     String password;
 
-    UserRole role = UserRole.LIBRARIAN;
-
 }

@@ -32,17 +32,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void deleteMember(Integer memberId) {
+    public void deleteMember(String memberId) {
 
     }
 
     @Override
-    public MemberResponse getMemberById(Integer memberId) {
+    public MemberResponse getMemberById(String memberId) {
         return null;
     }
 
     @Override
-    public MemberResponse updateMember(Integer memberId, MemberUpdateRequest request) {
+    public MemberResponse updateMember(String memberId, MemberUpdateRequest request) {
         return null;
     }
 }

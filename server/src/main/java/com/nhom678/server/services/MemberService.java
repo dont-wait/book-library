@@ -9,7 +9,7 @@ import java.util.List;
 public interface MemberService {
     MemberResponse createMember(MemberCreationRequest request);
     List<MemberResponse> getAllMember();
-    void deleteMember(Integer memberId);
-    MemberResponse getMemberById(Integer memberId);
-    MemberResponse updateMember(Integer memberId, MemberUpdateRequest request);
+    void deleteMember(String memberId);
+    MemberResponse getMemberById(String memberId);
+    MemberResponse updateMember(String memberId, MemberUpdateRequest request);
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public interface AdminService {
     AdminResponse createAdmin(AdminCreationRequest request);
     List<AdminResponse> getAllAdmin();
-    AdminResponse getAdminById(Integer adminId);
-    AdminResponse updateAdmin(Integer adminId, AdminUpdateRequest request);
-    void deleteAdmin(Integer adminId);
+    AdminResponse getAdminById(String  adminId);
+    AdminResponse updateAdmin(String adminId, AdminUpdateRequest request);
+    void deleteAdmin(String adminId);
 }
