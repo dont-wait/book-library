@@ -27,8 +27,6 @@ public class Librarian {
     @Column(name = "phone", unique = true, length = 11)
     String phone;
 
-    @Column(name = "managed_floor")
-    String managedFloor;
 
     //             ten thuoc tinh trong obj
     @OneToOne(mappedBy = "librarian", cascade = CascadeType.ALL, orphanRemoval = true)

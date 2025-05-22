@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
-    Optional<Member> findMemberById(String id);
-    Boolean existsMemberId(String id);
-    void deleteMemberById(String id);
+    Optional<Member> findByMemberId(String memberId);
+    Boolean existsByMemberId(String memberId);
+    void deleteByMemberId(String memberId);
 }

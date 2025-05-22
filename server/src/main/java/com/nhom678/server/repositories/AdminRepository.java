@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, String> {
-    Optional<Admin> findAdminById(String id);
-    Boolean existsAdminId(String id);
-    void deleteAdminById(String id);
+    Optional<Admin> findByAdminId(String adminId);
+    Boolean existsByAdminId(String adminId);
+    void deleteByAdminId(String adminId);
 }

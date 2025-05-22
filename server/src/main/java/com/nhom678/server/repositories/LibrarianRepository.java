@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LibrarianRepository extends JpaRepository<Librarian, String> {
-    Optional<Librarian> findLibrarianById(String id);
-    Boolean existsLibrarianId(String id);
-    void deleteLibrarianById(String id);
+    Optional<Librarian> findByLibrarianId(String id);
+    Boolean existsByLibrarianId(String id);
+    void deleteByLibrarianId(String id);
 }
