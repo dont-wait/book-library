@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Member {
     @Id
     @Column(name = "member_id", length = 10)
-    String adminId;
+    String memberId;
 
     @Column(name = "first_name")
     String firstName;
