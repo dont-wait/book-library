@@ -1,10 +1,10 @@
 package com.nhom678.server.services.impl;
 
-import com.nhom678.server.dto.request.category.CategoryCreateRequest;
+import com.nhom678.server.dto.request.category.CategoryCreationRequest;
 import com.nhom678.server.dto.response.CategoryResponse;
 import com.nhom678.server.entity.Category;
 import com.nhom678.server.exceptions.AppException;
-import com.nhom678.server.exceptions.ErrorCode;
+import com.nhom678.server.enums.ErrorCode;
 import com.nhom678.server.mapper.CategoryMapper;
 import com.nhom678.server.repositories.CategoryRepository;
 import com.nhom678.server.services.CategoryService;
@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryMapper categoryMapper;
 
     @Override
-    public CategoryResponse createCategory(CategoryCreateRequest request) {
+    public CategoryResponse createCategory(CategoryCreationRequest request) {
         if(categoryRepository.existsCategoryByCategoryName(request.getCategoryName()))
             throw new AppException(ErrorCode.CATEGORYNAME_EXISTED);
         Category category = categoryMapper.toCategory(request);

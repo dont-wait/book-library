@@ -20,7 +20,6 @@ public class BookUpdateRequest {
 
     String description;
 
-    @NotNull(message = "BOOK_IMAGE_URL_REQUIRED")
     String bookImageURL;
 
     @Min(value = 0, message = "QUANTITY_CANNOT_BE_NEGATIVE")
@@ -33,9 +32,7 @@ public class BookUpdateRequest {
 
     String floorPosition;
 
-    @NotNull(message = "PUBLISHER_REQUIRED")
     Integer publisherId;
 
-    @NotNull(message = "CATEGORY_REQUIRED")
     Integer categoryId;
 }

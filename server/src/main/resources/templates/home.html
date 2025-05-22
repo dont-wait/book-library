@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookShelf - Your Digital Library</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{home/home.css}">
+</head>
+<body>
+<!-- Header Background with slanted design -->
+<div class="header-bg"></div>
+
+<!-- Header Navigation with Fixed Layout -->
+<div class="header-wrapper">
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-book-open me-2"></i>BookShelf</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-page="home"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="shelf"><i class="fas fa-bookmark me-1"></i> My Shelf</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="manage"><i class="fas fa-cog me-1"></i> Manage Books</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="nav-link dark-mode-toggle" href="#"><i class="fas fa-moon"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container py-4">
+    <!-- Home Page -->
+    <div class="page active" id="home-page">
+        <!-- Quote Section -->
+        <div class="quote-section p-4 mb-4 rounded">
+            <h5 class="mb-1"><i class="fas fa-quote-left me-2"></i>Today's Quote</h5>
+            <p class="fs-5 mb-2 fst-italic" id="quote">"There is more treasure in books than in all the pirate's loot on Treasure Island."</p>
+            <p class="text-end mb-0 fw-light">- Walt Disney</p>
+            <div class="quote-dots">
+                <div class="quote-dot active"></div>
+                <div class="quote-dot"></div>
+                <div class="quote-dot"></div>
+                <div class="quote-dot"></div>
+            </div>
+        </div>
+
+        <!-- New Arrivals Section -->
+        <div class="new-arrivals-container mb-5">
+            <div class="new-arrivals-sidebar">
+                <h3 class="sidebar-text">New Arrivals</h3>
+            </div>
+            <div class="new-arrivals-content">
+                <div class="row g-3">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="arrival-card text-center">
+                            <img src="https://picsum.photos/seed/book1/130/172" class="book-cover">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="arrival-card text-center">
+                            <img src="https://picsum.photos/seed/book2/130/172" class="book-cover">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="arrival-card text-center">
+                            <img src="https://picsum.photos/seed/book3/130/172" class="book-cover">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="arrival-card text-center">
+                            <img src="https://picsum.photos/seed/book4/130/172" class="book-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommended Books -->
+        <div class="section-header">
+            <h2>Recommended for You</h2>
+            <a href="#" class="show-all">Show All</a>
+        </div>
+        <div class="horizontal-scroll">
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book4/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Don't Make Me Think</h5>
+                    <p class="book-meta mb-1">Steve Krug, 2000</p>
+                    <div class="rating-text"><span class="score">4.5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="4">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book5/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">The Design of Every..</h5>
+                    <p class="book-meta mb-1">Don Norman, 1988</p>
+                    <div class="rating-text"><span class="score">4.5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="5">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book6/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Sprint : How to solve..</h5>
+                    <p class="book-meta mb-1">Jake Knapp, 2000</p>
+                    <div class="rating-text"><span class="score">4.5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="6">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book7/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Learn UX : Design Gr..</h5>
+                    <p class="book-meta mb-1">Jeff Gothelf, 2016</p>
+                    <div class="rating-text"><span class="score">4.5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="7">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book8/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">The Road to React</h5>
+                    <p class="book-meta mb-1">Steve Krug, 2000</p>
+                    <div class="rating-text"><span class="score">4.5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="8">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book9/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Rich Dad Poor Dad</h5>
+                    <p class="book-meta mb-1">Robert T.Kiyosaki, 1997</p>
+                    <div class="rating-text"><span class="score">5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="9">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book10/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Harry Potter and The..</h5>
+                    <p class="book-meta mb-1">J.K. Rowling, 2002</p>
+                    <div class="rating-text"><span class="score">4.9</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="10">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book11/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">You Don't Know JS: S..</h5>
+                    <p class="book-meta mb-1">Kyle Simpson, 2014</p>
+                    <div class="rating-text"><span class="score">4.9</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="11">View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Readings -->
+        <div class="section-header">
+            <h2>Recent Readings</h2>
+            <a href="#" class="show-all">Show All</a>
+        </div>
+        <div class="horizontal-scroll">
+            <div class="card book-card" style="min-width: 160px; max-width: 160px;">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book9/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">To Kill a Mockingbird</h5>
+                    <p class="book-meta mb-1">Harper Lee, 1960</p>
+                    <div class="progress mt-2 mb-1" style="height: 5px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <small class="text-muted">75% completed</small>
+                    <button class="btn btn-primary btn-sm mt-2 w-100">Continue</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px;">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book10/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">The Hobbit</h5>
+                    <p class="book-meta mb-1">J.R.R. Tolkien, 1937</p>
+                    <div class="progress mt-2 mb-1" style="height: 5px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <small class="text-muted">30% completed</small>
+                    <button class="btn btn-primary btn-sm mt-2 w-100">Continue</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px;">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book11/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Sapiens</h5>
+                    <p class="book-meta mb-1">Yuval Noah Harari, 2011</p>
+                    <div class="progress mt-2 mb-1" style="height: 5px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <small class="text-muted">45% completed</small>
+                    <button class="btn btn-primary btn-sm mt-2 w-100">Continue</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px;">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book12/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Atomic Habits</h5>
+                    <p class="book-meta mb-1">James Clear, 2018</p>
+                    <div class="progress mt-2 mb-1" style="height: 5px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <small class="text-muted">15% completed</small>
+                    <button class="btn btn-primary btn-sm mt-2 w-100">Continue</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px;">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book13/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Thinking, Fast and Slow</h5>
+                    <p class="book-meta mb-1">Daniel Kahneman, 2011</p>
+                    <div class="progress mt-2 mb-1" style="height: 5px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <small class="text-muted">60% completed</small>
+                    <button class="btn btn-primary btn-sm mt-2 w-100">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic Books Section -->
+        <div class="section-header">
+            <h2>Academic Books</h2>
+            <a href="#" class="show-all">Show All</a>
+        </div>
+        <div class="horizontal-scroll">
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book20/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Introduction to Algorithms</h5>
+                    <p class="book-meta mb-1">Thomas H. Cormen, 2009</p>
+                    <div class="rating-text"><span class="score">4.8</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="20">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book21/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Artificial Intelligence</h5>
+                    <p class="book-meta mb-1">Stuart Russell, 2020</p>
+                    <div class="rating-text"><span class="score">4.7</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="21">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book22/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Database Systems</h5>
+                    <p class="book-meta mb-1">Hector Garcia-Molina, 2008</p>
+                    <div class="rating-text"><span class="score">4.5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="22">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book23/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Computer Networks</h5>
+                    <p class="book-meta mb-1">Andrew S. Tanenbaum, 2010</p>
+                    <div class="rating-text"><span class="score">4.6</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="23">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book24/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Operating System Concepts</h5>
+                    <p class="book-meta mb-1">Abraham Silberschatz, 2018</p>
+                    <div class="rating-text"><span class="score">4.7</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="24">View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Journals & Articles Section -->
+        <div class="section-header">
+            <h2>Journals, Articles & Paper Publications</h2>
+            <a href="#" class="show-all">Show All</a>
+        </div>
+        <div class="horizontal-scroll">
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/journal1/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Journal of Computer Science</h5>
+                    <p class="book-meta mb-1">Vol. 42, Issue 3, 2023</p>
+                    <div class="rating-text"><span class="score">4.2</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="30">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/journal2/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">IEEE Transactions on AI</h5>
+                    <p class="book-meta mb-1">Vol. 15, Issue 2, 2023</p>
+                    <div class="rating-text"><span class="score">4.8</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="31">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/journal3/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Nature Reviews</h5>
+                    <p class="book-meta mb-1">Vol. 587, May 2023</p>
+                    <div class="rating-text"><span class="score">4.9</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="32">View Details</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/journal4/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">Research in Computer Science</h5>
+                    <p class="book-meta mb-1">Vol. 22, Issue 1, 2023</p>
+                    <div class="rating-text"><span class="score">4.5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100" data-book-id="33">View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- News Section -->
+        <div class="section-header">
+            <h2>News</h2>
+        </div>
+        <div class="horizontal-scroll">
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/news1/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">14 Mar 2023</h5>
+                    <p class="book-meta mb-1">The Hindu News</p>
+                    <div class="rating-text"><span class="score">4.5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100">Read</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/news2/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">14 Mar 2023</h5>
+                    <p class="book-meta mb-1">TOI News</p>
+                    <div class="rating-text"><span class="score">4.5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100">Read</button>
+                </div>
+            </div>
+            <div class="card book-card" style="min-width: 160px; max-width: 160px">
+                <div class="book-cover" style="background-image: url('https://picsum.photos/seed/news3/200/300');"></div>
+                <div class="card-body p-3">
+                    <h5 class="card-title" style="font-size: 0.9rem">14 Mar 2023</h5>
+                    <p class="book-meta mb-1">Deccan Chronicle</p>
+                    <div class="rating-text"><span class="score">4.5</span><span class="max">/5</span></div>
+                    <button class="btn btn-primary btn-sm mt-2 w-100">Read</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Detail Page -->
+    <div class="page" id="book-detail-page">
+        <div class="d-flex align-items-center mb-4">
+            <button class="btn btn-outline-primary me-2 btn-back"><i class="fas fa-arrow-left"></i></button>
+            <h2 class="mb-0">Book Details</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <img src="https://picsum.photos/seed/book1/400/600" class="img-fluid rounded shadow book-detail-image" alt="Book Cover">
+                <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-primary"><i class="fas fa-book-reader me-2"></i>Read</button>
+                    <button class="btn btn-outline-primary"><i class="fas fa-bookmark me-2"></i>Borrow</button>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h1 class="book-title" style="color: var(--dark-text)">The Silent Echo</h1>
+                <p class="text-muted">By <span class="author">Julia Parker</span> • <span class="year">2023</span></p>
+
+                <div class="stars mb-2 fs-5">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span class="ms-2 fs-6">4.5/5 (120 ratings)</span>
+                </div>
+
+                <span class="badge badge-available mb-3 p-2">Available</span>
+
+                <!-- Book Tabs -->
+                <ul class="nav nav-tabs mb-3" id="bookTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details-tab-pane" type="button" role="tab" aria-controls="details-tab-pane" aria-selected="true">Book Details</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews-tab-pane" type="button" role="tab" aria-controls="reviews-tab-pane" aria-selected="false">Reviews</button>
+                    </li>
+                </ul>
+                <div class="tab-content pt-3" id="bookTabsContent">
+                    <div class="tab-pane fade show active" id="details-tab-pane" role="tabpanel" aria-labelledby="details-tab" tabindex="0">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <th scope="row">Publisher</th>
+                                <td>Mountain Press</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Language</th>
+                                <td>English</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pages</th>
+                                <td>342</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">ISBN</th>
+                                <td>978-3-16-148410-0</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Genre</th>
+                                <td>Mystery, Thriller</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <h5 class="mt-4">Synopsis</h5>
+                        <p>A thrilling mystery set in the mountains of Switzerland, where secrets echo through generations. When journalist Emma Reeves returns to her ancestral village to investigate a series of strange disappearances, she uncovers a web of lies that has silenced the town for decades. As the truth emerges, so does a deadly threat determined to keep the past buried.</p>
+                    </div>
+                    <div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="0">
+                        <div class="review p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <strong>Sarah Johnson</strong>
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <small class="text-muted">2 weeks ago</small>
+                            </div>
+                            <p>Absolutely couldn't put it down! The author weaves a compelling mystery with vivid descriptions of the Swiss Alps. The characters felt real and the plot twists kept me guessing until the very end.</p>
+                        </div>
+                        <div class="review p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <strong>Michael Chen</strong>
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <small class="text-muted">1 month ago</small>
+                            </div>
+                            <p>A solid mystery with excellent character development. The pacing was good, although I found the middle section a bit slow. The ending more than made up for it though!</p>
+                        </div>
+                        <div class="review p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <strong>Emily Rodriguez</strong>
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <small class="text-muted">2 months ago</small>
+                            </div>
+                            <p>The setting was beautifully described and atmospheric. I felt like I was right there in the mountains. The mystery itself was intriguing, though I guessed the culprit about halfway through.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Shelf Page -->
+    <div class="page" id="shelf-page">
+        <h2 class="mb-4">My Bookshelf</h2>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="btn-group" role="group" aria-label="View options">
+                <button type="button" class="btn btn-outline-primary active" id="grid-view-btn"><i class="fas fa-th me-1"></i> Grid</button>
+                <button type="button" class="btn btn-outline-primary" id="list-view-btn"><i class="fas fa-list me-1"></i> List</button>
+            </div>
+            <div class="d-flex">
+                <select class="form-select me-2" aria-label="Sort by">
+                    <option selected>Sort by: Recently Added</option>
+                    <option>Sort by: Title (A-Z)</option>
+                    <option>Sort by: Author (A-Z)</option>
+                    <option>Sort by: Progress</option>
+                </select>
+                <button class="btn btn-outline-primary"><i class="fas fa-filter"></i></button>
+            </div>
+        </div>
+
+        <!-- Grid View (Default) -->
+        <div class="row g-3" id="grid-view">
+            <div class="col-md-3 col-sm-6">
+                <div class="card book-card h-100">
+                    <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book9/200/300');"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">To Kill a Mockingbird</h5>
+                        <p class="card-text text-muted">Harper Lee</p>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">75% completed</small>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-sm">Continue</button>
+                            <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card book-card h-100">
+                    <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book10/200/300');"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">The Hobbit</h5>
+                        <p class="card-text text-muted">J.R.R. Tolkien</p>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">30% completed</small>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-sm">Continue</button>
+                            <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card book-card h-100">
+                    <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book11/200/300');"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Sapiens</h5>
+                        <p class="card-text text-muted">Yuval Noah Harari</p>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">45% completed</small>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-sm">Continue</button>
+                            <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card book-card h-100">
+                    <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book4/200/300');"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">The Alchemist</h5>
+                        <p class="card-text text-muted">Paulo Coelho</p>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">Completed</small>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-sm">Read Again</button>
+                            <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card book-card h-100">
+                    <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book5/200/300');"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Dune</h5>
+                        <p class="card-text text-muted">Frank Herbert</p>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">60% completed</small>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-sm">Continue</button>
+                            <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card book-card h-100">
+                    <div class="book-cover" style="background-image: url('https://picsum.photos/seed/book6/200/300');"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">1984</h5>
+                        <p class="card-text text-muted">George Orwell</p>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">15% completed</small>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-sm">Continue</button>
+                            <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- List View (Hidden by default) -->
+        <div class="list-group d-none" id="list-view">
+            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="https://picsum.photos/seed/book9/100/150" alt="Book Cover" class="me-3" style="width: 60px;">
+                    <div>
+                        <h5 class="mb-1">To Kill a Mockingbird</h5>
+                        <p class="mb-1 text-muted">Harper Lee</p>
+                        <div class="progress" style="height: 5px; width: 200px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">75% completed</small>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-sm me-2">Continue</button>
+                    <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="https://picsum.photos/seed/book10/100/150" alt="Book Cover" class="me-3" style="width: 60px;">
+                    <div>
+                        <h5 class="mb-1">The Hobbit</h5>
+                        <p class="mb-1 text-muted">J.R.R. Tolkien</p>
+                        <div class="progress" style="height: 5px; width: 200px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">30% completed</small>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-sm me-2">Continue</button>
+                    <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="https://picsum.photos/seed/book11/100/150" alt="Book Cover" class="me-3" style="width: 60px;">
+                    <div>
+                        <h5 class="mb-1">Sapiens</h5>
+                        <p class="mb-1 text-muted">Yuval Noah Harari</p>
+                        <div class="progress" style="height: 5px; width: 200px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">45% completed</small>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-sm me-2">Continue</button>
+                    <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="https://picsum.photos/seed/book4/100/150" alt="Book Cover" class="me-3" style="width: 60px;">
+                    <div>
+                        <h5 class="mb-1">The Alchemist</h5>
+                        <p class="mb-1 text-muted">Paulo Coelho</p>
+                        <div class="progress" style="height: 5px; width: 200px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">Completed</small>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-sm me-2">Read Again</button>
+                    <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="https://picsum.photos/seed/book5/100/150" alt="Book Cover" class="me-3" style="width: 60px;">
+                    <div>
+                        <h5 class="mb-1">Dune</h5>
+                        <p class="mb-1 text-muted">Frank Herbert</p>
+                        <div class="progress" style="height: 5px; width: 200px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">60% completed</small>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-sm me-2">Continue</button>
+                    <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="https://picsum.photos/seed/book6/100/150" alt="Book Cover" class="me-3" style="width: 60px;">
+                    <div>
+                        <h5 class="mb-1">1984</h5>
+                        <p class="mb-1 text-muted">George Orwell</p>
+                        <div class="progress" style="height: 5px; width: 200px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">15% completed</small>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-sm me-2">Continue</button>
+                    <button class="btn btn-outline-danger btn-sm"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Books Page -->
+    <div class="page" id="manage-page">
+        <h2 class="mb-4">Book Management</h2>
+
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stats-number">1,254</div>
+                    <div class="stats-label">Total Books</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stats-number">328</div>
+                    <div class="stats-label">Active Users</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <div class="stats-number">76</div>
+                    <div class="stats-label">Books Borrowed</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stats-number">12</div>
+                    <div class="stats-label">Overdue Returns</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Management Tabs -->
+        <ul class="nav nav-tabs mb-4" id="manageTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="books-tab" data-bs-toggle="tab" data-bs-target="#books-tab-pane" type="button" role="tab" aria-controls="books-tab-pane" aria-selected="true">Books</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="add-tab" data-bs-toggle="tab" data-bs-target="#add-tab-pane" type="button" role="tab" aria-controls="add-tab-pane" aria-selected="false">Add Book</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories-tab-pane" type="button" role="tab" aria-controls="categories-tab-pane" aria-selected="false">Categories</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="reports-tab" data-bs-toggle="tab" data-bs-target="#reports-tab-pane" type="button" role="tab" aria-controls="reports-tab-pane" aria-selected="false">Reports</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="manageTabsContent">
+            <!-- Books List Tab -->
+            <div class="tab-pane fade show active" id="books-tab-pane" role="tabpanel" aria-labelledby="books-tab" tabindex="0">
+                <!-- Search and Filter -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input" placeholder="Search books...">
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        <select class="form-select me-2" style="max-width: 200px;">
+                            <option selected>All Categories</option>
+                            <option>Fiction</option>
+                            <option>Non-Fiction</option>
+                            <option>Academic</option>
+                            <option>Journals</option>
+                        </select>
+                        <select class="form-select" style="max-width: 200px;">
+                            <option selected>Sort by: Title (A-Z)</option>
+                            <option>Sort by: Author (A-Z)</option>
+                            <option>Sort by: Published (Newest)</option>
+                            <option>Sort by: Added (Newest)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Books Table -->
+                <div class="book-table table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                        <tr>
+                            <th scope="col" width="5%">#</th>
+                            <th scope="col" width="5%">Cover</th>
+                            <th scope="col" width="25%">Title</th>
+                            <th scope="col" width="20%">Author</th>
+                            <th scope="col" width="10%">Category</th>
+                            <th scope="col" width="10%">Status</th>
+                            <th scope="col" width="10%">Added</th>
+                            <th scope="col" width="15%">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><img src="https://picsum.photos/seed/book1/200/300" class="table-img"></td>
+                            <td>The Silent Echo</td>
+                            <td>Julia Parker</td>
+                            <td>Fiction</td>
+                            <td><span class="badge bg-success">Available</span></td>
+                            <td>Jan 15, 2023</td>
+                            <td>
+                                <i class="fas fa-edit action-icon" title="Edit"></i>
+                                <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                <i class="fas fa-eye action-icon" title="View"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td><img src="https://picsum.photos/seed/book2/200/300" class="table-img"></td>
+                            <td>Beyond the Horizon</td>
+                            <td>Mark Johnson</td>
+                            <td>Sci-Fi</td>
+                            <td><span class="badge bg-warning text-dark">Borrowed</span></td>
+                            <td>Feb 3, 2023</td>
+                            <td>
+                                <i class="fas fa-edit action-icon" title="Edit"></i>
+                                <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                <i class="fas fa-eye action-icon" title="View"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td><img src="https://picsum.photos/seed/book3/200/300" class="table-img"></td>
+                            <td>Whispers of the Heart</td>
+                            <td>Sophia Williams</td>
+                            <td>Romance</td>
+                            <td><span class="badge bg-success">Available</span></td>
+                            <td>Feb 20, 2023</td>
+                            <td>
+                                <i class="fas fa-edit action-icon" title="Edit"></i>
+                                <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                <i class="fas fa-eye action-icon" title="View"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4</th>
+                            <td><img src="https://picsum.photos/seed/book4/200/300" class="table-img"></td>
+                            <td>The Alchemist</td>
+                            <td>Paulo Coelho</td>
+                            <td>Fiction</td>
+                            <td><span class="badge bg-danger">Reserved</span></td>
+                            <td>Dec 5, 2022</td>
+                            <td>
+                                <i class="fas fa-edit action-icon" title="Edit"></i>
+                                <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                <i class="fas fa-eye action-icon" title="View"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">5</th>
+                            <td><img src="https://picsum.photos/seed/book5/200/300" class="table-img"></td>
+                            <td>Dune</td>
+                            <td>Frank Herbert</td>
+                            <td>Sci-Fi</td>
+                            <td><span class="badge bg-success">Available</span></td>
+                            <td>Nov 18, 2022</td>
+                            <td>
+                                <i class="fas fa-edit action-icon" title="Edit"></i>
+                                <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                <i class="fas fa-eye action-icon" title="View"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">6</th>
+                            <td><img src="https://picsum.photos/seed/book20/200/300" class="table-img"></td>
+                            <td>Introduction to Algorithms</td>
+                            <td>Thomas H. Cormen</td>
+                            <td>Academic</td>
+                            <td><span class="badge bg-success">Available</span></td>
+                            <td>Jan 10, 2023</td>
+                            <td>
+                                <i class="fas fa-edit action-icon" title="Edit"></i>
+                                <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                <i class="fas fa-eye action-icon" title="View"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">7</th>
+                            <td><img src="https://picsum.photos/seed/journal1/200/300" class="table-img"></td>
+                            <td>Journal of Computer Science Vol. 42</td>
+                            <td>Various Authors</td>
+                            <td>Journal</td>
+                            <td><span class="badge bg-warning text-dark">Borrowed</span></td>
+                            <td>Mar 5, 2023</td>
+                            <td>
+                                <i class="fas fa-edit action-icon" title="Edit"></i>
+                                <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                <i class="fas fa-eye action-icon" title="View"></i>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Book list pagination" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Add Book Tab -->
+            <div class="tab-pane fade" id="add-tab-pane" role="tabpanel" aria-labelledby="add-tab" tabindex="0">
+                <div class="book-form">
+                    <h3 class="mb-4">Add New Book</h3>
+                    <form>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="bookTitle" class="form-label">Book Title*</label>
+                                    <input type="text" class="form-control" id="bookTitle" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookAuthor" class="form-label">Author*</label>
+                                    <input type="text" class="form-control" id="bookAuthor" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="publishYear" class="form-label">Publication Year</label>
+                                    <input type="number" class="form-control" id="publishYear" min="1800" max="2099">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="isbn" class="form-label">ISBN</label>
+                                    <input type="text" class="form-control" id="isbn">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="bookCategory" class="form-label">Category*</label>
+                                    <select class="form-select" id="bookCategory" required>
+                                        <option selected disabled value="">Choose...</option>
+                                        <option>Fiction</option>
+                                        <option>Non-Fiction</option>
+                                        <option>Academic</option>
+                                        <option>Journal</option>
+                                        <option>Magazine</option>
+                                        <option>Newspaper</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookPublisher" class="form-label">Publisher</label>
+                                    <input type="text" class="form-control" id="bookPublisher">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookPages" class="form-label">Number of Pages</label>
+                                    <input type="number" class="form-control" id="bookPages" min="1">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookLanguage" class="form-label">Language</label>
+                                    <select class="form-select" id="bookLanguage">
+                                        <option selected>English</option>
+                                        <option>Spanish</option>
+                                        <option>French</option>
+                                        <option>German</option>
+                                        <option>Chinese</option>
+                                        <option>Japanese</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="bookCover" class="form-label">Cover Image</label>
+                            <input class="form-control" type="file" id="bookCover" accept="image/*">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="bookDescription" class="form-label">Book Description</label>
+                            <textarea class="form-control" id="bookDescription" rows="4"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Book Status</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="bookStatus" id="statusAvailable" checked>
+                                <label class="form-check-label" for="statusAvailable">
+                                    Available
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="bookStatus" id="statusReserved">
+                                <label class="form-check-label" for="statusReserved">
+                                    Reserved
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="bookStatus" id="statusBorrowed">
+                                <label class="form-check-label" for="statusBorrowed">
+                                    Borrowed
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="reset" class="btn btn-outline-secondary me-2">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Book</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Categories Tab -->
+            <div class="tab-pane fade" id="categories-tab-pane" role="tabpanel" aria-labelledby="categories-tab" tabindex="0">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="book-form">
+                            <h3 class="mb-4">Add Category</h3>
+                            <form>
+                                <div class="mb-3">
+                                    <label for="categoryName" class="form-label">Category Name</label>
+                                    <input type="text" class="form-control" id="categoryName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="categoryDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="categoryDescription" rows="3"></textarea>
+                                </div>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">Add Category</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="book-table table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Category Name</th>
+                                    <th scope="col">Books Count</th>
+                                    <th scope="col">Created Date</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Fiction</td>
+                                    <td>423</td>
+                                    <td>Jan 10, 2022</td>
+                                    <td>
+                                        <i class="fas fa-edit action-icon" title="Edit"></i>
+                                        <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Non-Fiction</td>
+                                    <td>287</td>
+                                    <td>Jan 10, 2022</td>
+                                    <td>
+                                        <i class="fas fa-edit action-icon" title="Edit"></i>
+                                        <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Academic</td>
+                                    <td>186</td>
+                                    <td>Jan 15, 2022</td>
+                                    <td>
+                                        <i class="fas fa-edit action-icon" title="Edit"></i>
+                                        <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Science Fiction</td>
+                                    <td>142</td>
+                                    <td>Feb 20, 2022</td>
+                                    <td>
+                                        <i class="fas fa-edit action-icon" title="Edit"></i>
+                                        <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Mystery & Thriller</td>
+                                    <td>98</td>
+                                    <td>Mar 5, 2022</td>
+                                    <td>
+                                        <i class="fas fa-edit action-icon" title="Edit"></i>
+                                        <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Journal</td>
+                                    <td>76</td>
+                                    <td>Apr 12, 2022</td>
+                                    <td>
+                                        <i class="fas fa-edit action-icon" title="Edit"></i>
+                                        <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Magazine</td>
+                                    <td>42</td>
+                                    <td>May 18, 2022</td>
+                                    <td>
+                                        <i class="fas fa-edit action-icon" title="Edit"></i>
+                                        <i class="fas fa-trash-alt action-icon" title="Delete"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div class="tab-pane fade" id="reports-tab-pane" role="tabpanel" aria-labelledby="reports-tab" tabindex="0">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="book-form">
+                            <h3 class="mb-4">Most Borrowed Books</h3>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Book Title</th>
+                                    <th scope="col">Author</th>
+                                    <th scope="col">Borrows</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>To Kill a Mockingbird</td>
+                                    <td>Harper Lee</td>
+                                    <td>42</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>The Alchemist</td>
+                                    <td>Paulo Coelho</td>
+                                    <td>38</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Introduction to Algorithms</td>
+                                    <td>Thomas H. Cormen</td>
+                                    <td>36</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>The Silent Echo</td>
+                                    <td>Julia Parker</td>
+                                    <td>31</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>The Hobbit</td>
+                                    <td>J.R.R. Tolkien</td>
+                                    <td>29</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="book-form">
+                            <h3 class="mb-4">Active Borrowers</h3>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Books Borrowed</th>
+                                    <th scope="col">Last Activity</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>John Smith</td>
+                                    <td>8</td>
+                                    <td>Today</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Emily Johnson</td>
+                                    <td>6</td>
+                                    <td>Yesterday</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Michael Brown</td>
+                                    <td>5</td>
+                                    <td>2 days ago</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Sarah Davis</td>
+                                    <td>5</td>
+                                    <td>3 days ago</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>David Wilson</td>
+                                    <td>4</td>
+                                    <td>5 days ago</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="book-form">
+                            <h3 class="mb-4">Overdue Books</h3>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Book Title</th>
+                                    <th scope="col">Borrower</th>
+                                    <th scope="col">Due Date</th>
+                                    <th scope="col">Days Late</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Dune</td>
+                                    <td>Alex Thompson</td>
+                                    <td>Mar 10, 2023</td>
+                                    <td class="text-danger">5</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Beyond the Horizon</td>
+                                    <td>Jessica Lee</td>
+                                    <td>Mar 12, 2023</td>
+                                    <td class="text-danger">3</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Journal of Computer Science Vol. 42</td>
+                                    <td>Ryan Miller</td>
+                                    <td>Mar 13, 2023</td>
+                                    <td class="text-danger">2</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="book-form">
+                            <h3 class="mb-4">Generate Reports</h3>
+                            <form>
+                                <div class="mb-3">
+                                    <label for="reportType" class="form-label">Report Type</label>
+                                    <select class="form-select" id="reportType">
+                                        <option selected>Borrowing Activity</option>
+                                        <option>Book Inventory</option>
+                                        <option>User Activity</option>
+                                        <option>Overdue Books</option>
+                                        <option>Category Statistics</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="startDate" class="form-label">Start Date</label>
+                                            <input type="date" class="form-control" id="startDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="endDate" class="form-label">End Date</label>
+                                            <input type="date" class="form-control" id="endDate">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reportFormat" class="form-label">Format</label>
+                                    <select class="form-select" id="reportFormat">
+                                        <option selected>PDF</option>
+                                        <option>Excel</option>
+                                        <option>CSV</option>
+                                    </select>
+                                </div>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">Generate Report</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer-wrapper">
+    <footer class="py-3">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2023 BookShelf Library Management. All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+
+<!-- Bootstrap JS & Popper Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- App JavaScript -->
+<script>
+    // Check for dark mode preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+    }
+
+    // Listen for changes in color scheme preference
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        if (event.matches) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    });
+
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize page navigation
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link[data-page]');
+
+        // Dark mode toggle
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+        darkModeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.documentElement.classList.toggle('dark');
+            const icon = darkModeToggle.querySelector('i');
+            if (document.documentElement.classList.contains('dark')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Update dark mode icon based on initial state
+        if (document.documentElement.classList.contains('dark')) {
+            darkModeToggle.querySelector('i').classList.remove('fa-moon');
+            darkModeToggle.querySelector('i').classList.add('fa-sun');
+        }
+
+        // Page navigation function
+        function navigateTo(pageId) {
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId + '-page').classList.add('active');
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeLink = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+
+            // Scroll to top when changing pages
+            window.scrollTo(0, 0);
+        }
+
+        // Add event listeners to navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('data-page');
+                navigateTo(pageId);
+            });
+        });
+
+        // View Detail button click
+        const viewDetailButtons = document.querySelectorAll('[data-book-id]');
+        viewDetailButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const bookId = this.getAttribute('data-book-id');
+                navigateTo('book-detail');
+                // In a real app, you would fetch book details using the bookId
+            });
+        });
+
+        // Back button click
+        const backButtons = document.querySelectorAll('.btn-back');
+        backButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                navigateTo('home');
+            });
+        });
+
+        // Toggle grid/list view
+        const gridViewBtn = document.getElementById('grid-view-btn');
+        const listViewBtn = document.getElementById('list-view-btn');
+        const gridView = document.getElementById('grid-view');
+        const listView = document.getElementById('list-view');
+
+        gridViewBtn.addEventListener('click', function() {
+            gridView.classList.remove('d-none');
+            listView.classList.add('d-none');
+            gridViewBtn.classList.add('active');
+            listViewBtn.classList.remove('active');
+        });
+
+        listViewBtn.addEventListener('click', function() {
+            gridView.classList.add('d-none');
+            listView.classList.remove('d-none');
+            gridViewBtn.classList.remove('active');
+            listViewBtn.classList.add('active');
+        });
+
+        // Book Management functionality
+        const actionIcons = document.querySelectorAll('.action-icon');
+
+        actionIcons.forEach(icon => {
+            icon.addEventListener('click', function() {
+                if (this.classList.contains('fa-edit')) {
+                    // Switch to the Add Book tab and populate with the book's data
+                    const tabEl = document.querySelector('#add-tab');
+                    bootstrap.Tab.getInstance(tabEl) || new bootstrap.Tab(tabEl);
+                    tabEl.click();
+                    // In a real app, you would fetch the book data and populate the form
+                } else if (this.classList.contains('fa-trash-alt')) {
+                    if (confirm('Are you sure you want to delete this book?')) {
+                        // Delete the book (in a real app, you would call an API to delete the book)
+                        this.closest('tr').remove();
+                    }
+                } else if (this.classList.contains('fa-eye')) {
+                    // Navigate to the book detail page
+                    navigateTo('book-detail');
+                }
+            });
+        });
+
+        // Quotes rotation
+        const quotes = [
+            {
+                text: "There is more treasure in books than in all the pirate's loot on Treasure Island.",
+                author: "Walt Disney"
+            },
+            {
+                text: "A reader lives a thousand lives before he dies. The man who never reads lives only one.",
+                author: "George R.R. Martin"
+            },
+            {
+                text: "Reading is a conversation. All books talk. But a good book listens as well.",
+                author: "Mark Haddon"
+            },
+            {
+                text: "Books are a uniquely portable magic.",
+                author: "Stephen King"
+            }
+        ];
+
+        let currentQuoteIndex = 0;
+        const quoteText = document.getElementById('quote');
+        const quoteAuthor = quoteText ? quoteText.nextElementSibling : null;
+        const quoteDots = document.querySelectorAll('.quote-dot');
+
+        function rotateQuote() {
+            if (!quoteText || !quoteAuthor || quotes.length === 0) return;
+
+            // Reset active dot
+            quoteDots.forEach(dot => dot.classList.remove('active'));
+
+            // Update quote
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            quoteText.textContent = quotes[currentQuoteIndex].text;
+            quoteAuthor.textContent = "- " + quotes[currentQuoteIndex].author;
+
+            // Update active dot
+            quoteDots[currentQuoteIndex].classList.add('active');
+        }
+
+        setInterval(rotateQuote, 4000);
+    });
+</script>
+</body>
+</html>

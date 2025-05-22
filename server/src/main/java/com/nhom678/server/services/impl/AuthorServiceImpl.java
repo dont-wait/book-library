@@ -4,7 +4,7 @@ import com.nhom678.server.dto.request.author.AuthorCreateRequest;
 import com.nhom678.server.dto.response.AuthorResponse;
 import com.nhom678.server.entity.Author;
 import com.nhom678.server.exceptions.AppException;
-import com.nhom678.server.exceptions.ErrorCode;
+import com.nhom678.server.enums.ErrorCode;
 import com.nhom678.server.mapper.AuthorMapper;
 import com.nhom678.server.repositories.AuthorRepository;
 import com.nhom678.server.services.AuthorService;

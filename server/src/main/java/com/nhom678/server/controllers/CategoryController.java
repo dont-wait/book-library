@@ -1,7 +1,7 @@
 package com.nhom678.server.controllers;
 
 import com.nhom678.server.dto.ApiResponse;
-import com.nhom678.server.dto.request.category.CategoryCreateRequest;
+import com.nhom678.server.dto.request.category.CategoryCreationRequest;
 import com.nhom678.server.dto.response.CategoryResponse;
 import com.nhom678.server.services.CategoryService;
 import jakarta.validation.Valid;
@@ -28,7 +28,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    ApiResponse<CategoryResponse> createCategory(@Valid @RequestBody CategoryCreateRequest request) {
+    ApiResponse<CategoryResponse> createCategory(@Valid @RequestBody CategoryCreationRequest request) {
         return ApiResponse.<CategoryResponse>builder()
                 .result(categoryService.createCategory(request))
                 .message("Success")
