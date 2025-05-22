@@ -6,8 +6,8 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AdminResponse {
-    String adminId;
+public class LibrarianResponse {
+    String librarianId;
     String firstName;
     String lastName;
     String email;
