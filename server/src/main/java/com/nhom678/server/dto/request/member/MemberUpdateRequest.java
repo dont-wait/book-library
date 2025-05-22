@@ -1,12 +1,10 @@
-package com.nhom678.server.dto.request.admin;
+package com.nhom678.server.dto.request.member;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 
-@Data
-public class AdminUpdateRequest {
+public class MemberUpdateRequest {
 
     String firstName;
 
@@ -22,5 +20,4 @@ public class AdminUpdateRequest {
     @Pattern(regexp = "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$",
             message = "PASSWORD_MUST_BE_INCLUDE_SPECIFY_CHARACTER(s)(e.g., *, $, etc.)")
     String password;
-
 }
