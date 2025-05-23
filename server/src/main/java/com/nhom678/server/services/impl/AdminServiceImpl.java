@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.catalina.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,11 +42,12 @@ public class AdminServiceImpl implements AdminService {
             throw new AppException(ErrorCode.PHONE_EXISTED);
 
         Admin admin = adminMapper.toAdmin(request);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         adminRepository.save(admin);
 
         UserAccount userAccount = new UserAccount();
         userAccount.setUserId(request.getAdminId());
-        userAccount.setPassword(request.getPassword());
+        userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
         userAccount.setRole("ADMIN");
         userAccount.setIsActived(true);
         userAccount.setAdmin(admin);

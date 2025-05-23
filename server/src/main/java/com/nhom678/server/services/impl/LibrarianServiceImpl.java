@@ -15,6 +15,8 @@ import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,11 +41,12 @@ public class LibrarianServiceImpl implements LibrarianService {
             throw new AppException(ErrorCode.PHONE_EXISTED);
 
         Librarian librarian = librarianMapper.toLibrarian(request);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         librarianRepository.save(librarian);
 
         UserAccount userAccount = new UserAccount();
         userAccount.setUserId(request.getLibrarianId());
-        userAccount.setPassword(request.getPassword());
+        userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
         userAccount.setRole("LIBRARIAN");
         userAccount.setIsActived(true);
         userAccount.setLibrarian(librarian);
