@@ -62,7 +62,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminResponse getAdminById(String adminId) {
-        Admin admin = adminRepository.findByAdminId(adminId).orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
+        Admin admin = adminRepository.findByAdminId(adminId)
+                .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
 
         return adminMapper.toAdminResponse(admin);
     }
@@ -87,7 +88,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public void deleteAdmin(String adminId) {
+        if (!adminRepository.existsByAdminId(adminId))
+            throw new AppException(ErrorCode.ID_NOT_FOUND);
+        userAccountRepository.deleteByUserId(adminId);
         adminRepository.deleteByAdminId(adminId);
     }
 }

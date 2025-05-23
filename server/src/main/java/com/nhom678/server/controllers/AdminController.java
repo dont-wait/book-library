@@ -59,7 +59,7 @@ public class AdminController {
         ApiResponse<String> apiResponse = new ApiResponse<>();
         adminService.deleteAdmin(adminId);
         apiResponse.setMessage("Success");
-        apiResponse.setResult("Admin deleted successfully");
+        apiResponse.setResult(String.format("Deleted successfully Admin with id: %s", adminId));
         return apiResponse;
     }
 }
