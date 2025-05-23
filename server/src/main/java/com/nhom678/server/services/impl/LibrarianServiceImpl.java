@@ -39,16 +39,17 @@ public class LibrarianServiceImpl implements LibrarianService {
             throw new AppException(ErrorCode.PHONE_EXISTED);
 
         Librarian librarian = librarianMapper.toLibrarian(request);
+        librarianRepository.save(librarian);
 
         UserAccount userAccount = new UserAccount();
         userAccount.setUserId(request.getLibrarianId());
         userAccount.setPassword(request.getPassword());
         userAccount.setRole("LIBRARIAN");
         userAccount.setIsActived(true);
-
+        userAccount.setLibrarian(librarian);
         userAccountRepository.save(userAccount);
 
-        return librarianMapper.toLibrarianResponse(librarianRepository.save(librarian));
+        return librarianMapper.toLibrarianResponse(librarian);
     }
 
     @Override

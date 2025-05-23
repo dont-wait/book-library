@@ -41,15 +41,17 @@ public class AdminServiceImpl implements AdminService {
             throw new AppException(ErrorCode.PHONE_EXISTED);
 
         Admin admin = adminMapper.toAdmin(request);
+        adminRepository.save(admin);
 
         UserAccount userAccount = new UserAccount();
         userAccount.setUserId(request.getAdminId());
         userAccount.setPassword(request.getPassword());
         userAccount.setRole("ADMIN");
         userAccount.setIsActived(true);
-
+        userAccount.setAdmin(admin);
         userAccountRepository.save(userAccount);
-        return adminMapper.toAdminResponse(adminRepository.save(admin));
+
+        return adminMapper.toAdminResponse(admin);
     }
 
     @Override
