@@ -14,6 +14,10 @@ import lombok.experimental.FieldDefaults;
 public class MemberCreationRequest {
 
     @NotBlank
+    @Size(min = 10, max = 10, message = "ID_MUST_BE_10_CHARACTERS")
+    String memberId;
+
+    @NotBlank
     String firstName;
     @NotBlank
     String lastName;

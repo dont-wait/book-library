@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 public class LibrarianCreationRequest {
     @NotBlank
     @Size(min = 10, max = 10, message = "ID_MUST_BE_10_CHARACTERS")
-    String adminId;
+    String librarianId;
 
     @NotBlank
     String firstName;
@@ -23,7 +23,7 @@ public class LibrarianCreationRequest {
     String lastName;
 
     @NotBlank(message = "EMAIL_REQUIRED")
-    @Email
+    @Email(message = "INVALID_FORMAT_EMAIL")
     String email;
 
     @NotBlank(message = "PHONE_REQUIRED")

@@ -12,4 +12,7 @@ public interface LibrarianRepository extends JpaRepository<Librarian, String> {
     Optional<Librarian> findByLibrarianId(String id);
     Boolean existsByLibrarianId(String id);
     void deleteByLibrarianId(String id);
+    Boolean existsByEmail(String email);
+    Boolean existsByPhone(String phone);
+
 }

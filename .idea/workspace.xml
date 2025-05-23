@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3278e570-7422-42bb-a67f-fe953f20bbaf" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/AuthorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/AuthorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/PublisherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/PublisherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/ApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/response/ApiResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/admin/AdminUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/admin/AdminUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/librarian/LibrarianUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/librarian/LibrarianUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/member/MemberUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/member/MemberUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/response/AdminResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/response/AdminResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/exceptions/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/services/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/services/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/services/impl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/services/impl/AdminServiceImpl.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dont-wait&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/dont-wait/book-library.git&quot;,
+    &quot;accountId&quot;: &quot;d3cabb36-ee83-4d1e-b69f-ff5221262abf&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2x5OlGQZW92Ee41A27ON9hcHN6K" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Maven.server [clean].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.ServerApplication.executor": "Run",
+    "git-widget-placeholder": "dev",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/dontwait/programming/book-library/server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/server/src/main/resources/templates" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/server/src/main/resources/static" />
+      <recent name="$PROJECT_DIR$/server/src/main/resources/static/home" />
+      <recent name="$PROJECT_DIR$/server/src/main/java" />
+      <recent name="$PROJECT_DIR$/server/src/main/resources" />
+      <recent name="$PROJECT_DIR$/server/src/main" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="ServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="book-library" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.nhom678.server.ServerApplication" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="true" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="true" PATH="server/.env" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3278e570-7422-42bb-a67f-fe953f20bbaf" name="Changes" comment="" />
+      <created>1747224617449</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1747224617449</updated>
+      <workItem from="1747224621991" duration="1862000" />
+      <workItem from="1747294918437" duration="1284000" />
+      <workItem from="1747316109365" duration="2635000" />
+      <workItem from="1747336855199" duration="5339000" />
+      <workItem from="1747487828535" duration="3000" />
+      <workItem from="1747489661229" duration="30000" />
+      <workItem from="1747811643616" duration="4223000" />
+      <workItem from="1747826814621" duration="2700000" />
+      <workItem from="1747841375822" duration="7484000" />
+      <workItem from="1747879281545" duration="15037000" />
+      <workItem from="1747901729955" duration="11488000" />
+      <workItem from="1747959566103" duration="73000" />
+      <workItem from="1747959647865" duration="42000" />
+      <workItem from="1747960451417" duration="46000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/book_library$ServerApplication.ic" NAME="ServerApplication Coverage Results" MODIFIED="1747224792161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+  </component>
+</project>
