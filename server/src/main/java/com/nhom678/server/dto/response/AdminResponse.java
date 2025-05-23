@@ -12,5 +12,4 @@ public class AdminResponse {
     String lastName;
     String email;
     String phone;
-    String password;
 }

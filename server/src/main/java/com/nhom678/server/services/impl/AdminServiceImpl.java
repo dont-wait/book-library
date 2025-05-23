@@ -49,9 +49,7 @@ public class AdminServiceImpl implements AdminService {
         userAccount.setIsActived(true);
 
         userAccountRepository.save(userAccount);
-        AdminResponse adminResponse = adminMapper.toAdminResponse(admin);
-        adminResponse.setPassword(request.getPassword());
-        return adminResponse;
+        return adminMapper.toAdminResponse(adminRepository.save(admin));
     }
 
     @Override
@@ -71,24 +69,21 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
-    public AdminResponse updateAdmin(String adminId, AdminUpdateRequest request) {
-        Admin adminUpdate = adminRepository.findByAdminId(adminId).orElseThrow(
-                () -> new AppException(ErrorCode.ID_NOT_FOUND));
+    public AdminResponse updateAdmin(String adminId, AdminUpdateRequest updateRequest) {
 
-        if(adminRepository.existsByEmail(request.getEmail()))
-            throw new AppException(ErrorCode.EMAIL_EXISTED);
-        if(adminRepository.existsByPhone(request.getPhone()))
-            throw new AppException(ErrorCode.PHONE_EXISTED);
-        UserAccount userAccount = userAccountRepository.findByUserId(adminId)
+        Admin existingAdmin = adminRepository.findByAdminId(adminId)
                 .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
 
-        userAccount.setPassword(request.getPassword());
-        adminMapper.updateAdmin(adminUpdate, request);
+        if (updateRequest.getEmail() != null && !updateRequest.getEmail().equals(existingAdmin.getEmail()))
+            if (adminRepository.existsByEmail(updateRequest.getEmail()))
+                throw new AppException(ErrorCode.EMAIL_EXISTED);
+        if(updateRequest.getPhone() != null && !updateRequest.getPhone().equals(existingAdmin.getPhone()))
+            if(adminRepository.existsByPhone(updateRequest.getPhone()))
+                throw new AppException(ErrorCode.PHONE_EXISTED);
 
-        AdminResponse adminResponse = adminMapper.toAdminResponse(adminUpdate);
-        adminResponse.setPassword(request.getPassword());
+        adminMapper.updateAdmin(existingAdmin, updateRequest);
 
-        return adminResponse;
+        return adminMapper.toAdminResponse(existingAdmin);
     }
 
     @Override

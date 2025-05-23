@@ -6,9 +6,7 @@ import com.nhom678.server.dto.response.BookResponse;
 import com.nhom678.server.entity.Book;
 import com.nhom678.server.entity.Category;
 import com.nhom678.server.entity.Publisher;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -24,6 +22,7 @@ public interface BookMapper {
     @Mapping(target = "authors", expression = "java(getAuthorIds(book))")
     BookResponse toBookResponse(Book book);
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateBook(@MappingTarget Book book, BookUpdateRequest request);
 
     default List<Integer> getAuthorIds(Book book) {
