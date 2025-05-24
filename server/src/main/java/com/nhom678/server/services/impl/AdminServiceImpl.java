@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
+    @PreAuthorize( "hasRole('ADMIN')")
     public AdminResponse createAdmin(AdminCreationRequest request) {
         if(adminRepository.existsByAdminId(request.getAdminId()))
             throw new AppException(ErrorCode.ID_EXISTED);
@@ -63,12 +66,22 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.toAdminResponse(admin);
     }
 
+
     @Override
     public List<AdminResponse> getAllAdmin() {
         return adminRepository.findAll()
                 .stream()
                 .map(adminMapper::toAdminResponse)
                 .toList();
+    }
+
+    public AdminResponse getMyInfo() {
+        var context = SecurityContextHolder.getContext();
+        String adminId = context.getAuthentication().getName();
+
+        Admin admin = adminRepository.findByAdminId(adminId)
+                .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
+        return adminMapper.toAdminResponse(admin);
     }
 
     @Override

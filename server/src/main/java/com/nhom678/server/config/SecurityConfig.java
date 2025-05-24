@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -22,6 +23,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     //Chua nhung public endpoint ai cx truy cap duoc
@@ -48,11 +50,6 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PUBLIC_URLS).permitAll() //authen
-                        .requestMatchers(HttpMethod.GET, "/admins/**").hasRole(UserRole.ADMIN.name())
-                        .requestMatchers(HttpMethod.GET, "/user-accounts").hasRole(UserRole.ADMIN.name())
-                        .requestMatchers(HttpMethod.POST, "/admins/**").hasRole(UserRole.ADMIN.name())
-                        .requestMatchers(HttpMethod.GET, "/librarians/**").hasRole(UserRole.ADMIN.name())
-                        .requestMatchers(HttpMethod.POST, "/librarians/**").hasRole(UserRole.ADMIN.name())
                         .requestMatchers(HttpMethod.POST, "/members/**").hasAnyRole(UserRole.ADMIN.name(), UserRole.LIBRARIAN.name())
                 .anyRequest().authenticated());
 

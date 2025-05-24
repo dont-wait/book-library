@@ -23,6 +23,7 @@ public class UserAccountController {
     UserAccountService userAccountService;
 
     @GetMapping
+
     ApiResponse<List<UserAccountResponse>> getAllUserAccount() {
 
         var authentication = SecurityContextHolder.getContext().getAuthentication();

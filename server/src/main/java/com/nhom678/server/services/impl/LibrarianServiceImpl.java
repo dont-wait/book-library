@@ -16,6 +16,8 @@ import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,7 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     @Transactional
+    @PreAuthorize( "hasRole('ADMIN')")
     public LibrarianResponse createLibrarian(LibrarianCreationRequest request) {
         if (librarianRepository.existsByLibrarianId(request.getLibrarianId()))
             throw new AppException(ErrorCode.ID_EXISTED);
@@ -61,14 +64,24 @@ public class LibrarianServiceImpl implements LibrarianService {
     }
 
     @Override
+    @PreAuthorize( "hasRole('ADMIN')")
     public List<LibrarianResponse> getAllLibrarian() {
         return librarianRepository.findAll()
                 .stream()
                 .map(librarianMapper::toLibrarianResponse)
                 .toList();
     }
-
     @Override
+    @PreAuthorize( "hasRole('LIBRARIAN')")
+    public LibrarianResponse getMyInfo() {
+        var context = SecurityContextHolder.getContext();
+        String librarianId = context.getAuthentication().getName();
+        Librarian librarian = librarianRepository.findByLibrarianId(librarianId)
+                .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
+        return librarianMapper.toLibrarianResponse(librarian);
+    }
+    @Override
+    @PreAuthorize( "hasRole('ADMIN')")
     public LibrarianResponse getLibrarianById(String librarianId) {
         Librarian librarian = librarianRepository.findByLibrarianId(librarianId)
                 .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
@@ -78,6 +91,7 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     @Transactional
+    @PreAuthorize( "hasRole('ADMIN')")
     public LibrarianResponse updateLibrarian(String librarianId, LibrarianUpdateRequest updateRequest) {
         Librarian existingLibrarian = librarianRepository.findByLibrarianId(librarianId)
                 .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
@@ -97,6 +111,7 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     @Transactional
+    @PreAuthorize( "hasRole('ADMIN')")
     public void deleteLibrarian(String librarianId) {
         if (!librarianRepository.existsByLibrarianId(librarianId))
             throw new AppException(ErrorCode.ID_NOT_FOUND);

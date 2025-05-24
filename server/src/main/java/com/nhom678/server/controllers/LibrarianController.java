@@ -37,6 +37,14 @@ public class LibrarianController {
                 .build();
     }
 
+    @GetMapping("/myInfo")
+    ApiResponse<LibrarianResponse> getMyInfo() {
+        return ApiResponse.<LibrarianResponse>builder()
+                .result(librarianService.getMyInfo())
+                .message("Success")
+                .build();
+    }
+
     @GetMapping("/{librarianId}")
     ApiResponse<LibrarianResponse> getLibrarianById(@PathVariable String librarianId) {
         return ApiResponse.<LibrarianResponse>builder()

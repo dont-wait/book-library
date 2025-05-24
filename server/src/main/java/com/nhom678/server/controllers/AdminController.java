@@ -37,6 +37,14 @@ public class AdminController {
                 .build();
     }
 
+    @GetMapping("/myInfo")
+    ApiResponse<AdminResponse> getMyInfo() {
+        return ApiResponse.<AdminResponse>builder()
+                .result(adminService.getMyInfo())
+                .message("Success")
+                .build();
+    }
+
     @GetMapping("/{adminId}")
     ApiResponse<AdminResponse> getAdminById(@PathVariable String adminId) {
         return ApiResponse.<AdminResponse>builder()
