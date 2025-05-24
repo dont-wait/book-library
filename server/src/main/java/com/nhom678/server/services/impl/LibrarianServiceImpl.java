@@ -46,7 +46,7 @@ public class LibrarianServiceImpl implements LibrarianService {
 
         UserAccount userAccount = new UserAccount();
         userAccount.setUserId(request.getLibrarianId());
-        userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
+        userAccount.setPassword(passwordEncoder.encode(request.getPassword())); //hash password
         userAccount.setRole("LIBRARIAN");
         userAccount.setIsActived(true);
         userAccount.setLibrarian(librarian);

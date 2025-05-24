@@ -12,7 +12,10 @@ spring:
       hibernate.dialect: ${DIALECT}
       show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+
+jwt:
+  signerKey: ${JWT_SECRET}
 server:
   port: 6969
   servlet:

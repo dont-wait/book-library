@@ -1,14 +1,14 @@
-package com.nhom678.server.dto.response;
+package com.nhom678.server.dto.request.authen;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+//Xac thuc token
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationResponse {
+public class IntrospectRequest {
     String token;
-    Boolean authenticated;
 }
