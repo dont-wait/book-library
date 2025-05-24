@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class GlobalExceptionHandler {
 
-
-
     //Ham` nay bat loi mi`nh khong xac dinh truoc
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> handlingRunTimeException(RuntimeException e) {
@@ -22,6 +20,7 @@ public class GlobalExceptionHandler {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
         apiResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
+        log.error("Exception: ", e);
         return ResponseEntity.badRequest().body(apiResponse);
     }
 
@@ -33,7 +32,7 @@ public class GlobalExceptionHandler {
 
         apiResponse.setCode(errorCode.getCode());
         apiResponse.setMessage(errorCode.getMessage());
-
+        log.error("Exception: ", appException);
         return ResponseEntity.badRequest().body(apiResponse);
     }
 

@@ -8,6 +8,8 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Set;
+
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AdminCreationRequest {
@@ -35,4 +37,5 @@ public class AdminCreationRequest {
             message = "PASSWORD_MUST_BE_INCLUDE_SPECIFY_CHARACTER(s)(e.g., *, $, etc.)")
     String password;
 
+    Set<String> roles;
 }

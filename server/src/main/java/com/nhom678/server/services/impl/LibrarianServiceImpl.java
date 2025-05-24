@@ -29,6 +29,7 @@ public class LibrarianServiceImpl implements LibrarianService {
     LibrarianRepository librarianRepository;
     LibrarianMapper librarianMapper;
     UserAccountRepository userAccountRepository;
+    PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -41,13 +42,11 @@ public class LibrarianServiceImpl implements LibrarianService {
             throw new AppException(ErrorCode.PHONE_EXISTED);
 
         Librarian librarian = librarianMapper.toLibrarian(request);
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         librarianRepository.save(librarian);
 
         UserAccount userAccount = new UserAccount();
         userAccount.setUserId(request.getLibrarianId());
         userAccount.setPassword(passwordEncoder.encode(request.getPassword())); //hash password
-        userAccount.setRole("LIBRARIAN");
         userAccount.setIsActived(true);
         userAccount.setLibrarian(librarian);
         userAccountRepository.save(userAccount);

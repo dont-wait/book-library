@@ -2,14 +2,18 @@ package com.nhom678.server.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "librarian")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Librarian {
     @Id
     @Column(name = "librarian_id", length = 10)

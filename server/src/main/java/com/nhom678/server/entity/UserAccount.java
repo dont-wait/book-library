@@ -1,11 +1,10 @@
 package com.nhom678.server.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -13,6 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "user_account") // ke nam giu khoa ngoai -> join column
+@Builder
 public class UserAccount {
     @Id
     @Column(name = "user_id", length = 10)
@@ -21,8 +21,7 @@ public class UserAccount {
     @Column(name = "password")
     String password;
 
-    @Column(name = "user_role")
-    String role;
+
     @Column(name = "is_actived")
     Boolean isActived;
 
@@ -37,4 +36,7 @@ public class UserAccount {
     @OneToOne
     @JoinColumn(name = "member_id")
     Member member;
+
+    @Column(name = "roles")
+    Set<String> roles;
 }
