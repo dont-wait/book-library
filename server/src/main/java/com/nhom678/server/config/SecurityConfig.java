@@ -48,9 +48,12 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PUBLIC_URLS).permitAll() //authen
-                        .requestMatchers(HttpMethod.POST, "/librarians", "/admin").hasRole(UserRole.ADMIN.name()) //Chi ai co quyen cao hon moi dc post
-                        .requestMatchers(HttpMethod.POST, "/members").hasAnyRole(UserRole.ADMIN.name(), UserRole.LIBRARIAN.name())
-                        .requestMatchers(HttpMethod.GET, "/librarians", "/admin").hasRole(UserRole.ADMIN.name())
+                        .requestMatchers(HttpMethod.GET, "/admins/**").hasRole(UserRole.ADMIN.name())
+                        .requestMatchers(HttpMethod.GET, "/user-accounts").hasRole(UserRole.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/admins/**").hasRole(UserRole.ADMIN.name())
+                        .requestMatchers(HttpMethod.GET, "/librarians/**").hasRole(UserRole.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/librarians/**").hasRole(UserRole.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/members/**").hasAnyRole(UserRole.ADMIN.name(), UserRole.LIBRARIAN.name())
                 .anyRequest().authenticated());
 
         return httpSecurity.build();

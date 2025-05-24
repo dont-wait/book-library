@@ -57,7 +57,7 @@ public class LibrarianServiceImpl implements LibrarianService {
         userAccount.setLibrarian(librarian);
         userAccountRepository.save(userAccount);
 
-        return librarianMapper.toLibrarianResponse(librarian);
+        return librarianMapper.toLibrarianResponse(librarianRepository.save(librarian));
     }
 
     @Override

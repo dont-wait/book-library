@@ -54,7 +54,6 @@ public class AdminServiceImpl implements AdminService {
 
         HashSet<String> roles = new HashSet<>();
         roles.add(UserRole.ADMIN.name());
-        roles.add(UserRole.LIBRARIAN.name());
         userAccount.setRoles(roles);
 
         userAccount.setIsActived(true);

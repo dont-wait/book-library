@@ -20,7 +20,7 @@ import java.util.HashSet;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE) //CREATE DEFAULT ADMIN
 public class ApplicationInitConfig {
 
     @Autowired
@@ -41,6 +41,7 @@ public class ApplicationInitConfig {
                adminRepository.save(admin);
                UserAccount defaultAdminAccount = UserAccount.builder()
                        .userId(admin.getAdminId())
+                       .admin(admin)
                        .roles(roles)
                        .isActived(true)
                        .password(passwordEncoder.encode("admin123@"))
