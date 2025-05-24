@@ -6,6 +6,7 @@ import com.nhom678.server.dto.response.LibrarianResponse;
 import com.nhom678.server.entity.Librarian;
 import com.nhom678.server.entity.UserAccount;
 import com.nhom678.server.enums.ErrorCode;
+import com.nhom678.server.enums.UserRole;
 import com.nhom678.server.exceptions.AppException;
 import com.nhom678.server.mapper.LibrarianMapper;
 import com.nhom678.server.repositories.LibrarianRepository;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -48,6 +50,10 @@ public class LibrarianServiceImpl implements LibrarianService {
         userAccount.setUserId(request.getLibrarianId());
         userAccount.setPassword(passwordEncoder.encode(request.getPassword())); //hash password
         userAccount.setIsActived(true);
+
+        HashSet<String> roles = new HashSet<>();
+        roles.add(UserRole.LIBRARIAN.name());
+        userAccount.setRoles(roles);
         userAccount.setLibrarian(librarian);
         userAccountRepository.save(userAccount);
 

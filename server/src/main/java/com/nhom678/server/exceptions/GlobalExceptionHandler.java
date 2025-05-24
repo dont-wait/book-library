@@ -20,7 +20,6 @@ public class GlobalExceptionHandler {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
         apiResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
-        log.error("Exception: ", e);
         return ResponseEntity.badRequest().body(apiResponse);
     }
 
@@ -32,7 +31,6 @@ public class GlobalExceptionHandler {
 
         apiResponse.setCode(errorCode.getCode());
         apiResponse.setMessage(errorCode.getMessage());
-        log.error("Exception: ", appException);
         return ResponseEntity.badRequest().body(apiResponse);
     }
 
