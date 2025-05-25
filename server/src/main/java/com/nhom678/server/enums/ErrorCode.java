@@ -47,9 +47,10 @@ public enum ErrorCode {
     INVALID_FORMAT_EMAIL(1006, "Invalide email format", HttpStatus.BAD_REQUEST),
     ROLE_MUST_BE_STUDENT_OR_LECTURER(1006, "Role must be student or lecturer", HttpStatus.BAD_REQUEST),
 
-    UNAUTHENCATED_EXCEPTION(1007, "UnAuthencated", HttpStatus.BAD_REQUEST),
+    UNAUTHENTICATED(1007, "Unauthenticated", HttpStatus.UNAUTHORIZED),
+    UNAUTHORIZED(1007, "You do not permission", HttpStatus.FORBIDDEN),
 
-    UNCATEGORIZED_EXCEPTION(6789, "Uncategorized Exception", HttpStatus.INTERNAL_SERVER_ERROR);
+    UNCATEGORIZED(6789, "Uncategorized Exception", HttpStatus.INTERNAL_SERVER_ERROR);
     private final int code;
     private final String message;
     private final HttpStatus status;
