@@ -45,8 +45,11 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable) //ngan ngua cross-site -> VIP but in this case, i still use that, so chill
                 .oauth2ResourceServer(oauth2 ->
-                        oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                        oauth2.jwt(jwtConfigurer ->
+                                jwtConfigurer
+                                        .decoder(jwtDecoder())
+                                            .jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                                        .authenticationEntryPoint(new JwtAuthenticationEntryPoint()) //Dieu huong Filter Spring xu li
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PUBLIC_URLS).permitAll() //authen
