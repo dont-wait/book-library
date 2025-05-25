@@ -1,6 +1,6 @@
 package com.nhom678.server.config;
 
-//Token khi thuc hien login, Neu token kh co permission thi khong xem duoc
+//Token khi thuc hien login, Neu token kh co permission thi khong xem duoc myInfo, Hoac Token het han, invalid
 //GlobalExceptionHandler khong bat duoc do viec kiem tra token nam o tang filter-do spring security quan li
 //Ham nay dung de giup ta xu li dc exception o tren
 import com.fasterxml.jackson.databind.ObjectMapper;
