@@ -14,4 +14,5 @@ public class AdminResponse {
     String lastName;
     String email;
     String phone;
+    UserAccountResponse userAccount;
 }

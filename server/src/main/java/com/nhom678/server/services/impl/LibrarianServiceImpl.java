@@ -59,6 +59,7 @@ public class LibrarianServiceImpl implements LibrarianService {
         userAccount.setRoles(roles);
         userAccount.setLibrarian(librarian);
         userAccountRepository.save(userAccount);
+        librarian.setUserAccount(userAccount);
 
         return librarianMapper.toLibrarianResponse(librarianRepository.save(librarian));
     }
