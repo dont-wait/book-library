@@ -15,4 +15,5 @@ public class LibrarianResponse {
     String lastName;
     String email;
     String phone;
+    UserAccountResponse userAccount;
 }

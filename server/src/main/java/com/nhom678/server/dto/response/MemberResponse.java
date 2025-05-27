@@ -14,4 +14,5 @@ public class MemberResponse {
     String lastName;
     String email;
     String phone;
+    UserAccountResponse userAccountResponse;
 }
