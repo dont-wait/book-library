@@ -22,8 +22,8 @@ public class UserAccount {
     String password;
 
 
-    @Column(name = "is_actived")
-    Boolean isActived;
+    @Column(name = "is_activated")
+    Boolean isActivated;
 
     @OneToOne
     @JoinColumn(name = "admin_id")

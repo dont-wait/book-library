@@ -1,6 +1,7 @@
 package com.nhom678.server.config;
 
 import com.nhom678.server.enums.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,26 +29,29 @@ public class SecurityConfig {
 
     //Chua nhung public endpoint ai cx truy cap duoc
     private final String[] PUBLIC_URLS = {
-            "/authen/**",
+            "/auth/**",
             "/api-ui.html",
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/webjars/**",
     };
+
     @Value("${JWT_SECRET}")
     private String signerKey;
 
+    @Autowired
+    private CustomJwtDecoder jwtDecoder;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, CustomJwtDecoder customJwtDecoder) throws Exception {
         httpSecurity
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable) //ngan ngua cross-site -> VIP but in this case, i still use that, so chill
                 .oauth2ResourceServer(oauth2 ->
                         oauth2.jwt(jwtConfigurer ->
                                 jwtConfigurer
-                                        .decoder(jwtDecoder())
+                                        .decoder(customJwtDecoder) //verify token
                                             .jwtAuthenticationConverter(jwtAuthenticationConverter()))
                                         .authenticationEntryPoint(new JwtAuthenticationEntryPoint()) //Dieu huong Filter Spring xu li
                 )

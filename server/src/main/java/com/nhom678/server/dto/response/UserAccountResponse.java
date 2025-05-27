@@ -10,8 +10,6 @@ import java.util.Set;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserAccountResponse {
-    String userId;
-    String password;
-    Boolean isActived;
+    Boolean isActivated;
     Set<String> roles;
 }

@@ -52,13 +52,14 @@ public class LibrarianServiceImpl implements LibrarianService {
         UserAccount userAccount = new UserAccount();
         userAccount.setUserId(request.getLibrarianId());
         userAccount.setPassword(passwordEncoder.encode(request.getPassword())); //hash password
-        userAccount.setIsActived(true);
+        userAccount.setIsActivated(true);
 
         HashSet<String> roles = new HashSet<>();
         roles.add(UserRole.LIBRARIAN.name());
         userAccount.setRoles(roles);
         userAccount.setLibrarian(librarian);
         userAccountRepository.save(userAccount);
+        librarian.setUserAccount(userAccount);
 
         return librarianMapper.toLibrarianResponse(librarianRepository.save(librarian));
     }

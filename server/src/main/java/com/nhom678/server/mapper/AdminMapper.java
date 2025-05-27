@@ -10,7 +10,10 @@ import org.mapstruct.*;
 public interface AdminMapper {
 
     AdminResponse toAdminResponse(Admin admin);
-    Admin toAdmin(AdminCreationRequest adminResponse);
+
+    @Mapping(target="userAccount", ignore = true)
+    Admin toAdmin(AdminCreationRequest request);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateAdmin(@MappingTarget Admin admin, AdminUpdateRequest request);
 }

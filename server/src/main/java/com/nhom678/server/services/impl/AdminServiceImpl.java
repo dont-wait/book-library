@@ -52,6 +52,7 @@ public class AdminServiceImpl implements AdminService {
         adminRepository.save(admin);
 
         UserAccount userAccount = new UserAccount();
+
         userAccount.setUserId(request.getAdminId());
         userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
 
@@ -59,8 +60,10 @@ public class AdminServiceImpl implements AdminService {
         roles.add(UserRole.ADMIN.name());
         userAccount.setRoles(roles);
 
-        userAccount.setIsActived(true);
+        userAccount.setIsActivated(true);
         userAccount.setAdmin(admin);
+
+        admin.setUserAccount(userAccount);
         userAccountRepository.save(userAccount);
 
         return adminMapper.toAdminResponse(admin);
