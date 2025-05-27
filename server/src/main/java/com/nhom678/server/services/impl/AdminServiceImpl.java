@@ -60,7 +60,7 @@ public class AdminServiceImpl implements AdminService {
         roles.add(UserRole.ADMIN.name());
         userAccount.setRoles(roles);
 
-        userAccount.setIsActived(true);
+        userAccount.setIsActivated(true);
         userAccount.setAdmin(admin);
 
         admin.setUserAccount(userAccount);

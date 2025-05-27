@@ -10,6 +10,6 @@ import java.util.Set;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserAccountResponse {
-    Boolean isActived;
+    Boolean isActivated;
     Set<String> roles;
 }

@@ -52,7 +52,7 @@ public class LibrarianServiceImpl implements LibrarianService {
         UserAccount userAccount = new UserAccount();
         userAccount.setUserId(request.getLibrarianId());
         userAccount.setPassword(passwordEncoder.encode(request.getPassword())); //hash password
-        userAccount.setIsActived(true);
+        userAccount.setIsActivated(true);
 
         HashSet<String> roles = new HashSet<>();
         roles.add(UserRole.LIBRARIAN.name());

@@ -24,7 +24,7 @@ import java.util.HashSet;
 public class ApplicationInitConfig {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
     @Bean
     ApplicationRunner appRunner(AdminRepository adminRepository, UserAccountRepository userAccountRepository) {
@@ -43,7 +43,7 @@ public class ApplicationInitConfig {
                        .userId(admin.getAdminId())
                        .admin(admin)
                        .roles(roles)
-                       .isActived(true)
+                       .isActivated(true)
                        .password(passwordEncoder.encode("admin123@"))
                        .build();
                userAccountRepository.save(defaultAdminAccount);
