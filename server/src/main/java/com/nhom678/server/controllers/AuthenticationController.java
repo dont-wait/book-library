@@ -3,6 +3,7 @@ package com.nhom678.server.controllers;
 import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.authen.AuthenticationRequest;
 import com.nhom678.server.dto.request.authen.IntrospectRequest;
+import com.nhom678.server.dto.request.authen.LogoutRequest;
 import com.nhom678.server.dto.response.AuthenticationResponse;
 import com.nhom678.server.dto.response.IntrospectResponse;
 import com.nhom678.server.services.AuthenticationService;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
 
 @RestController
-@RequestMapping("/authen")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationController {
@@ -39,4 +40,13 @@ public class AuthenticationController {
                 .result(result)
                 .build();
     }
+
+    @PostMapping("/log-out")
+    ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder()
+                .message("Logout successfully")
+                .build();
+    }
+
 }
