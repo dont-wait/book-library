@@ -20,11 +20,11 @@ public class PublisherController {
 
     PublisherService publisherService;
 
-    @GetMapping("/{publisherName}")
-    ApiResponse<PublisherResponse> getPublisherByName(@PathVariable String publisherName) {
+    @GetMapping("/{publisherId}")
+    ApiResponse<PublisherResponse> getPublisherById(@PathVariable Integer publisherId) {
         return ApiResponse.<PublisherResponse>builder()
                 .result(
-                    publisherService.getPublisherByName(publisherName))
+                    publisherService.getPublisherById(publisherId))
                 .message("Success")
                 .build();
     }
@@ -44,9 +44,9 @@ public class PublisherController {
                 .build();
     }
 
-    @DeleteMapping("/{publisherName}")
-    ApiResponse<String> deletePublisher(@PathVariable String publisherName) {
-        publisherService.deletePublisher(publisherName);
+    @DeleteMapping("/{publisherId}")
+    ApiResponse<String> deletePublisher(@PathVariable Integer publisherId) {
+        publisherService.deletePublisherById(publisherId);
         return ApiResponse.<String>builder()
                 .result("Publisher successfully deleted")
                 .message("Success")

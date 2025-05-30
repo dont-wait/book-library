@@ -1,7 +1,7 @@
 package com.nhom678.server.controllers;
 
 import com.nhom678.server.dto.ApiResponse;
-import com.nhom678.server.dto.request.author.AuthorCreateRequest;
+import com.nhom678.server.dto.request.author.AuthorCreationRequest;
 import com.nhom678.server.dto.response.AuthorResponse;
 import com.nhom678.server.services.AuthorService;
 import lombok.AccessLevel;
@@ -25,7 +25,7 @@ public class AuthorController {
     }
 
     @PostMapping
-    ApiResponse<AuthorResponse> createAuthor(@RequestBody AuthorCreateRequest request) {
+    ApiResponse<AuthorResponse> createAuthor(@RequestBody AuthorCreationRequest request) {
         return ApiResponse.<AuthorResponse>builder()
                 .result(authorService.createAuthor(request))
                 .message("Success")
