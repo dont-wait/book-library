@@ -4,6 +4,7 @@ import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.authen.AuthenticationRequest;
 import com.nhom678.server.dto.request.authen.IntrospectRequest;
 import com.nhom678.server.dto.request.authen.LogoutRequest;
+import com.nhom678.server.dto.request.authen.RefreshRequest;
 import com.nhom678.server.dto.response.AuthenticationResponse;
 import com.nhom678.server.dto.response.IntrospectResponse;
 import com.nhom678.server.services.AuthenticationService;
@@ -28,6 +29,14 @@ public class AuthenticationController {
     @PostMapping("/log-in")
     ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         var result = authenticationService.authenticate(request);
+        return ApiResponse.<AuthenticationResponse>builder()
+                .result(result)
+                .build();
+    }
+
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationResponse> authenticate(@RequestBody RefreshRequest request) throws ParseException, JOSEException {
+        var result = authenticationService.refreshToken(request);
         return ApiResponse.<AuthenticationResponse>builder()
                 .result(result)
                 .build();

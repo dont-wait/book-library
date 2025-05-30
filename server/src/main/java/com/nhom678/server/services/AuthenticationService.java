@@ -3,6 +3,7 @@ package com.nhom678.server.services;
 import com.nhom678.server.dto.request.authen.AuthenticationRequest;
 import com.nhom678.server.dto.request.authen.IntrospectRequest;
 import com.nhom678.server.dto.request.authen.LogoutRequest;
+import com.nhom678.server.dto.request.authen.RefreshRequest;
 import com.nhom678.server.dto.response.AuthenticationResponse;
 import com.nhom678.server.dto.response.IntrospectResponse;
 import com.nhom678.server.entity.InvalidatedToken;
@@ -94,6 +95,35 @@ public class AuthenticationService {
                 .expiryTime(expiryTime)
                 .build();
         invalidatedTokenRepository.save(invalidatedToken);
+    }
+
+    public AuthenticationResponse refreshToken(RefreshRequest request)
+            throws ParseException, JOSEException {
+
+        //Kiem tra hieu luc token
+        var signedJwt = verifyToken(request.getToken());
+
+        //Invalid token cu
+        var jwtId = signedJwt.getJWTClaimsSet().getJWTID();
+        var expiryTime = signedJwt.getJWTClaimsSet().getExpirationTime();
+        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                .id(jwtId)
+                .expiryTime(expiryTime)
+                .build();
+
+        //Logout token cu
+        invalidatedTokenRepository.save(invalidatedToken);
+
+
+        var userId = signedJwt.getJWTClaimsSet().getSubject();
+        UserAccount userAccount = userAccountRepository.findByUserId(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
+        var token = generateToken(userAccount);
+
+        return AuthenticationResponse.builder()
+                .token(token)
+                .authenticated(true)
+                .build();
     }
 
     private SignedJWT verifyToken(String token) throws JOSEException, ParseException {

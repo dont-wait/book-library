@@ -11,6 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookSearchCriteria {
+
+    String bookId;
+
     String bookName;
 
     //Double cost;

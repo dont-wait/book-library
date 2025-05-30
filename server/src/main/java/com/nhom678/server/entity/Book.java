@@ -41,6 +41,9 @@ public class Book {
     @Column(name = "publication_date")
     Date publicationDate;
 
+    @Column(name="pages")
+    Integer pages;
+
     @Column(name = "rating")
     Double rating;
 

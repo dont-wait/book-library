@@ -16,6 +16,7 @@ spring:
 
 jwt:
   signerKey: ${JWT_SECRET}
+  valid-duration: 60
 server:
   port: 6969
   servlet:
