@@ -19,8 +19,8 @@ public class StatusBook {
     @Id
     String name;
 
-    @Column(name = "fine_code", nullable = false)
-    Double fineCode;
+    @Column(name = "fine_cost", nullable = false)
+    Double fineCost;
 
     @Column(name = "description")
     String description;
