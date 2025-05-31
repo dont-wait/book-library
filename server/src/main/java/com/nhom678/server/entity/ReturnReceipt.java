@@ -16,6 +16,8 @@ public class ReturnReceipt {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String returnReceiptId;
+
+    @Column(name = "return_receipt")
     Date returnDate;
 
     @ManyToOne
