@@ -8,8 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface PublisherRepository extends JpaRepository<Publisher, Integer> {
-    Optional<Publisher> findPublisherByPublisherName(String publisherName);
+    Optional<Publisher> findPublisherByPublisherId(Integer publisherId);
     Boolean existsPublisherByPublisherName(String publisherName);
-
-    void deletePublishersByPublisherName(String publisherName);
+    void deletePublishersByPublisherId(Integer publisherId);
 }

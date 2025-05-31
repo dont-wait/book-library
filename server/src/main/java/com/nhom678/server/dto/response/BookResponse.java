@@ -42,5 +42,5 @@ public class BookResponse {
 
     Integer categoryId;
 
-    List<Integer> authors;
+    Integer authorId;
 }

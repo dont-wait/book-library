@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthorCreateRequest {
+public class AuthorCreationRequest {
 
     @NotNull(message = "AUTHOR_NAME_REQUIRE")
     String authorName;

@@ -33,8 +33,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse getCategoryByName(String categoryName) {
-        Optional<Category> category = categoryRepository.findCategoryByCategoryName(categoryName);
+    public CategoryResponse getCategoryByCategoryId(Integer categoryId) {
+        Optional<Category> category = categoryRepository.findCategoryByCategoryId(categoryId);
         if(category.isEmpty())
             throw new AppException(ErrorCode.CATEGORYNAME_NOT_FOUND);
         return categoryMapper.toCategoryResponse(category.get());
@@ -50,10 +50,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public void deleteCategory(String categoryName) {
-        if(categoryRepository.findCategoryByCategoryName(categoryName).isEmpty())
+    public void deleteCategoryByCategoryId(Integer categoryId) {
+        if(categoryRepository.findCategoryByCategoryId(categoryId).isEmpty())
             throw new AppException(ErrorCode.CATEGORYNAME_NOT_FOUND);
-        categoryRepository.deleteCategoryByCategoryName(categoryName);
+        categoryRepository.deleteCategoryByCategoryId(categoryId);
     }
 
 

@@ -31,7 +31,6 @@ public class BookServiceImpl implements BookService {
     PublisherRepository publisherRepository;
     CategoryRepository categoryRepository;
     AuthorRepository authorRepository;
-    BookAuthorRepository bookAuthorRepository;
 
     @Override
     @Transactional
@@ -52,23 +51,14 @@ public class BookServiceImpl implements BookService {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new AppException(ErrorCode.CATEGORYNAME_NOT_FOUND));
 
-        List<Author> authors = authorRepository.findAllById(request.getAuthorIds());
-        if (authors.size() != request.getAuthorIds().size()) {
-            throw new AppException(ErrorCode.AUTHOR_NOT_FOUND);
-        }
+        Author author = authorRepository.findById(request.getPublisherId())
+                .orElseThrow(() -> new AppException(ErrorCode.AUTHOR_NOT_FOUND));
 
-        Book book = bookMapper.toBook(request, publisher, category);
 
-        List<BookAuthor> bookAuthors = authors.stream().map(author -> {
-            BookAuthor ba = new BookAuthor();
-            ba.setAuthor(author);
-            ba.setBook(book);
-            return ba;
-        }).toList();
 
-        //After save, we will response for client
-        bookAuthorRepository.saveAll(bookAuthors);
-        book.setBookAuthors(bookAuthors);
+        Book book = bookMapper.toBook(request, publisher, category, author);
+
+
         return bookMapper.toBookResponse(bookRepository.save(book));
     }
 

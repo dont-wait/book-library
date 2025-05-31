@@ -1,6 +1,6 @@
 package com.nhom678.server.services.impl;
 
-import com.nhom678.server.dto.request.author.AuthorCreateRequest;
+import com.nhom678.server.dto.request.author.AuthorCreationRequest;
 import com.nhom678.server.dto.response.AuthorResponse;
 import com.nhom678.server.entity.Author;
 import com.nhom678.server.exceptions.AppException;
@@ -25,7 +25,7 @@ public class AuthorServiceImpl implements AuthorService {
     AuthorMapper authorMapper;
 
     @Override
-    public AuthorResponse createAuthor(AuthorCreateRequest request) {
+    public AuthorResponse createAuthor(AuthorCreationRequest request) {
         if(authorRepository.existsAuthorByAuthorName(request.getAuthorName()))
             throw new AppException(ErrorCode.AUTHOR_NAME_EXISTED);
         Author author = authorMapper.toAuthor(request);
@@ -33,11 +33,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorResponse getAuthorByName(String authorName) {
+    public AuthorResponse getAuthorById(Integer authorId) {
 
         return authorMapper.toAuthorResponse(authorRepository
-                .findAuthorByAuthorName(authorName)
-                .orElseThrow(() -> new AppException(ErrorCode.AUTHOR_NOT_FOUND)));
+                .findById(authorId)
+                .orElseThrow(()
+                        -> new AppException(ErrorCode.AUTHOR_NOT_FOUND)));
     }
 
     @Override
