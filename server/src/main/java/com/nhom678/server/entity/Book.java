@@ -23,7 +23,7 @@ public class Book {
     @Column(name = "book_name", nullable = false, unique = true)
     String bookName;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     String description;
 
     @Column(name = "book_image_url")

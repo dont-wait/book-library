@@ -16,7 +16,8 @@ spring:
 
 jwt:
   signerKey: ${JWT_SECRET}
-  valid-duration: 60
+  valid-duration: 3600 #in-seconds
+  refreshable-duration: 36000 #in-seconds
 server:
   port: 6969
   servlet:
