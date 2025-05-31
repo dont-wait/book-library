@@ -1,6 +1,6 @@
 package com.nhom678.server.services.impl;
 
-import com.nhom678.server.dto.request.ReturnReceipt.ReturnReceiptRequest;
+import com.nhom678.server.dto.request.returnReceipt.ReturnReceiptRequest;
 import com.nhom678.server.dto.response.ReturnReceiptResponse;
 import com.nhom678.server.entity.BorrowReceipt;
 import com.nhom678.server.entity.ReturnReceipt;
@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-
-import static com.nhom678.server.enums.ErrorCode.ID_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

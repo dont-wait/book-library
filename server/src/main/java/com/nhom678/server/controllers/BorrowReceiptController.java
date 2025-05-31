@@ -1,58 +1,43 @@
 package com.nhom678.server.controllers;
 
 import com.nhom678.server.dto.ApiResponse;
-import com.nhom678.server.dto.request.BorrowReceipt.BorrowReceiptRequest;
+import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptCreationRequest;
 import com.nhom678.server.dto.response.BorrowReceiptResponse;
 import com.nhom678.server.services.BorrowReceiptService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/borrow_receipt")
+@RequestMapping("/borrow-receipts")
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BorrowReceiptController {
-    BorrowReceiptService borrowReceiptService;
+     BorrowReceiptService service;
 
     @PostMapping
-    ApiResponse<BorrowReceiptResponse> createBorrowReceipt(@RequestBody BorrowReceiptRequest request) {
-        BorrowReceiptResponse borrowReceiptResponse = borrowReceiptService.createBorerowReceipt(request);
+    ApiResponse<BorrowReceiptResponse> create(@RequestBody @Valid BorrowReceiptCreationRequest dto) {
+        // Convert entity sang DTO trả về
+        BorrowReceiptResponse response = service.createBorrowReceipt(dto);
         return ApiResponse.<BorrowReceiptResponse>builder()
-                .message("success").result(borrowReceiptResponse).build();
+                .result(response)
+                .message("Success")
+                .build();
     }
-
     @GetMapping
-    ApiResponse<List<BorrowReceiptResponse>> getAllBorrowReceipt() {
-        List<BorrowReceiptResponse> borrowReceiptResponses = borrowReceiptService.getAllBorrowReceipt();
-        return ApiResponse.<List<BorrowReceiptResponse>>builder()
-                .message("Success").result(borrowReceiptResponses).build();
+    public ResponseEntity<List<BorrowReceiptResponse>> getAll(){
+        List<BorrowReceiptResponse> list=service.getAll();
+        return ResponseEntity.ok(list);
     }
 
-    @GetMapping("/{id}")
-    ApiResponse<BorrowReceiptResponse> getByIdBorrowReceipt(@PathVariable String id) {
-        BorrowReceiptResponse borrowReceiptResponse = borrowReceiptService.getByIdBorrowReceipt(id);
-        return ApiResponse.<BorrowReceiptResponse>builder()
-                .message("Success").result(borrowReceiptResponse).build();
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<BorrowReceiptCreationRequest>> getByUserId(@PathVariable String userId){
+        List<BorrowReceiptCreationRequest> list =service.getByUserId(userId);
+        return ResponseEntity.ok(list);
     }
-
-    @PutMapping("/{id}")
-    ApiResponse<BorrowReceiptResponse> updateBorrowReceipt(@PathVariable String id, @RequestBody BorrowReceiptRequest request) {
-        BorrowReceiptResponse borrowReceiptResponse = borrowReceiptService.updateBorrowReceipt(id, request);
-        return ApiResponse.<BorrowReceiptResponse>builder()
-                .message("Sucess").result(borrowReceiptResponse).build();
-    }
-
-    @DeleteMapping("/{id}")
-    ApiResponse<String> deleteBorrowReceipt(@PathVariable String id)
-    {
-        borrowReceiptService.deleteBorrowReceipt(id);
-        return  ApiResponse.<String>builder()
-                .message("Suceess").result("delete").build();
-    }
-
 }

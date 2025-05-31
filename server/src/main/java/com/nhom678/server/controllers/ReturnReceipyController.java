@@ -2,7 +2,7 @@ package com.nhom678.server.controllers;
 
 
 import com.nhom678.server.dto.ApiResponse;
-import com.nhom678.server.dto.request.ReturnReceipt.ReturnReceiptRequest;
+import com.nhom678.server.dto.request.returnReceipt.ReturnReceiptRequest;
 import com.nhom678.server.dto.response.ReturnReceiptResponse;
 import com.nhom678.server.services.ReturnReceiptService;
 import lombok.AccessLevel;

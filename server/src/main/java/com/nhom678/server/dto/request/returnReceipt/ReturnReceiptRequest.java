@@ -1,4 +1,4 @@
-package com.nhom678.server.dto.request.ReturnReceipt;
+package com.nhom678.server.dto.request.returnReceipt;
 
 
 import lombok.AccessLevel;

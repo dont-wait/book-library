@@ -1,12 +1,9 @@
 package com.nhom678.server.services.impl;
 
 
-import com.nhom678.server.dto.request.BorrowReceipt.BorrowReceiptRequest;
+import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptCreationRequest;
 import com.nhom678.server.dto.response.BorrowReceiptResponse;
-import com.nhom678.server.entity.Book;
-import com.nhom678.server.entity.BorrowReceipt;
-import com.nhom678.server.entity.StatusBook;
-import com.nhom678.server.entity.UserAccount;
+import com.nhom678.server.entity.*;
 import com.nhom678.server.enums.ErrorCode;
 import com.nhom678.server.exceptions.AppException;
 import com.nhom678.server.mapper.BorrowReceiptMapper;
@@ -21,93 +18,68 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class BorrowReceiptServiceImpl implements BorrowReceiptService
-{
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+
+public class BorrowReceiptServiceImpl implements BorrowReceiptService {
+
     BorrowReceiptRepository borrowReceiptRepository;
-    BookRepository bookRepository;
+    BorrowReceiptMapper mapper;
     UserAccountRepository userAccountRepository;
+    BookRepository bookRepository;
     StatusBookRepository statusBookRepository;
-    BorrowReceiptMapper borrowReceiptMapper;
+//    Book book;
+//    UserAccount userAccount;
+//    ReturnReceipt returnReceipt;
 
     @Override
-    public BorrowReceiptResponse createBorerowReceipt(BorrowReceiptRequest request)
-    {
-        Book book = bookRepository.findById(request.getBookId())
-                .orElseThrow(() -> new AppException(ErrorCode.BOOK_NAME_NOT_FOUND));
+    public BorrowReceiptResponse createBorrowReceipt(BorrowReceiptCreationRequest dto){
+//        UserAccount userAccount=userAccountRepository.findByUserId("defaultUserId")
+//                .orElseThrow(()-> new AppException(ErrorCode.ID_NOT_FOUND));
 
-        UserAccount userAccount = userAccountRepository.findById(request.getUserId())
+        Book book=bookRepository.findById(dto.getBookId())
+                .orElseThrow(()-> new AppException(ErrorCode.BOOK_ID_NOT_FOUND));
+        //        BorrowReceiptET entity = mapper.toEntity(dto);
+
+
+        UserAccount userAccount = userAccountRepository.findByUserId(dto.getUserId())
                 .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
 
-        StatusBook statusBook = statusBookRepository.findById(request.getStatusBookName())
-                .orElseThrow(() -> new AppException(ErrorCode.BOOK_NAME_NOT_FOUND));
+        StatusBook statusBook = statusBookRepository.findByName(dto.getName())
+                .orElseThrow(() -> new AppException(ErrorCode.STATUS_NAME_NOT_FOUND));
 
-        BorrowReceipt borrowReceipt = borrowReceiptRepository.findByBorrowReceiptId((request.getBorrowReceiptId()))
-                        .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));
-
-        borrowReceipt = BorrowReceipt.builder()
+        ReturnReceipt returnReceipt = null;
+        BorrowReceipt borrowReceipt = BorrowReceipt.builder()
+                .borrowDate(dto.getBorrowDate())
+                .dueDate(dto.getDueDate())
+                .quantity(dto.getQuantity())
                 .book(book)
-                .
+                .userAccount(userAccount)
+                .statusBook(statusBook)
                 .build();
-
-        borrowReceipt.setBook(book);
-        borrowReceipt.setUserAccount(userAccount);
-        borrowReceipt.setStatusBook(statusBook);
-
-
-        return borrowReceiptMapper.toDto(borrowReceiptRepository.save(borrowReceipt));
+        borrowReceiptRepository.save(borrowReceipt);
+        return mapper.toBorrowReceiptResponse(borrowReceipt);
     }
 
+
     @Override
-    public List<BorrowReceiptResponse> getAllBorrowReceipt()
-    {
-        return borrowReceiptRepository.findAll().stream().map(borrowReceiptMapper::toDto).toList();
+    public List<BorrowReceiptResponse> getAll(){
+        List<BorrowReceipt> list= borrowReceiptRepository.findAll();
+        return list.stream()
+                .map(mapper::toBorrowReceiptResponse)
+                .collect(Collectors.toList());
     }
-
     @Override
-    public BorrowReceiptResponse getByIdBorrowReceipt(String id)
-    {
-        BorrowReceipt borrowReceipt = borrowReceiptRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
-        return borrowReceiptMapper.toDto(borrowReceipt);
-    }
+    public List<BorrowReceiptCreationRequest> getByUserId(String userId){
 
-    @Override
-    public BorrowReceiptResponse updateBorrowReceipt(String id, BorrowReceiptRequest request)
-    {
-        BorrowReceipt borrowReceipt = borrowReceiptRepository.findByBorrowReceiptId(id)
-                .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));
 
-        Book book = bookRepository.findById(request.getBookId())
-                .orElseThrow(() -> new AppException(ErrorCode.BOOK_ID_NOT_FOUND));
-
-        UserAccount userAccount = userAccountRepository.findById(request.getUserId())
-                .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
-
-        StatusBook statusBook = statusBookRepository.findById(request.getStatusBookName())
-                .orElseThrow(() -> new AppException(ErrorCode.BOOK_NAME_NOT_FOUND));
-
-        borrowReceipt.setBorrowDate(request.getBorrowDate());
-        borrowReceipt.setDueDate(request.getDueDate());
-        borrowReceipt.setQuantity(request.getQuantity());
-        borrowReceipt.setBook(book);
-        borrowReceipt.setUserAccount(userAccount);
-        borrowReceipt.setStatusBook(statusBook);
-
-        return borrowReceiptMapper.toDto(borrowReceiptRepository.save(borrowReceipt));
-
-    }
-
-    @Override
-    public void deleteBorrowReceipt(String id)
-    {
-        if (!borrowReceiptRepository.existsById(id)) {
-            throw new AppException(ErrorCode.ID_NOT_FOUND);
-        }
-        borrowReceiptRepository.deleteById(id);
-
+//        List<BorrowReceipt> list=borrowReceiptRepository.findByUserId(userId);
+//        return list.stream()
+//                .map(this::toDTO)
+//                .collect(Collectors.toList());
+        return null;
     }
 }

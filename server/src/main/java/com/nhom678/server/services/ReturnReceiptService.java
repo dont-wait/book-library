@@ -1,6 +1,6 @@
 package com.nhom678.server.services;
 
-import com.nhom678.server.dto.request.ReturnReceipt.ReturnReceiptRequest;
+import com.nhom678.server.dto.request.returnReceipt.ReturnReceiptRequest;
 import com.nhom678.server.dto.response.ReturnReceiptResponse;
 
 import java.util.List;
