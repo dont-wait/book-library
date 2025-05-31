@@ -23,7 +23,7 @@ public class Book {
     @Column(name = "book_name", nullable = false, unique = true)
     String bookName;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     String description;
 
     @Column(name = "book_image_url")
@@ -41,6 +41,9 @@ public class Book {
     @Column(name = "publication_date")
     Date publicationDate;
 
+    @Column(name="pages")
+    Integer pages;
+
     @Column(name = "rating")
     Double rating;
 
@@ -55,8 +58,9 @@ public class Book {
     @JoinColumn(name = "category_id", nullable = false)
     Category category;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<BookAuthor> bookAuthors;
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    Author author;
 
 
 }

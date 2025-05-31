@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface AuthorRepository extends JpaRepository<Author, Integer> {
     Boolean existsAuthorByAuthorName(String authorName);
     void deleteAuthorByAuthorId(Integer authorId);
-    Optional<Author> findAuthorByAuthorName(String authorName);
+    Optional<Author> findAuthorByAuthorId(Integer authorId);
 }

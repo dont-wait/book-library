@@ -35,9 +35,9 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public PublisherResponse getPublisherByName(String publisherName) {
+    public PublisherResponse getPublisherById(Integer id) {
         return publisherMapper.toPublisherResponse(publisherRepository
-                .findPublisherByPublisherName(publisherName)
+                .findPublisherByPublisherId(id)
                 .orElseThrow(() -> new AppException(ErrorCode.PUBLISHER_NOT_FOUND)));
     }
 
@@ -50,10 +50,10 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     @Transactional
-    public void deletePublisher(String publisherName) {
-        if (publisherRepository.findPublisherByPublisherName(publisherName).isEmpty()) {
+    public void deletePublisherById(Integer id) {
+        if (publisherRepository.findPublisherByPublisherId(id).isEmpty()) {
             throw new AppException(ErrorCode.PUBLISHER_NOT_FOUND);
         }
-        publisherRepository.deletePublishersByPublisherName(publisherName);
+        publisherRepository.deletePublishersByPublisherId(id);
     }
 }

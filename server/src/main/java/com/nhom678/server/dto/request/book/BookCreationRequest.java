@@ -34,6 +34,8 @@ public class BookCreationRequest {
 
     Date publicationDate;
 
+    Integer pages;
+
     Double rating;
 
     String floorPosition;
@@ -45,7 +47,6 @@ public class BookCreationRequest {
     Integer categoryId;
 
     @NotNull(message = "AUTHOR_IDS_REQUIRED")
-    @Size(min = 1, message = "AT_LEAST_ONE_AUTHOR_REQUIRED")
-    List<Integer> authorIds;
+    Integer authorId;
 
 }
