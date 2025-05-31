@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/return_receipt")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class ReturnReceipyController
+public class ReturnReceiptController
 {
     ReturnReceiptService returnReceiptService;
 
