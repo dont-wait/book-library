@@ -26,6 +26,8 @@ services:
     depends_on:
       - mysql
       - redis
+    ports:
+      - "6969:6969"
     networks:
       - server
 

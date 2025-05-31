@@ -26,6 +26,7 @@ public enum ErrorCode {
     BOOK_NOT_FOUND(1003, "Searched by Book name, ISBN - BOOK NOT FOUND", HttpStatus.NOT_FOUND),
     PUBLISHER_NOT_FOUND(1003, "Publisher name not found", HttpStatus.NOT_FOUND),
     ID_NOT_FOUND(1003, "Person not found", HttpStatus.NOT_FOUND),
+    STATUS_NAME_NOT_FOUND(1003, "Status name not found", HttpStatus.NOT_FOUND),
 
     BOOK_IMAGE_URL_REQUIRED(1004, "Book image url is required", HttpStatus.BAD_REQUEST),
     AUTHOR_IDS_REQUIRED(1004, "Author ids is required", HttpStatus.BAD_REQUEST),

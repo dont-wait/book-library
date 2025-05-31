@@ -1,12 +1,10 @@
 package com.nhom678.server.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,17 +13,19 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "borrow_receipt")
+@Builder
 public class BorrowReceipt {
     @Id
     @Column(name = "borrow_receipt_id")
     @GeneratedValue(strategy = GenerationType.UUID)
     String borrowReceiptId;
 
+
     @Column(name="borrow_date", nullable = false)
-    Date borrowDate;
+    LocalDate borrowDate;
 
     @Column(name="due_date", nullable = false)
-    Date dueDate;
+    LocalDate dueDate;
 
     @Column(name="quantity", nullable = false)
     Integer quantity;
@@ -44,6 +44,5 @@ public class BorrowReceipt {
 
     @OneToOne(mappedBy = "borrowReceipt")
     ReturnReceipt returnReceipt;
-
 
 }
