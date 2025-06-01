@@ -68,8 +68,7 @@ public class BookServiceImpl implements BookService {
     public List<BookResponse> getAllBooks(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-
-        return bookRepository.findAll(pageable, size)
+        return bookRepository.findAll(pageable)
                 .stream()
                 .map(bookMapper::toBookResponse)
                 .toList();
