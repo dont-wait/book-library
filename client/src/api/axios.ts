@@ -1,9 +1,9 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:6969";
+import { API_ENDPOINTS } from './endpoints';
 
 const instance = axios.create({
-    baseURL,
+    baseURL: "http://localhost:6969/api/v1",
+    withCredentials: true,
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -32,7 +32,7 @@ instance.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             localStorage.removeItem('token');
-            window.location.href = 'auth/log-in';
+            window.location.href = '/auth/log-in';
         }
         return Promise.reject(error);
     }

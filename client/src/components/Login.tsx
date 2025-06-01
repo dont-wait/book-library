@@ -18,11 +18,10 @@ const Login = () => {
   const handleUserSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(API_ENDPOINTS.AUTH.LOGIN, {
+      await axios.post(API_ENDPOINTS.AUTH.LOGIN, {
         userId: signInData.userId,
         password: signInData.password
       });
-      localStorage.setItem('token', response.data.result.token);
       window.location.href = '/';
     } catch {
       setError('Mã sinh viên hoặc mật khẩu không đúng');
@@ -32,11 +31,10 @@ const Login = () => {
   const handleAdminSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(API_ENDPOINTS.AUTH.LOGIN, {
+      await axios.post(API_ENDPOINTS.AUTH.LOGIN, {
         userId: adminData.userId,
         password: adminData.password
       });
-      localStorage.setItem('token', response.data.result.token);
       window.location.href = '/admin';
     } catch {
       setError('Tên đăng nhập hoặc mật khẩu không đúng');
