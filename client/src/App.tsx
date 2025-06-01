@@ -1,21 +1,29 @@
 import { useEffect, useState } from "react"
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import axios from "./api/axios";
+import { API_ENDPOINTS } from "./api/endpoints";
 import Login from "./components/Login";
 
 interface Book {
-  BookName: string,
-  Title: string;
-  Author: string;
-  ImageBook: string;
-  CategoryId: string;
-  ISBN: string;
-  PublishedDate: string;
+  bookId: number;
+  bookName: string;
+  description: string;
+  bookImageURL: string;
+  quantity: number;
+  isbn: string;
+  publicationDate: string;
+  rating: number;
+  floorPosition: string;
+  publisherId: number;
+  categoryId: number;
+  authorId: number;
 }
 
 const App = () => {
-  const [books, setBook] = useState<Book[]>([])
+  const [books, setBooks] = useState<Book[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -27,12 +35,26 @@ const App = () => {
   useEffect(() => {
     if (isAuthenticated) {
       const getBooks = async () => {
-        const bookList = await axios.get("/books")
-        setBook(bookList.data)
-      }
+        try {
+          const response = await axios.get(API_ENDPOINTS.BOOKS.GET_ALL);
+          setBooks(response.data.result || []); // Access the result field from ApiResponse
+          setLoading(false);
+        } catch (err) {
+          setError('Failed to fetch books');
+          setLoading(false);
+        }
+      };
       getBooks();
     }
   }, [isAuthenticated]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <Router>
@@ -44,12 +66,15 @@ const App = () => {
             isAuthenticated ? (
               <div>
                 {books.map(book => (
-                  <div key={book.ISBN}>
-                    <h1>{book.Title}</h1>
-                    <h2>{book.Author}</h2>
-                    <img src={book.ImageBook} alt={book.Title} />
-                    <p>{book.PublishedDate}</p>
-                    <p>{book.CategoryId}</p>
+                  <div key={book.bookId}>
+                    <h1>{book.bookName}</h1>
+                    <p>{book.description}</p>
+                    <img src={book.bookImageURL} alt={book.bookName} />
+                    <p>Quantity: {book.quantity}</p>
+                    <p>ISBN: {book.isbn}</p>
+                    <p>Published: {book.publicationDate}</p>
+                    <p>Rating: {book.rating}</p>
+                    <p>Location: {book.floorPosition}</p>
                   </div>
                 ))}
               </div>
@@ -60,7 +85,7 @@ const App = () => {
         />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
