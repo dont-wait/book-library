@@ -1,0 +1,32 @@
+package com.nhom678.server.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+@Configuration
+public class CorsConfig {
+    
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        
+        // Allow credentials
+        config.setAllowCredentials(true);
+        
+        // Allow specific origin
+        config.addAllowedOrigin("http://localhost:5173"); // Vite's default port
+        
+        // Allow specific headers
+        config.addAllowedHeader("*");
+        
+        // Allow specific methods
+        config.addAllowedMethod("*");
+        
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+} 
