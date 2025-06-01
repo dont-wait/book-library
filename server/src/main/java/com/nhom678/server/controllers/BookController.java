@@ -25,9 +25,10 @@ public class BookController {
     BookService bookService;
 
     @GetMapping
-    ApiResponse<List<BookResponse>> getAllBooks() {
+    ApiResponse<List<BookResponse>> getAllBooks(@RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "10") int size) {
         return ApiResponse.<List<BookResponse>>builder()
-                .result(bookService.getAllBooks())
+                .result(bookService.getAllBooks(page, size))
                 .message("Success")
                 .build();
     }
