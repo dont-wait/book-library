@@ -1,6 +1,7 @@
 package com.nhom678.server.services;
 
 import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptCreationRequest;
+import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptUpdateRequest;
 import com.nhom678.server.dto.response.BorrowReceiptResponse;
 
 import java.util.List;
@@ -15,4 +16,9 @@ public interface BorrowReceiptService
     List<BorrowReceiptResponse> getAll();
 
     List<BorrowReceiptResponse> getByUserId(String userId);
+
+    BorrowReceiptResponse updateBorrowReceipt(BorrowReceiptUpdateRequest dto);
+
+    void deleteBorrowReceipt(String borrowReceiptId);
+
 }

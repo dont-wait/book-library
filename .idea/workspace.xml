@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3278e570-7422-42bb-a67f-fe953f20bbaf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/AuthorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/AuthorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/BookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/CategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/PublisherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/controllers/PublisherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/ApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/response/ApiResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/admin/AdminUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/admin/AdminUpdateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/librarian/LibrarianUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/librarian/LibrarianUpdateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/member/MemberUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/request/member/MemberUpdateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/response/AdminResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/dto/response/AdminResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/exceptions/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/services/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/services/BookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/services/impl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/nhom678/server/services/impl/AdminServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="3278e570-7422-42bb-a67f-fe953f20bbaf" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,6 +47,7 @@
   "keyToString": {
     "DefaultHtmlFileTemplate": "HTML File",
     "Maven.server [clean].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -70,7 +55,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.ServerApplication.executor": "Run",
-    "git-widget-placeholder": "dev",
+    "git-widget-placeholder": "spring-security-architecture",
+    "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/dontwait/programming/book-library/server",
     "node.js.detected.package.eslint": "true",
@@ -145,6 +131,7 @@
       <workItem from="1747959566103" duration="73000" />
       <workItem from="1747959647865" duration="42000" />
       <workItem from="1747960451417" duration="46000" />
+      <workItem from="1748439870253" duration="315000" />
     </task>
     <servers />
   </component>

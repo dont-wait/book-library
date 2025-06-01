@@ -14,6 +14,8 @@ import com.nhom678.server.utils.URLUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,8 +65,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookResponse> getAllBooks() {
-        return bookRepository.findAll()
+    public List<BookResponse> getAllBooks(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return bookRepository.findAll(pageable)
                 .stream()
                 .map(bookMapper::toBookResponse)
                 .toList();

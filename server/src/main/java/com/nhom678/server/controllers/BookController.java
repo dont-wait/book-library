@@ -11,7 +11,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClient;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -24,13 +24,15 @@ public class BookController {
     BookService bookService;
 
     @GetMapping
-    ApiResponse<List<BookResponse>> getAllBooks() {
+    ApiResponse<List<BookResponse>> getAllBooks(@RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "10") int size) {
         return ApiResponse.<List<BookResponse>>builder()
-                .result(bookService.getAllBooks())
+                .result(bookService.getAllBooks(page, size))
                 .message("Success")
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     @PostMapping
     ApiResponse<BookResponse> createBook(@Valid @RequestBody BookCreationRequest request) {
         return ApiResponse.<BookResponse>builder()
@@ -38,6 +40,7 @@ public class BookController {
                 .message("Success").build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     @PutMapping("{bookId}")
     ApiResponse<BookResponse> updateBook(@PathVariable Integer bookId,
                                          @Valid @RequestBody BookUpdateRequest request) {
@@ -56,12 +59,13 @@ public class BookController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     @DeleteMapping
     ApiResponse<String> deleteBook(@RequestParam String BookName) {
-        ApiResponse<String> apiResponse = new ApiResponse<>();
         bookService.deleteBook(BookName);
-        apiResponse.setMessage("Success");
-        apiResponse.setResult("Deleted successfully") ;
-        return apiResponse;
+        return ApiResponse.<String>builder()
+                .result("Deleted successfully")
+                .message("Success")
+                .build();
     }
 }

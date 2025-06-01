@@ -2,6 +2,7 @@ package com.nhom678.server.services.impl;
 
 
 import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptCreationRequest;
+import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptUpdateRequest;
 import com.nhom678.server.dto.response.BorrowReceiptResponse;
 import com.nhom678.server.entity.*;
 import com.nhom678.server.enums.ErrorCode;
@@ -31,9 +32,6 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
     UserAccountRepository userAccountRepository;
     BookRepository bookRepository;
     StatusBookRepository statusBookRepository;
-//    Book book;
-//    UserAccount userAccount;
-//    ReturnReceipt returnReceipt;
 
     @Override
     public BorrowReceiptResponse createBorrowReceipt(BorrowReceiptCreationRequest dto){
@@ -81,4 +79,37 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
                 .map(mapper::toBorrowReceiptResponse)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public BorrowReceiptResponse updateBorrowReceipt(BorrowReceiptUpdateRequest dto) {
+        BorrowReceipt borrowReceipt = borrowReceiptRepository.findById(dto.getBorrowReceiptId())
+                .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));
+
+        if (dto.getBookId() != null) {
+            Book book = bookRepository.findById(dto.getBookId())
+                    .orElseThrow(() -> new AppException(ErrorCode.BOOK_ID_NOT_FOUND));
+            borrowReceipt.setBook(book);
+        }
+
+        if (dto.getStatusName() != null) {
+            StatusBook statusBook = statusBookRepository.findByName(dto.getStatusName())
+                    .orElseThrow(() -> new AppException(ErrorCode.STATUS_NAME_NOT_FOUND));
+            borrowReceipt.setStatusBook(statusBook);
+        }
+
+        // trường  còn lại
+        mapper.updateBorrowReceipt(borrowReceipt, dto);
+
+        borrowReceiptRepository.save(borrowReceipt);
+
+        return mapper.toBorrowReceiptResponse(borrowReceipt);
+    }
+
+    @Override
+    public void deleteBorrowReceipt(String borrowReceiptId) {
+        BorrowReceipt borrowReceipt = borrowReceiptRepository.findById(borrowReceiptId)
+                .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));
+        borrowReceiptRepository.delete(borrowReceipt);
+    }
+
 }
