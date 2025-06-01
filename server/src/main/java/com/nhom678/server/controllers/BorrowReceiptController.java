@@ -30,14 +30,21 @@ public class BorrowReceiptController {
                 .build();
     }
     @GetMapping
-    public ResponseEntity<List<BorrowReceiptResponse>> getAll(){
-        List<BorrowReceiptResponse> list=service.getAll();
-        return ResponseEntity.ok(list);
+    public ApiResponse<List<BorrowReceiptResponse>> getAll() {
+        List<BorrowReceiptResponse> list = service.getAll();
+        return ApiResponse.<List<BorrowReceiptResponse>>builder()
+                .result(list)
+                .message("Success")
+                .build();
     }
 
+
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<BorrowReceiptCreationRequest>> getByUserId(@PathVariable String userId){
-        List<BorrowReceiptCreationRequest> list =service.getByUserId(userId);
-        return ResponseEntity.ok(list);
+    public ApiResponse<List<BorrowReceiptResponse>> getByUserId(@PathVariable String userId){
+        List<BorrowReceiptResponse> list =service.getByUserId(userId);
+        return ApiResponse.<List<BorrowReceiptResponse>>builder()
+                .result(list)
+                .message("Success")
+                .build();
     }
 }

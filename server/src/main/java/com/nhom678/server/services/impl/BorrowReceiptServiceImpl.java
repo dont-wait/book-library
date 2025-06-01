@@ -73,13 +73,12 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
                 .collect(Collectors.toList());
     }
     @Override
-    public List<BorrowReceiptCreationRequest> getByUserId(String userId){
+    public List<BorrowReceiptResponse> getByUserId(String userId){
 
 
-//        List<BorrowReceipt> list=borrowReceiptRepository.findByUserId(userId);
-//        return list.stream()
-//                .map(this::toDTO)
-//                .collect(Collectors.toList());
-        return null;
+        List<BorrowReceipt> list=borrowReceiptRepository.findByUserId(userId);
+        return list.stream()
+                .map(mapper::toBorrowReceiptResponse)
+                .collect(Collectors.toList());
     }
 }
