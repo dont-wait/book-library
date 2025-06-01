@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../api/axios";
+import axios from "axios";
 import { API_ENDPOINTS } from "../api/endpoints";
-import { AxiosError } from "axios";
 
 const Auth = () => {
-  const [userId, setUserId] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -13,19 +12,13 @@ const Auth = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axiosInstance.post(API_ENDPOINTS.AUTH.LOGIN, {
-        userId,
+      await axios.post(API_ENDPOINTS.AUTH.LOGIN, {
+        username,
         password,
-      }, {
-        withCredentials: true
       });
       navigate("/admin");
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        setError(err.response?.data?.message || "Invalid username or password");
-      } else {
-        setError("An unexpected error occurred");
-      }
+    } catch (error) {
+      setError("Invalid username or password");
     }
   };
 
@@ -40,18 +33,18 @@ const Auth = () => {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="userId" className="sr-only">
-                User ID
+              <label htmlFor="username" className="sr-only">
+                Username
               </label>
               <input
-                id="userId"
-                name="userId"
+                id="username"
+                name="username"
                 type="text"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="User ID"
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)}
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div>
