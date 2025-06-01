@@ -23,7 +23,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ReturnReceiptServiceImpl implements ReturnReceiptService
 {
     ReturnReceiptRepository returnReceiptRepository;
@@ -31,16 +31,13 @@ public class ReturnReceiptServiceImpl implements ReturnReceiptService
     StatusBookRepository statusBookRepository;
     ReturnReceiptMapper returnReceiptMapper;
 
-    @Autowired
-    public ReturnReceiptServiceImpl(BorrowReceiptRepository borrowReceiptRepository) {
-        this.borrowReceiptRepository = borrowReceiptRepository;
-    }
+
 
     @Override
     public ReturnReceiptResponse createReturnReceipt(ReturnReceiptRequest request)
     {
         BorrowReceipt borrowReceipt = borrowReceiptRepository.findByBorrowReceiptId(request.getBorrowReceiptId())
-                .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));
 
         StatusBook statusBook = statusBookRepository.findById(request.getStatusBookName())
                 .orElseThrow(() -> new AppException(ErrorCode.BOOK_NAME_NOT_FOUND));
