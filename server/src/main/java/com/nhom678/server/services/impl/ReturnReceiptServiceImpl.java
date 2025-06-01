@@ -15,6 +15,7 @@ import com.nhom678.server.services.ReturnReceiptService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -29,6 +30,11 @@ public class ReturnReceiptServiceImpl implements ReturnReceiptService
     BorrowReceiptRepository borrowReceiptRepository;
     StatusBookRepository statusBookRepository;
     ReturnReceiptMapper returnReceiptMapper;
+
+    @Autowired
+    public ReturnReceiptServiceImpl(BorrowReceiptRepository borrowReceiptRepository) {
+        this.borrowReceiptRepository = borrowReceiptRepository;
+    }
 
     @Override
     public ReturnReceiptResponse createReturnReceipt(ReturnReceiptRequest request)
