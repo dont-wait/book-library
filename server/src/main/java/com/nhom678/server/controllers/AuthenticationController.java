@@ -32,7 +32,7 @@ public class AuthenticationController {
         // Create secure HTTP-only cookie
         Cookie cookie = new Cookie("auth_token", result.getToken());
         cookie.setHttpOnly(true);
-        cookie.setSecure(false); // Only sent over HTTPS
+        cookie.setSecure(false); // Set to false for local development
         cookie.setPath("/");
         cookie.setMaxAge(3600); // 1 hour
         response.addCookie(cookie);
@@ -49,7 +49,7 @@ public class AuthenticationController {
         // Update cookie with new token
         Cookie cookie = new Cookie("auth_token", result.getToken());
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+        cookie.setSecure(false); // Set to false for local development
         cookie.setPath("/");
         cookie.setMaxAge(3600);
         response.addCookie(cookie);
@@ -74,7 +74,7 @@ public class AuthenticationController {
         // Clear the auth cookie
         Cookie cookie = new Cookie("auth_token", "");
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+        cookie.setSecure(false); // Set to false for local development
         cookie.setPath("/");
         cookie.setMaxAge(0); // Delete cookie
         response.addCookie(cookie);

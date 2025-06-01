@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecificationExecutor<Book> {
-    Page<Book> findAll(Pageable pageable);
+    Page<Book> findAll(Pageable pageable, int size);
     Optional<Book> findBookByIsbn(String isbn);
     Optional<Book> findBookByBookName(String bookName);
     Optional<Book> findBookByBookId(Integer bookId);

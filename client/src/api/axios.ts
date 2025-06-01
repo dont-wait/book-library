@@ -1,5 +1,4 @@
 import axios from "axios";
-import { API_ENDPOINTS } from './endpoints';
 
 const instance = axios.create({
     baseURL: "http://localhost:6969/api/v1",
@@ -7,16 +6,19 @@ const instance = axios.create({
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
     },
 });
 
 // Add a request interceptor
 instance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
+        // Add cache control headers to every request
+        config.headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+        config.headers["Pragma"] = "no-cache";
+        config.headers["Expires"] = "0";
         return config;
     },
     (error) => {
@@ -29,10 +31,10 @@ instance.interceptors.response.use(
     (response) => {
         return response;
     },
-    (error) => {
+    async (error) => {
         if (error.response?.status === 401) {
-            localStorage.removeItem('token');
-            window.location.href = '/auth/log-in';
+            // If unauthorized, redirect to login
+            window.location.href = '/login';
         }
         return Promise.reject(error);
     }

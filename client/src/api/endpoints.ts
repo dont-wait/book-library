@@ -16,6 +16,9 @@ export const API_ENDPOINTS = {
     GET_PROFILE: `${BASE_URL}/users/profile`,
     GET_BORROWED_BOOKS: `${BASE_URL}/users/borrowed-books`,
   },
+  DASHBOARD: {
+    STATS: `${BASE_URL}/admin/dashboard/stats`,
+  },
   ADMIN: {
     // User management
     GET_ALL_USERS: `${BASE_URL}/admin/users`,
@@ -46,5 +49,17 @@ export const API_ENDPOINTS = {
     ADD_PUBLISHER: `${BASE_URL}/admin/publishers`,
     UPDATE_PUBLISHER: (id: string) => `${BASE_URL}/admin/publishers/${id}`,
     DELETE_PUBLISHER: (id: string) => `${BASE_URL}/admin/publishers/${id}`,
+
+    // Borrow management
+    GET_ALL_BORROWS: `${BASE_URL}/admin/borrows`,
+    ADD_BORROW: `${BASE_URL}/admin/borrows`,
+    UPDATE_BORROW: (id: string) => `${BASE_URL}/admin/borrows/${id}`,
+    DELETE_BORROW: (id: string) => `${BASE_URL}/admin/borrows/${id}`,
+
+    // Return management
+    GET_ALL_RETURNS: `${BASE_URL}/admin/returns`,
+    ADD_RETURN: `${BASE_URL}/admin/returns`,
+    UPDATE_RETURN: (id: string) => `${BASE_URL}/admin/returns/${id}`,
+    DELETE_RETURN: (id: string) => `${BASE_URL}/admin/returns/${id}`,
   },
 } as const; 

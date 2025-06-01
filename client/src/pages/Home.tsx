@@ -16,12 +16,14 @@ const Home = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(API_ENDPOINTS.BOOKS.GET_ALL);
-        setBooks(response.data);
+        const response = await axios.get(`${API_ENDPOINTS.BOOKS.GET_ALL}?page=${page}&size=${size}`);
+        setBooks(response.data.result || []);
         setLoading(false);
       } catch {
         setError('Không thể tải danh sách sách. Vui lòng thử lại sau.');
@@ -30,17 +32,25 @@ const Home = () => {
     };
 
     fetchBooks();
-  }, []);
+  }, [page, size]);
 
   const handleBorrow = async (bookId: string) => {
     try {
       await axios.post(API_ENDPOINTS.BOOKS.BORROW(bookId));
       // Cập nhật lại danh sách sách sau khi mượn thành công
-      const response = await axios.get(API_ENDPOINTS.BOOKS.GET_ALL);
-      setBooks(response.data);
+      const response = await axios.get(`${API_ENDPOINTS.BOOKS.GET_ALL}?page=${page}&size=${size}`);
+      setBooks(response.data.result || []);
     } catch {
       setError('Không thể mượn sách. Vui lòng thử lại sau.');
     }
+  };
+
+  const handleNextPage = () => {
+    setPage(prevPage => prevPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setPage(prevPage => Math.max(0, prevPage - 1));
   };
 
   if (loading) {
@@ -94,6 +104,12 @@ const Home = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="pagination">
+        <button onClick={handlePrevPage} disabled={page === 0}>Trang trước</button>
+        <span>Trang {page + 1}</span>
+        <button onClick={handleNextPage}>Trang sau</button>
       </div>
     </div>
   );

@@ -26,6 +26,15 @@ public class CorsConfig {
         // Allow specific methods
         config.addAllowedMethod("*");
         
+        // Allow cookies
+        config.addExposedHeader("Set-Cookie");
+        config.addExposedHeader("Authorization");
+        
+        // Add cache control headers
+        config.addExposedHeader("Cache-Control");
+        config.addExposedHeader("Pragma");
+        config.addExposedHeader("Expires");
+        
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }

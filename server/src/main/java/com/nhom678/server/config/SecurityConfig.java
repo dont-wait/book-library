@@ -52,7 +52,7 @@ public class SecurityConfig {
                         oauth2.jwt(jwtConfigurer ->
                                 jwtConfigurer
                                         .decoder(customJwtDecoder) //verify token
-                                            .jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                                        .jwtAuthenticationConverter(jwtAuthenticationConverter()))
                                         .authenticationEntryPoint(new JwtAuthenticationEntryPoint()) //Dieu huong Filter Spring xu li
                 )
                 .authorizeHttpRequests(request -> request

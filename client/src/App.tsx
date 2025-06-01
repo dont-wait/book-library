@@ -1,88 +1,131 @@
 import { useEffect, useState } from "react"
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import axios from "./api/axios";
+import axios, { AxiosError } from "axios";
 import { API_ENDPOINTS } from "./api/endpoints";
-import Login from "./components/Login";
-
-interface Book {
-  bookId: number;
-  bookName: string;
-  description: string;
-  bookImageURL: string;
-  quantity: number;
-  isbn: string;
-  publicationDate: string;
-  rating: number;
-  floorPosition: string;
-  publisherId: number;
-  categoryId: number;
-  authorId: number;
-}
+import Layout from "./components/common/Layout";
+import Login from "./pages/Auth";
+import Dashboard from "./pages/admin/Dashboard";
+import Books from "./pages/admin/Books";
+import Users from "./pages/admin/Users";
+import Categories from "./pages/admin/Categories";
+import Authors from "./pages/admin/Authors";
+import Borrows from "./pages/admin/Borrows";
+import Returns from "./pages/admin/Returns";
 
 const App = () => {
-  const [books, setBooks] = useState<Book[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      const getBooks = async () => {
-        try {
-          const response = await axios.get(API_ENDPOINTS.BOOKS.GET_ALL);
-          setBooks(response.data.result || []); // Access the result field from ApiResponse
-          setLoading(false);
-        } catch (err) {
-          setError('Failed to fetch books');
-          setLoading(false);
+    const checkAuth = async () => {
+      try {
+        await axios.get(API_ENDPOINTS.USERS.GET_PROFILE);
+        setIsAuthenticated(true);
+      } catch (error) {
+        if (error instanceof AxiosError && error.response?.status === 401) {
+          setIsAuthenticated(false);
         }
-      };
-      getBooks();
-    }
-  }, [isAuthenticated]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/admin" replace /> : <Login />} />
         <Route
-          path="/"
+          path="/admin"
           element={
             isAuthenticated ? (
-              <div>
-                {books.map(book => (
-                  <div key={book.bookId}>
-                    <h1>{book.bookName}</h1>
-                    <p>{book.description}</p>
-                    <img src={book.bookImageURL} alt={book.bookName} />
-                    <p>Quantity: {book.quantity}</p>
-                    <p>ISBN: {book.isbn}</p>
-                    <p>Published: {book.publicationDate}</p>
-                    <p>Rating: {book.rating}</p>
-                    <p>Location: {book.floorPosition}</p>
-                  </div>
-                ))}
-              </div>
+              <Layout>
+                <Dashboard />
+              </Layout>
             ) : (
               <Navigate to="/login" replace />
             )
           }
         />
+        <Route
+          path="/admin/books"
+          element={
+            isAuthenticated ? (
+              <Layout>
+                <Books />
+              </Layout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            isAuthenticated ? (
+              <Layout>
+                <Users />
+              </Layout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/admin/categories"
+          element={
+            isAuthenticated ? (
+              <Layout>
+                <Categories />
+              </Layout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/admin/authors"
+          element={
+            isAuthenticated ? (
+              <Layout>
+                <Authors />
+              </Layout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/admin/borrows"
+          element={
+            isAuthenticated ? (
+              <Layout>
+                <Borrows />
+              </Layout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/admin/returns"
+          element={
+            isAuthenticated ? (
+              <Layout>
+                <Returns />
+              </Layout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route path="*" element={<Navigate to="/admin" replace />} />
       </Routes>
     </Router>
   );
