@@ -14,5 +14,5 @@ public interface BorrowReceiptService
 
     List<BorrowReceiptResponse> getAll();
 
-    List<BorrowReceiptCreationRequest> getByUserId(String userId);
+    List<BorrowReceiptResponse> getByUserId(String userId);
 }
