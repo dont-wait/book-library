@@ -1,6 +1,5 @@
-package com.nhom678.server.dto.request.borrowReceipt;
+package com.nhom678.server.dto.request.borrowReceiptV2;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;

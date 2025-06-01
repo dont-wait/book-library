@@ -19,9 +19,29 @@ instance.interceptors.request.use(
         config.headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
         config.headers["Pragma"] = "no-cache";
         config.headers["Expires"] = "0";
+        
+        // Get token from localStorage
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            // Add token to Authorization header
+            config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        
+        // Browser automatically sends HttpOnly cookies
+        // No need to manually add Authorization header if using cookies for auth
+        
+        // Log request details for debugging
+        console.log('Request:', {
+            url: config.url,
+            method: config.method,
+            headers: config.headers,
+            withCredentials: config.withCredentials
+        });
+        
         return config;
     },
     (error) => {
+        console.error('Request error:', error);
         return Promise.reject(error);
     }
 );
@@ -29,13 +49,23 @@ instance.interceptors.request.use(
 // Add a response interceptor
 instance.interceptors.response.use(
     (response) => {
+        // Log response details for debugging
+        console.log('Response:', {
+            status: response.status,
+            headers: response.headers,
+            data: response.data
+        });
         return response;
     },
     async (error) => {
-        if (error.response?.status === 401) {
-            // If unauthorized, redirect to login
-            window.location.href = '/login';
-        }
+        // Log error details for debugging
+        console.error('Response error:', {
+            status: error.response?.status,
+            data: error.response?.data,
+            headers: error.response?.headers
+        });
+        
+        // Remove automatic redirect on 401
         return Promise.reject(error);
     }
 );

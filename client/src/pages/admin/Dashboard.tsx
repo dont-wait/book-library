@@ -1,54 +1,61 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { API_ENDPOINTS } from "../../api/endpoints";
+import { Tab } from '@headlessui/react';
+import BookManagement from '../../components/admin/BookManagement';
+import CategoryManagement from '../../components/admin/CategoryManagement';
+import AuthorManagement from '../../components/admin/AuthorManagement';
+import UserManagement from '../../components/admin/UserManagement';
 
-interface DashboardStats {
-  totalBooks: number;
-  totalUsers: number;
-  totalBorrows: number;
-  totalReturns: number;
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
 }
 
 const Dashboard = () => {
-  const [stats, setStats] = useState<DashboardStats>({
-    totalBooks: 0,
-    totalUsers: 0,
-    totalBorrows: 0,
-    totalReturns: 0,
-  });
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await axios.get(API_ENDPOINTS.DASHBOARD.STATS);
-        setStats(response.data.result);
-      } catch (error) {
-        console.error("Failed to fetch dashboard stats:", error);
-      }
-    };
-
-    fetchStats();
-  }, []);
+  const tabs = [
+    { name: 'Books', component: BookManagement },
+    { name: 'Categories', component: CategoryManagement },
+    { name: 'Authors', component: AuthorManagement },
+    { name: 'Users', component: UserManagement },
+  ];
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-6">Dashboard</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-gray-500 text-sm font-medium">Total Books</h2>
-          <p className="text-3xl font-bold text-gray-900">{stats.totalBooks}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-gray-500 text-sm font-medium">Total Users</h2>
-          <p className="text-3xl font-bold text-gray-900">{stats.totalUsers}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-gray-500 text-sm font-medium">Total Borrows</h2>
-          <p className="text-3xl font-bold text-gray-900">{stats.totalBorrows}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-gray-500 text-sm font-medium">Total Returns</h2>
-          <p className="text-3xl font-bold text-gray-900">{stats.totalReturns}</p>
+    <div className="min-h-screen bg-gray-100 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-lg shadow">
+          <div className="px-4 py-5 sm:px-6">
+            <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+          </div>
+          <Tab.Group>
+            <Tab.List className="flex space-x-1 rounded-t-xl bg-gray-100 p-1">
+              {tabs.map((tab) => (
+                <Tab
+                  key={tab.name}
+                  className={({ selected }: { selected: boolean }) =>
+                    classNames(
+                      'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
+                      'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                      selected
+                        ? 'bg-white text-blue-700 shadow'
+                        : 'text-gray-600 hover:bg-white/[0.12] hover:text-gray-800'
+                    )
+                  }
+                >
+                  {tab.name}
+                </Tab>
+              ))}
+            </Tab.List>
+            <Tab.Panels className="mt-2">
+              {tabs.map((tab, idx) => (
+                <Tab.Panel
+                  key={idx}
+                  className={classNames(
+                    'rounded-xl bg-white p-3',
+                    'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+                  )}
+                >
+                  <tab.component />
+                </Tab.Panel>
+              ))}
+            </Tab.Panels>
+          </Tab.Group>
         </div>
       </div>
     </div>
