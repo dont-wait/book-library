@@ -11,7 +11,7 @@ public interface MemberMapper {
 
     MemberResponse toMemberResponse(Member member);
     @Mapping(target = "userAccount", ignore = true)
-    Member toMember(MemberCreationRequest memberResponse);
+    Member toMember(MemberCreationRequest request);
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateMember(@MappingTarget Member member, MemberUpdateRequest request);
 }
