@@ -2,6 +2,7 @@ package com.nhom678.server.controllers;
 
 import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptCreationRequest;
+import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptUpdateRequest;
 import com.nhom678.server.dto.response.BorrowReceiptResponse;
 import com.nhom678.server.services.BorrowReceiptService;
 import jakarta.validation.Valid;
@@ -47,4 +48,32 @@ public class BorrowReceiptController {
                 .message("Success")
                 .build();
     }
+
+    @PutMapping
+    public ApiResponse<BorrowReceiptResponse> update(@RequestBody @Valid BorrowReceiptUpdateRequest dto) {
+        BorrowReceiptResponse response = service.updateBorrowReceipt(dto);
+        return ApiResponse.<BorrowReceiptResponse>builder()
+                .result(response)
+                .message("Update Success")
+                .build();
+    }
+    @PutMapping("/{borrowReceiptId}")
+    public ApiResponse<BorrowReceiptResponse> update(@PathVariable String borrowReceiptId, @RequestBody @Valid BorrowReceiptUpdateRequest dto) {
+        dto.setBorrowReceiptId(borrowReceiptId); // gán borrowReceiptId từ URL vào dto
+        BorrowReceiptResponse response = service.updateBorrowReceipt(dto);
+        return ApiResponse.<BorrowReceiptResponse>builder()
+                .result(response)
+                .message("Update Success")
+                .build();
+    }
+    @DeleteMapping("/{borrowReceiptId}")
+    public ApiResponse<String> deleteBorrowReceipt(@PathVariable String borrowReceiptId) {
+        service.deleteBorrowReceipt(borrowReceiptId);
+        return ApiResponse.<String>builder()
+                .result("Delete success")
+                .message("Success")
+                .build();
+    }
+
+
 }

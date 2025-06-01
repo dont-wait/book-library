@@ -1,6 +1,8 @@
 package com.nhom678.server.mapper;
 
+import com.nhom678.server.dto.request.admin.AdminUpdateRequest;
 import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptCreationRequest;
+import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptUpdateRequest;
 import com.nhom678.server.dto.response.BorrowReceiptResponse;
 import com.nhom678.server.entity.BorrowReceipt;
 import org.mapstruct.*;
@@ -15,6 +17,9 @@ public interface BorrowReceiptMapper {
 
     BorrowReceipt toBorrowReceipt(BorrowReceiptCreationRequest request);
 
-  //  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-   // void updateBorrowReceipt(@MappingTarget BorrowReceipt borrowReceipt, AdminUpdateRequest request);
+//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+//    void updateBorrowReceipt(@MappingTarget BorrowReceipt borrowReceipt, AdminUpdateRequest request);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateBorrowReceipt(@MappingTarget BorrowReceipt borrowReceipt, BorrowReceiptUpdateRequest request);
 }
