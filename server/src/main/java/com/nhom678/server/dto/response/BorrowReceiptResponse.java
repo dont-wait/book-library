@@ -19,6 +19,7 @@ public class BorrowReceiptResponse {
     String name;
     String bookName;
     String statusReceiptName;
+    Double costBorrow;
 
     String bookId;
 }

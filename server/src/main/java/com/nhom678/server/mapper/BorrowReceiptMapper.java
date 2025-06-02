@@ -14,6 +14,7 @@ public interface BorrowReceiptMapper {
     @Mapping(source = "book.bookId", target = "bookId")
     @Mapping(source = "book.bookName", target = "bookName")
     @Mapping(source = "statusReceipt.statusReceiptName", target = "statusReceiptName")
+    @Mapping(source = "costBorrow", target = "costBorrow")
 
     BorrowReceiptResponse toBorrowReceiptResponse(BorrowReceipt borrowReceipt);
 

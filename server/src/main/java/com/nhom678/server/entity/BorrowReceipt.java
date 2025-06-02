@@ -50,4 +50,9 @@ public class BorrowReceipt {
     @JoinColumn (name = "status_receipt_name")
     StatusReceipt statusReceipt;
 
+    @Column(name = "cost_borrow")
+    Double costBorrow;
+
+
+
 }

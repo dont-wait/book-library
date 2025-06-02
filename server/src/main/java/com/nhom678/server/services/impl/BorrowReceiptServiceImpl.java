@@ -50,6 +50,7 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
         StatusReceipt statusReceipt = statusReceiptRepository.findById(dto.getStatusReceiptName())
                 .orElseThrow(() -> new AppException(ErrorCode.STATUS_RECEIPT_NOT_FOUND));
 
+        Double costBorrow = statusBook.getFinePercent() * book.getCost() - book.getQuantity();
 
         BorrowReceipt borrowReceipt = BorrowReceipt.builder()
                 .borrowDate(dto.getBorrowDate())
@@ -59,6 +60,7 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
                 .userAccount(userAccount)
                 .statusBook(statusBook)
                 .statusReceipt(statusReceipt)
+                .costBorrow(costBorrow)
                 .build();
         borrowReceiptRepository.save(borrowReceipt);
         return mapper.toBorrowReceiptResponse(borrowReceipt);

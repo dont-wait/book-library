@@ -35,4 +35,6 @@ public class BorrowReceiptCreationRequest {
     @NotNull
     String statusReceiptName;
 
+
+
 }
