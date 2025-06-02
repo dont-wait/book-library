@@ -24,7 +24,4 @@ public class StatusBook {
 
     @Column(name = "description")
     String description;
-
-    @OneToMany(mappedBy = "statusBook", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<BorrowReceipt> borrowReceipt;
 }

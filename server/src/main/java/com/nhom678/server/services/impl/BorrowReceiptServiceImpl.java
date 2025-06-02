@@ -51,7 +51,6 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
                 .orElseThrow(() -> new AppException(ErrorCode.STATUS_RECEIPT_NOT_FOUND));
 
 
-        ReturnReceipt returnReceipt = null;
         BorrowReceipt borrowReceipt = BorrowReceipt.builder()
                 .borrowDate(dto.getBorrowDate())
                 .dueDate(dto.getDueDate())

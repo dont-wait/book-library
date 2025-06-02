@@ -14,5 +14,5 @@ public class StatusBookResponse {
     String name;
     Double fineCode;
     String description;
-    List<BookResponse> borrowReceipt;
+    //List<BookResponse> borrowReceipt;
 }
