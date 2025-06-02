@@ -1,73 +1,45 @@
 import axios from "axios";
 
-const instance = axios.create({
-    baseURL: "http://localhost:6969/api/v1",
-    withCredentials: true,
-    headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0"
-    },
+const MOCK_URL = "http://localhost:3000";
+// const API_URL = "http://localhost:3000/api/v1";
+
+const apiClient = axios.create({
+  baseURL: MOCK_URL,
+  headers: {
+    "Content-Type": "application/json",
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    Pragma: "no-cache",
+    Expires: "0",
+  },
+  // withCredentials: true,
 });
 
-// Add a request interceptor
-instance.interceptors.request.use(
-    (config) => {
-        // Add cache control headers to every request
-        config.headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
-        config.headers["Pragma"] = "no-cache";
-        config.headers["Expires"] = "0";
-        
-        // Get token from localStorage
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            // Add token to Authorization header
-            config.headers["Authorization"] = `Bearer ${token}`;
-        }
-        
-        // Browser automatically sends HttpOnly cookies
-        // No need to manually add Authorization header if using cookies for auth
-        
-        // Log request details for debugging
-        console.log('Request:', {
-            url: config.url,
-            method: config.method,
-            headers: config.headers,
-            withCredentials: config.withCredentials
-        });
-        
-        return config;
-    },
-    (error) => {
-        console.error('Request error:', error);
-        return Promise.reject(error);
-    }
-);
+// Interceptor để thêm access_token vào header của tất cả các yêu cầu
+apiClient.interceptors.request.use((config) => {
+  const separator = config.url?.includes("?") ? "&" : "?";
+  config.url = `${config.url}${separator}_t=${new Date().getTime()}`;
+  return config;
+});
 
-// Add a response interceptor
-instance.interceptors.response.use(
-    (response) => {
-        // Log response details for debugging
-        console.log('Response:', {
-            status: response.status,
-            headers: response.headers,
-            data: response.data
-        });
-        return response;
-    },
-    async (error) => {
-        // Log error details for debugging
-        console.error('Response error:', {
-            status: error.response?.status,
-            data: error.response?.data,
-            headers: error.response?.headers
-        });
-        
-        // Remove automatic redirect on 401
-        return Promise.reject(error);
-    }
-);
+// const login = async (id: string, password: string) => {
+//   try {
+//     const response = await apiClient.post(LOGIN_API, {
+//       id,
+//       password,
+//     });
 
-export default instance;
+//     // luu cookie vao session storage
+//     const token = response.data.data.access_token;
+//     sessionStorage.setItem("access_token", token);
+//     apiClient.defaults.headers.Authorization = `Bearer ${token}`;
+
+//     return {
+//       user: response.data.data.user,
+//       accessToken: response.data.data.access_token,
+//     };
+//   } catch {
+//     throw new Error("Error during login:");
+//   }
+// };
+
+export { apiClient };
