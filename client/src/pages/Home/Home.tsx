@@ -54,6 +54,7 @@ const Home = () => {
   // Xử lý khi người dùng chuyển trang
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
