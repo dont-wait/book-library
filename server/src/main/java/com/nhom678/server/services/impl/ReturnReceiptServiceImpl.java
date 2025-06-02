@@ -41,7 +41,7 @@ public class ReturnReceiptServiceImpl implements ReturnReceiptService
                 .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));
 
         StatusBook statusBook = statusBookRepository.findById(request.getStatusBookName())
-                .orElseThrow(() -> new AppException(ErrorCode.BOOK_NAME_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.STATUS_NAME_NOT_FOUND));
 
         ReturnReceipt phieuTra = returnReceiptMapper.toPhieuTra(request);
         phieuTra.setBorrowReceipt(borrowReceipt);
