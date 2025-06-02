@@ -6,6 +6,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.List;
+
 @Configuration
 public class CorsConfig {
     
@@ -16,7 +18,9 @@ public class CorsConfig {
         
         // Allow credentials
         config.setAllowCredentials(true);
-        
+
+
+        config.setAllowedOriginPatterns(List.of("*"));  // <-- allows all origins
         // Allow specific origins
         config.addAllowedOrigin("http://localhost:5173");
         
