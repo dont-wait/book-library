@@ -7,13 +7,13 @@ import java.time.LocalDate;
 @Data
 public class BorrowReceiptUpdateRequest {
 //    @NotNull(message = "borrowReceiptId is required")
-    String borrowReceiptId;
+//    String borrowReceiptId;
 
     LocalDate borrowDate;
     LocalDate dueDate;
     Integer quantity;
-    Integer bookId;
-    String userId;
+//    Integer bookId;
+//    String userId;
     String statusName;
     String statusReceiptName;
 }
