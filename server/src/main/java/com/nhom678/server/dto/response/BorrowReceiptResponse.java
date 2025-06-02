@@ -17,5 +17,5 @@ public class BorrowReceiptResponse {
     Integer quantity;
     String userId;
     String name;
-    Integer bookId;
+    String bookName;
 }
