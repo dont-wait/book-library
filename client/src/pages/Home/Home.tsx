@@ -4,11 +4,11 @@ import BooksGrid from "../../components/BookGrid";
 import Pagination from "../../components/Pagination";
 import { useState, useEffect } from "react";
 import { apiClient } from "../../api/axios";
-import { Book, User, BorrowBook } from "../../type";
+import { Book, BorrowBook, Member } from "../../type";
 import { Container, Row, Col } from "react-bootstrap";
 
 interface UserData {
-  data: User;
+  data: Member;
 }
 
 interface BorrowedBookData {
@@ -32,7 +32,7 @@ const itemsPerPage: number = 50;
 
 // Home Page Component
 const Home = () => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<Member>();
   const [borrowBooks, setBorrowBooks] = useState<BorrowBook[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedBooks, setPaginatedBooks] = useState<Book[]>([]);
@@ -57,19 +57,21 @@ const Home = () => {
   useEffect(() => {
 
     async function getUserInfo() {
-      const userInfo: UserData = await apiClient.get("/users");
-      if (userInfo) {
+      const userInfo: UserData = await apiClient.get("/members");
+      if (userInfo?.data) {
         setUser(userInfo.data);
       }
     }
 
     async function getBorrowedBooks() {
+      if (!user?.memberId) return;
       const borrowedBooks: BorrowedBookData = await apiClient.get(
-        "/borrowedBooks"
-      );
+        `/borrow-receipts/user/${admin00001}`
 
-      if (borrowBooks) {
-        setBorrowBooks(borrowedBooks.data);
+      );
+      console.log("booo: ", borrowedBooks.data.result)
+      if (borrowBooks?.data?.result) {
+        setBorrowBooks(borrowedBooks.data.result);
       }
     }
 

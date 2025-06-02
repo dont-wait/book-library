@@ -24,8 +24,8 @@ const BorrowedBooks = ({
         <i className='fas fa-bookmark me-2'></i>Your Borrowed Books
       </h5>
       {borrowedBooks.map((borrow) => {
-        const book = books.find((b) => b.bookId === borrow.bookId);
-        const bookName = book ? book.book_name : "Unknown Book";
+        const book = books.find((b) => b.bookName === borrow.bookName);
+        const bookName = book ? book.bookName : "Unknown Book";
         const isOverdue = new Date(borrow.dueDate) < new Date();
 
         return (

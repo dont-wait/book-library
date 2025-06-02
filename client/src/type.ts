@@ -14,13 +14,36 @@ export interface Book {
   authorName: string;
 }
 
-interface UserAccount {
+export interface AuthData {
+  userId: string;
+  role?: string[];
+  auth_token: string;
+}
+
+export interface UserAccount {
   isActivated: boolean;
   roles: string[];
 }
 
-export interface User {
+export interface Admin {
   adminId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  userAccount: UserAccount;
+}
+
+export interface Librarian {
+  librarianId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  userAccount: UserAccount;
+}
+export interface Member {
+  memberId: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -34,6 +57,7 @@ export interface BorrowBook {
   dueDate: string;
   quantity: number;
   userId: string;
-  name: string;
-  bookId: number;
+  name: string; //status book
+  statusReceiptName: string;
+  bookName: string;
 }
