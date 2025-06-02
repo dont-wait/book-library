@@ -83,15 +83,11 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
     }
 
     @Override
-    public BorrowReceiptResponse updateBorrowReceipt(BorrowReceiptUpdateRequest dto) {
-        BorrowReceipt borrowReceipt = borrowReceiptRepository.findById(dto.getBorrowReceiptId())
+    public BorrowReceiptResponse updateBorrowReceipt(String borrowReceiptId, BorrowReceiptUpdateRequest dto) {
+        BorrowReceipt borrowReceipt = borrowReceiptRepository.findById(borrowReceiptId)
                 .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));
 
-        if (dto.getBookId() != null) {
-            Book book = bookRepository.findById(dto.getBookId())
-                    .orElseThrow(() -> new AppException(ErrorCode.BOOK_ID_NOT_FOUND));
-            borrowReceipt.setBook(book);
-        }
+
 
         if (dto.getStatusName() != null) {
             StatusBook statusBook = statusBookRepository.findByName(dto.getStatusName())

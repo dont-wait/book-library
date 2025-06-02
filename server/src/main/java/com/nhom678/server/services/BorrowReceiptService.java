@@ -15,7 +15,7 @@ public interface BorrowReceiptService
 
     List<BorrowReceiptResponse> getByUserId(String userId);
 
-    BorrowReceiptResponse updateBorrowReceipt(BorrowReceiptUpdateRequest dto);
+    BorrowReceiptResponse updateBorrowReceipt(String borrowReceiptId, BorrowReceiptUpdateRequest dto);
 
     void deleteBorrowReceipt(String borrowReceiptId);
 

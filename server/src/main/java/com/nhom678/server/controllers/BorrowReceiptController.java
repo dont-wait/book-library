@@ -49,18 +49,9 @@ public class BorrowReceiptController {
                 .build();
     }
 
-    @PutMapping
-    public ApiResponse<BorrowReceiptResponse> update(@RequestBody @Valid BorrowReceiptUpdateRequest dto) {
-        BorrowReceiptResponse response = service.updateBorrowReceipt(dto);
-        return ApiResponse.<BorrowReceiptResponse>builder()
-                .result(response)
-                .message("Update Success")
-                .build();
-    }
     @PutMapping("/{borrowReceiptId}")
     public ApiResponse<BorrowReceiptResponse> update(@PathVariable String borrowReceiptId, @RequestBody @Valid BorrowReceiptUpdateRequest dto) {
-        dto.setBorrowReceiptId(borrowReceiptId); // gán borrowReceiptId từ URL vào dto
-        BorrowReceiptResponse response = service.updateBorrowReceipt(dto);
+        BorrowReceiptResponse response = service.updateBorrowReceipt(borrowReceiptId, dto);
         return ApiResponse.<BorrowReceiptResponse>builder()
                 .result(response)
                 .message("Update Success")
