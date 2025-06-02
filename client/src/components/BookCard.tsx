@@ -19,13 +19,13 @@ const BookCard = ({ book }: { book: Book }) => {
     <Col lg={3} md={4} sm={6} className='mb-4' onClick={handleClick}>
       <Card className='book-card h-100'>
         <img
-          src={book.book_image_url}
+          src={book.bookImageURL}
           className='card-img-top book-image'
-          alt={book.book_name}
+          alt={book.bookName}
           loading='lazy'
         />
         <Card.Body className='d-flex flex-column'>
-          <Card.Title>{book.book_name}</Card.Title>
+          <Card.Title>{book.bookName}</Card.Title>
           <div className='rating-stars mb-2'>
             <RatingStars rating={book.rating} />
             <small className='text-muted ms-1'>({book.rating})</small>

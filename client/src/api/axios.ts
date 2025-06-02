@@ -1,17 +1,17 @@
 import axios from "axios";
 
-const MOCK_URL = "http://localhost:3000";
-// const API_URL = "http://localhost:3000/api/v1";
+// const MOCK_URL = "http://localhost:3000";
+const API_URL = "http://localhost:6969/api/v1";
 
 const apiClient = axios.create({
-  baseURL: MOCK_URL,
+  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
     "Cache-Control": "no-cache, no-store, must-revalidate",
     Pragma: "no-cache",
     Expires: "0",
   },
-  // withCredentials: true,
+  withCredentials: true,
 });
 
 // Interceptor để thêm access_token vào header của tất cả các yêu cầu

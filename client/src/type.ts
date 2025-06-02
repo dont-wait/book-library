@@ -1,17 +1,17 @@
 export interface Book {
   bookId: number;
-  book_name: string;
+  bookName: string;
   cost: number;
   description: string;
-  book_image_url: string;
+  bookImageURL: string;
   quantity: number;
   isbn: string;
   publicationDate: string | null;
   rating: number;
   floorPosition: string | null;
-  publisherId: number;
-  categoryId: number;
-  authorId: number;
+  publisherName: string;
+  categoryName: string;
+  authorName: string;
 }
 
 interface UserAccount {

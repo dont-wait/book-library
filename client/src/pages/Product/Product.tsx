@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Book } from "../../type";
 import RatingStars from "../../components/RatingStars";
 import { Container, Row, Col } from "react-bootstrap";
+import formatNumberCost from "../../util/formatNumber";
+
 
 // Product Page Component
 const Product = () => {
@@ -24,7 +26,7 @@ const Product = () => {
   }
 
   const onBorrowBook = (book: Book) => {
-    console.log("Borrowing", book.book_name);
+    console.log("Borrowing", book.bookName);
   };
 
   const onBackToHome = () => {
@@ -39,7 +41,7 @@ const Product = () => {
             <NavLink to='/'>Home</NavLink>
           </li>
           <li className='breadcrumb-item active' aria-current='page'>
-            {book.book_name}
+            {book.bookName}
           </li>
         </ol>
       </nav>
@@ -47,21 +49,21 @@ const Product = () => {
       <Row>
         <Col md={4}>
           <img
-            src={book.book_image_url}
+            src={book.bookImageURL}
             alt='Book Cover'
             className='img-fluid product-image w-100 mb-3'
           />
         </Col>
 
         <Col md={8}>
-          <h1 className='mb-3'>{book.book_name}</h1>
+          <h1 className='mb-3'>{book.bookName}</h1>
 
           <div className='mb-3'>
             <div className='rating-stars mb-2'>
               <RatingStars rating={book.rating} />
               <small className='text-muted ms-1'>({book.rating})</small>
             </div>
-            <h3 className='text-primary'>${book.cost}</h3>
+            <h3 className='text-primary'>${formatNumberCost(book.cost)}</h3>
           </div>
 
           <Row className='mb-4'>
@@ -70,15 +72,15 @@ const Product = () => {
                 <strong>ISBN:</strong> {book.isbn}
               </p>
               <p>
-                <strong>Publisher ID:</strong> {book.publisherId}
+                <strong>Publisher:</strong> {book.publisherName}
               </p>
               <p>
-                <strong>Category ID:</strong> {book.categoryId}
+                <strong>Category:</strong> {book.categoryName}
               </p>
             </Col>
             <Col sm={6}>
               <p>
-                <strong>Author ID:</strong> {book.authorId}
+                <strong>Author:</strong> {book.authorName}
               </p>
               <p>
                 <strong>Publication Date:</strong>{" "}
