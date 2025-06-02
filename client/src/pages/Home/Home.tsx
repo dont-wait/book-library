@@ -7,10 +7,6 @@ import { apiClient } from "../../api/axios";
 import { Book, User, BorrowBook } from "../../type";
 import { Container, Row, Col } from "react-bootstrap";
 
-interface BookData {
-  data: Book[];
-}
-
 interface UserData {
   data: User;
 }
@@ -31,39 +27,34 @@ const defaultUser = {
   },
 };
 
-const itemsPerPage = 50;
+const totalPages: number = 10;
+const itemsPerPage: number = 50;
 
 // Home Page Component
 const Home = () => {
-  const [books, setBooks] = useState<Book[]>([]);
   const [user, setUser] = useState<User>();
   const [borrowBooks, setBorrowBooks] = useState<BorrowBook[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedBooks, setPaginatedBooks] = useState<Book[]>([]);
 
   // Tính tổng số trang
-  const totalPages = Math.ceil(books.length / itemsPerPage);
 
   // Cập nhật danh sách sách hiển thị khi trang thay đổi
   useEffect(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    setPaginatedBooks(books.slice(startIndex, endIndex));
-  }, [currentPage, books, itemsPerPage]);
+    async function getItemPerPage() {
+      const bookData = await apiClient.get(`/books?page=${currentPage - 1}&size=${itemsPerPage}`);
+      setPaginatedBooks(bookData.data.result);
+    }
+    getItemPerPage();
+  }, [currentPage, itemsPerPage]);
 
   // Xử lý khi người dùng chuyển trang
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); // Cuộn lên đầu trang khi chuyển trang
   };
 
   useEffect(() => {
-    async function getBookData() {
-      const bookData: BookData = await apiClient.get("/books");
-      if (bookData) {
-        setBooks(bookData.data);
-      }
-    }
 
     async function getUserInfo() {
       const userInfo: UserData = await apiClient.get("/users");
@@ -82,7 +73,6 @@ const Home = () => {
       }
     }
 
-    getBookData();
     getUserInfo();
     getBorrowedBooks();
   }, []);
@@ -94,7 +84,7 @@ const Home = () => {
             <UserInfo user={user ?? defaultUser} />
           </Col>
           <Col md={4}>
-            <BorrowedBooks borrowedBooks={borrowBooks} books={books} />
+            <BorrowedBooks borrowedBooks={borrowBooks} books={paginatedBooks} />
           </Col>
         </Row>
       </Container>
@@ -104,7 +94,6 @@ const Home = () => {
           <Col xs={12}>
             <h2 className='mb-4'>
               <i className='fas fa-books me-2'></i>Browse Books
-              <span className='badge badge-custom ms-2'>{books.length}</span>
             </h2>
           </Col>
         </Row>
