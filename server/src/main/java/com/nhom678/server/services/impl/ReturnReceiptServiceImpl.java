@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -83,12 +84,22 @@ public class ReturnReceiptServiceImpl implements ReturnReceiptService
     }
 
     @Override
-    public void deleteReturnReceipt(String id)
-    {
-        if (!returnReceiptRepository.existsById(id)) {
-            throw new AppException(ErrorCode.ID_NOT_FOUND);
+    @Transactional
+    public void deleteReturnReceipt(String id) {
+        ReturnReceipt receipt = returnReceiptRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
+
+        // Gỡ liên kết với BorrowReceipt (nếu có)
+        if (receipt.getBorrowReceipt() != null) {
+            receipt.getBorrowReceipt().setReturnReceipt(null);
         }
-        returnReceiptRepository.deleteById(id);
+
+        // Gỡ liên kết với StatusBook (nếu cần)
+        receipt.setBorrowReceipt(null);
+        receipt.setStatusBook(null);
+
+        returnReceiptRepository.delete(receipt);
     }
+
 
 }

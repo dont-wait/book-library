@@ -17,7 +17,7 @@ public class ReturnReceipt {
     @GeneratedValue(strategy = GenerationType.UUID)
     String returnReceiptId;
 
-    @Column(name = "return_receipt")
+    @Column(name = "return_date")
     Date returnDate;
 
     @ManyToOne
