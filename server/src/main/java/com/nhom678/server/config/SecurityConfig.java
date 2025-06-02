@@ -37,7 +37,9 @@ public class SecurityConfig {
             "/webjars/**",
             "/borrow-receipts/**",
             "/return_receipts/**",
-            "/status/**"
+            "/status/**",
+            "/books/**",
+            "/books"
     };
 
     @Value("${JWT_SECRET}")
