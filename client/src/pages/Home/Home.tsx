@@ -1,6 +1,7 @@
 import UserInfo from "../../components/UserInfo";
 import BorrowedBooks from "../../components/BorrowedBooks";
 import BooksGrid from "../../components/BookGrid";
+import Pagination from "../../components/Pagination";
 import { useState, useEffect } from "react";
 import { apiClient } from "../../api/axios";
 import { Book, User, BorrowBook } from "../../type";
@@ -30,11 +31,30 @@ const defaultUser = {
   },
 };
 
+const itemsPerPage = 50;
+
 // Home Page Component
 const Home = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [user, setUser] = useState<User>();
   const [borrowBooks, setBorrowBooks] = useState<BorrowBook[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [paginatedBooks, setPaginatedBooks] = useState<Book[]>([]);
+
+  // Tính tổng số trang
+  const totalPages = Math.ceil(books.length / itemsPerPage);
+
+  // Cập nhật danh sách sách hiển thị khi trang thay đổi
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setPaginatedBooks(books.slice(startIndex, endIndex));
+  }, [currentPage, books, itemsPerPage]);
+
+  // Xử lý khi người dùng chuyển trang
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   useEffect(() => {
     async function getBookData() {
@@ -88,7 +108,14 @@ const Home = () => {
           </Col>
         </Row>
 
-        <BooksGrid books={books} />
+        <BooksGrid books={paginatedBooks} />
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          maxDisplayedPages={5}
+        />
       </Container>
     </div>
   );
