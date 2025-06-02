@@ -38,9 +38,15 @@ public class BookResponse {
 
     String floorPosition;
 
-    Integer publisherId;
+//    Integer publisherId;
+//
+//    Integer categoryId;
+//
+//    Integer authorId;
 
-    Integer categoryId;
+    String publisherName;
 
-    Integer authorId;
+    String categoryName;
+
+    String authorName;
 }

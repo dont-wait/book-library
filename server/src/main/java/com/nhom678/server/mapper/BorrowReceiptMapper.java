@@ -1,6 +1,5 @@
 package com.nhom678.server.mapper;
 
-import com.nhom678.server.dto.request.admin.AdminUpdateRequest;
 import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptCreationRequest;
 import com.nhom678.server.dto.request.borrowReceipt.BorrowReceiptUpdateRequest;
 import com.nhom678.server.dto.response.BorrowReceiptResponse;

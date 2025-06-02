@@ -14,14 +14,12 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
-    @Mapping(target = "publisher", source = "publisher")
-    @Mapping(target = "category", source = "category")
-    @Mapping(target = "author", source = "author")
+
     Book toBook(BookCreationRequest request, Publisher publisher, Category category, Author author);
 
-    @Mapping(target = "publisherId", source = "publisher.publisherId")
-    @Mapping(target = "categoryId", source = "category.categoryId")
-    @Mapping(target = "authorId", source = "author.authorId")
+    @Mapping(target = "publisherName", source = "publisher.publisherName")
+    @Mapping(target = "categoryName", source = "category.categoryName")
+    @Mapping(target = "authorName", source = "author.authorName")
     BookResponse toBookResponse(Book book);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

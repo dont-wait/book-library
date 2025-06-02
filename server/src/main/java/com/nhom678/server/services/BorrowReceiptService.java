@@ -6,8 +6,6 @@ import com.nhom678.server.dto.response.BorrowReceiptResponse;
 
 import java.util.List;
 
-import com.nhom678.server.dto.request.BorrowReceipt.BorrowReceiptRequest;
-
 public interface BorrowReceiptService
 {
 

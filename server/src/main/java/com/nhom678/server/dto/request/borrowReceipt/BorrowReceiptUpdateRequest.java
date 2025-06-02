@@ -1,4 +1,4 @@
-package com.nhom678.server.dto.request.borrowReceiptV2;
+package com.nhom678.server.dto.request.borrowReceipt;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.nhom678.server.dto.request.borrowReceiptV2;
+package com.nhom678.server.dto.request.borrowReceipt;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

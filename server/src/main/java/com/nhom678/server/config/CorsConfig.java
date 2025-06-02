@@ -17,8 +17,8 @@ public class CorsConfig {
         // Allow credentials
         config.setAllowCredentials(true);
         
-        // Allow specific origin
-        config.addAllowedOrigin("http://localhost:5173"); // Vite's default port
+        // Allow specific origins
+        config.addAllowedOrigin("http://localhost:5173");
         
         // Allow specific headers
         config.addAllowedHeader("*");
