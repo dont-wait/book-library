@@ -45,4 +45,9 @@ public class BorrowReceipt {
     @OneToOne(mappedBy = "borrowReceipt")
     ReturnReceipt returnReceipt;
 
+
+    @ManyToOne
+    @JoinColumn (name = "status_receipt_name")
+    StatusReceipt statusReceipt;
+
 }

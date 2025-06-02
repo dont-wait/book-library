@@ -8,10 +8,7 @@ import com.nhom678.server.entity.*;
 import com.nhom678.server.enums.ErrorCode;
 import com.nhom678.server.exceptions.AppException;
 import com.nhom678.server.mapper.BorrowReceiptMapper;
-import com.nhom678.server.repositories.BookRepository;
-import com.nhom678.server.repositories.BorrowReceiptRepository;
-import com.nhom678.server.repositories.StatusBookRepository;
-import com.nhom678.server.repositories.UserAccountRepository;
+import com.nhom678.server.repositories.*;
 import com.nhom678.server.services.BorrowReceiptService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +28,8 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
     UserAccountRepository userAccountRepository;
     BookRepository bookRepository;
     StatusBookRepository statusBookRepository;
+    StatusReceiptRepository statusReceiptRepository;
+
 
     @Override
     public BorrowReceiptResponse createBorrowReceipt(BorrowReceiptCreationRequest dto){
@@ -48,6 +47,10 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
         StatusBook statusBook = statusBookRepository.findByName(dto.getName())
                 .orElseThrow(() -> new AppException(ErrorCode.STATUS_NAME_NOT_FOUND));
 
+        StatusReceipt statusReceipt = statusReceiptRepository.findById(dto.getStatusReceiptName())
+                .orElseThrow(() -> new AppException(ErrorCode.STATUS_RECEIPT_NOT_FOUND));
+
+
         ReturnReceipt returnReceipt = null;
         BorrowReceipt borrowReceipt = BorrowReceipt.builder()
                 .borrowDate(dto.getBorrowDate())
@@ -56,6 +59,7 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
                 .book(book)
                 .userAccount(userAccount)
                 .statusBook(statusBook)
+                .statusReceipt(statusReceipt)
                 .build();
         borrowReceiptRepository.save(borrowReceipt);
         return mapper.toBorrowReceiptResponse(borrowReceipt);
@@ -95,6 +99,13 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
                     .orElseThrow(() -> new AppException(ErrorCode.STATUS_NAME_NOT_FOUND));
             borrowReceipt.setStatusBook(statusBook);
         }
+
+        if (dto.getStatusReceiptName() != null) {
+            StatusReceipt statusReceipt = statusReceiptRepository.findById(dto.getStatusReceiptName())
+                    .orElseThrow(() -> new AppException(ErrorCode.STATUS_RECEIPT_NOT_FOUND));
+            borrowReceipt.setStatusReceipt(statusReceipt);
+        }
+
 
         // trường  còn lại
         mapper.updateBorrowReceipt(borrowReceipt, dto);

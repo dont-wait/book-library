@@ -15,4 +15,5 @@ public class BorrowReceiptUpdateRequest {
     Integer bookId;
     String userId;
     String statusName;
+    String statusReceiptName;
 }

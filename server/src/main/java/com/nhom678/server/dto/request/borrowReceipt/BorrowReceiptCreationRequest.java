@@ -31,4 +31,8 @@ public class BorrowReceiptCreationRequest {
 
     @NotNull(message = "status name is required")
     String name;
+
+    @NotNull
+    String statusReceiptName;
+
 }

@@ -12,6 +12,8 @@ public interface BorrowReceiptMapper {
     @Mapping(source = "userAccount.userId", target = "userId")
     @Mapping(source = "statusBook.name", target = "name") // giả sử userAccount có trường name
     @Mapping(source = "book.bookName", target = "bookName")
+    @Mapping(source = "statusReceipt.statusReceiptName", target = "statusReceiptName")
+
     BorrowReceiptResponse toBorrowReceiptResponse(BorrowReceipt borrowReceipt);
 
     BorrowReceipt toBorrowReceipt(BorrowReceiptCreationRequest request);

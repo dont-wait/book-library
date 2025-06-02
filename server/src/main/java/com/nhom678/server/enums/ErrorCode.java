@@ -28,6 +28,7 @@ public enum ErrorCode {
     ID_NOT_FOUND(1003, "Person not found", HttpStatus.NOT_FOUND),
     STATUS_NAME_NOT_FOUND(1003, "Status name not found", HttpStatus.NOT_FOUND),
     BORROW_ID_NOT_FOUND(1003, "Borrow id not found", HttpStatus.NOT_FOUND),
+    STATUS_RECEIPT_NOT_FOUND(1003,"Status receipt not found", HttpStatus.NOT_FOUND),
 
     BOOK_IMAGE_URL_REQUIRED(1004, "Book image url is required", HttpStatus.BAD_REQUEST),
     AUTHOR_IDS_REQUIRED(1004, "Author ids is required", HttpStatus.BAD_REQUEST),
