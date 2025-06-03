@@ -60,4 +60,5 @@ export interface BorrowBook {
   name: string; //status book
   statusReceiptName: string;
   bookName: string;
+  costBorrow: number;
 }
