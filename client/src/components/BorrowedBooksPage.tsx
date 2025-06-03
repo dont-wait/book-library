@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { apiClient } from "../api/axios";
 import { BorrowBook, Book } from "../type";
-import { Container, Table, Image, Button, Dropdown } from "react-bootstrap";
+import { Container, Table, Image, Button, Dropdown, Form } from "react-bootstrap";
 import { format } from "date-fns";
 import EditBorrowModal from "../components/EditBorrowModal";
 import { useToast } from "../hooks/useToast";
 import priceFormat from "../util/formatNumber";
+import PaymentInfo from "./PaymentInfo";
+import { FaCreditCard } from "react-icons/fa";
 
 const defaultUserId = "2001230753";
 
@@ -36,12 +38,15 @@ const BorrowedBooksPage = () => {
     const [allBooks, setAllBooks] = useState<Book[]>([]);
     const [editingBorrow, setEditingBorrow] = useState<BorrowBook | null>(null);
     const [showModal, setShowModal] = useState(false);
+    const [showPaymentInfo, setPaymentInfo] = useState(false);
+
+    // Mảng chứa các borrowReceiptId được chọn để thanh toán
+    const [selectedUnpaidIds, setSelectedUnpaidIds] = useState<string[]>([]);
 
     const fetchData = async () => {
         try {
             const borrowRes = await apiClient.get(`/borrow-receipts/user/${defaultUserId}`);
             const booksRes = await apiClient.get(`/books?page=0&size=1000`);
-            console.log(borrowRes.data.result);
             setBorrowedBooks(borrowRes.data.result);
             setAllBooks(booksRes.data.result);
         } catch {
@@ -54,9 +59,11 @@ const BorrowedBooksPage = () => {
     }, []);
 
     const handleEditClick = (borrow: BorrowBook) => {
-        if (!["APPROVED", "CANCELED"].includes(borrow.statusReceiptName.toUpperCase())) {
+        if (borrow.statusReceiptName.toUpperCase() === "UNPAID") {
             setEditingBorrow(borrow);
             setShowModal(true);
+        } else {
+            showToast("Chỉ có phiếu UNPAID mới được chỉnh sửa", "error");
         }
     };
 
@@ -69,6 +76,8 @@ const BorrowedBooksPage = () => {
             await apiClient.delete(`/borrow-receipts/${borrow.borrowReceiptId}`);
             showToast("Xóa thành công", "success");
             fetchData();
+            // Xóa khỏi danh sách chọn nếu có
+            setSelectedUnpaidIds((prev) => prev.filter(id => id !== borrow.borrowReceiptId));
         } catch {
             showToast("Xóa thất bại", "error");
         }
@@ -85,26 +94,86 @@ const BorrowedBooksPage = () => {
     };
 
     const unpaidReceipts = borrowedBooks.filter(b => b.statusReceiptName === "UNPAID");
-    const totalUnpaidCost = unpaidReceipts.reduce((total, b) => total + (b.costBorrow || 0), 0);
 
-    const handlePayAll = async () => {
-        try {
-            const ids = unpaidReceipts.map(b => b.borrowReceiptId);
-            await apiClient.post(`/borrow-receipts/pay`, { ids });
-            showToast("Thanh toán thành công", "success");
-            fetchData();
-        } catch {
-            showToast("Thanh toán thất bại", "error");
+    // Tính tổng chi phí các phiếu được chọn thanh toán
+    const totalSelectedCost = unpaidReceipts
+        .filter(b => selectedUnpaidIds.includes(b.borrowReceiptId))
+        .reduce((total, b) => total + (b.costBorrow || 0), 0);
+
+    const handlePaySelected = () => {
+        if (selectedUnpaidIds.length === 0) {
+            showToast("Vui lòng chọn ít nhất một phiếu để thanh toán", "error");
+            return;
+        }
+        setPaymentInfo(true);
+    };
+
+    const toggleSelect = (borrowReceiptId: string) => {
+        setSelectedUnpaidIds((prev) =>
+            prev.includes(borrowReceiptId)
+                ? prev.filter(id => id !== borrowReceiptId)
+                : [...prev, borrowReceiptId]
+        );
+    };
+
+    const handleSelectAllChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.checked) {
+            setSelectedUnpaidIds(unpaidReceipts.map(b => b.borrowReceiptId));
+        } else {
+            setSelectedUnpaidIds([]);
         }
     };
+    const handleConfirmPayment = async () => {
+        try {
+            for (const id of selectedUnpaidIds) {
+                await apiClient.put(`/borrow-receipts/${id}`, {
+                    statusReceiptName: "PENDING"
+                });
+            }
+            showToast("Thanh toán thành công, trạng thái đã được cập nhật", "success");
+            setPaymentInfo(false);
+            fetchData();
+            setSelectedUnpaidIds([]);
+        } catch {
+            showToast("Thanh toán thất bại, vui lòng thử lại", "error");
+        }
+    };
+
 
     return (
         <Container className="mt-4">
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2 className="mb-0">Tất cả phiếu mượn của bạn</h2>
                 {unpaidReceipts.length > 0 && (
-                    <Button variant="danger" size="sm" onClick={handlePayAll}>
-                        Thanh toán tất cả ({totalUnpaidCost.toLocaleString()}đ)
+                    <Button
+                        variant="danger"
+                        size="lg"
+                        onClick={handlePaySelected}
+                        disabled={selectedUnpaidIds.length === 0}
+                        style={{
+                            padding: "10px 20px",
+                            borderRadius: "30px",
+                            fontWeight: "600",
+                            boxShadow: selectedUnpaidIds.length > 0
+                                ? "0 4px 12px rgba(220, 53, 69, 0.5)"
+                                : "none",
+                            transition: "all 0.3s ease",
+                        }}
+                        onMouseEnter={e => {
+                            if (selectedUnpaidIds.length > 0) {
+                                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#c82333";
+                                (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 18px rgba(220, 53, 69, 0.7)";
+                            }
+                        }}
+                        onMouseLeave={e => {
+                            if (selectedUnpaidIds.length > 0) {
+                                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "";
+                                (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 12px rgba(220, 53, 69, 0.5)";
+                            }
+                        }}
+                    >
+                        <FaCreditCard style={{ marginRight: 8 }} />
+                        Thanh toán ({totalSelectedCost.toLocaleString()}đ)
                     </Button>
                 )}
             </div>
@@ -112,6 +181,15 @@ const BorrowedBooksPage = () => {
             <Table bordered hover responsive className="align-middle">
                 <thead className="table-light text-center">
                     <tr>
+                        <th>
+                            {/* Checkbox chọn tất cả chỉ với phiếu UNPAID */}
+                            <Form.Check
+                                type="checkbox"
+                                disabled={unpaidReceipts.length === 0}
+                                checked={selectedUnpaidIds.length === unpaidReceipts.length && unpaidReceipts.length > 0}
+                                onChange={handleSelectAllChange}
+                            />
+                        </th>
                         <th>Ảnh</th>
                         <th>Tên sách</th>
                         <th>Ngày mượn</th>
@@ -129,11 +207,22 @@ const BorrowedBooksPage = () => {
                         const imageUrl = book?.bookImageURL || "https://via.placeholder.com/60x80?text=No+Image";
                         const formattedBorrowDate = borrow.borrowDate ? format(new Date(borrow.borrowDate), "dd/MM/yyyy") : "-";
                         const formattedDueDate = borrow.dueDate ? format(new Date(borrow.dueDate), "dd/MM/yyyy") : "-";
+                        const isUnpaid = borrow.statusReceiptName === "UNPAID";
 
                         return (
                             <tr key={borrow.borrowReceiptId}>
                                 <td className="text-center">
-                                    <Image src={imageUrl} alt={book?.bookName} thumbnail style={{ width: 60, height: 80, objectFit: "cover" }} />
+                                    {/* Checkbox chỉ hiển thị với phiếu UNPAID */}
+                                    {isUnpaid ? (
+                                        <Form.Check
+                                            type="checkbox"
+                                            checked={selectedUnpaidIds.includes(borrow.borrowReceiptId)}
+                                            onChange={() => toggleSelect(borrow.borrowReceiptId)}
+                                        />
+                                    ) : null}
+                                </td>
+                                <td className="text-center">
+                                    <Image src={imageUrl} alt={book?.bookName} thumbnail style={{ width: 90, height: 120, objectFit: "cover" }} />
                                 </td>
                                 <td style={{ maxWidth: 220 }}>
                                     <div style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={book?.bookName}>
@@ -166,7 +255,7 @@ const BorrowedBooksPage = () => {
 
                                         <Dropdown.Menu>
                                             <Dropdown.Item onClick={() => handleEditClick(borrow)}>Chỉnh sửa</Dropdown.Item>
-                                            {borrow.statusReceiptName === "UNPAID" && (
+                                            {isUnpaid && (
                                                 <Dropdown.Item onClick={() => handleDelete(borrow)}>Xóa</Dropdown.Item>
                                             )}
                                         </Dropdown.Menu>
@@ -184,6 +273,19 @@ const BorrowedBooksPage = () => {
                     borrow={editingBorrow}
                     onClose={handleCloseModal}
                     onSuccess={handleSuccessModal}
+                />
+            )}
+            {showPaymentInfo && (
+                <PaymentInfo
+                    amount={totalSelectedCost}
+                    onClose={() => setPaymentInfo(false)}
+                    onSuccess={() => {
+                        setPaymentInfo(false);
+                        handleConfirmPayment();
+                        fetchData();
+                        setSelectedUnpaidIds([]); // reset chọn sau thanh toán thành công
+                    }}
+                    selectedIds={selectedUnpaidIds} // truyền id các phiếu thanh toán cho PaymentInfo xử lý
                 />
             )}
         </Container>
