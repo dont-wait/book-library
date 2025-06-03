@@ -12,6 +12,7 @@ const BookCard = ({ book }: { book: Book }) => {
 
   const handleClick = () => {
     setSelectedBook(book);
+    window.scrollTo({ top: 0, behavior: "smooth" });
     navigate("/product");
   };
 
