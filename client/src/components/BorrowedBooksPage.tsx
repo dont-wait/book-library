@@ -168,7 +168,7 @@ const BorrowedBooksPage = () => {
 
                                         <Dropdown.Menu>
                                             <Dropdown.Item onClick={() => handleEditClick(borrow)}>Chỉnh sửa</Dropdown.Item>
-                                            {borrow.statusReceiptName === "PENDING" && (
+                                            {borrow.statusReceiptName === "UNPAID" && (
                                                 <Dropdown.Item onClick={() => handleDelete(borrow)}>Xóa</Dropdown.Item>
                                             )}
                                         </Dropdown.Menu>
