@@ -5,13 +5,15 @@ import { Book } from "../../type";
 import RatingStars from "../../components/RatingStars";
 import { Container, Row, Col } from "react-bootstrap";
 import formatNumberCost from "../../util/formatNumber";
-
+import { useState } from "react";
+import BorrowForm from "../../components/BorrowForm";
+import { useToast } from "../../hooks/useToast";
 
 // Product Page Component
 const Product = () => {
   const { selectedBook: book } = useBookContext();
   const navigate = useNavigate();
-
+  const [showBorrowForm, setBorrowForm] = useState(false);
   if (!book) {
     return (
       <Container className='mt-4'>
@@ -25,8 +27,8 @@ const Product = () => {
     );
   }
 
-  const onBorrowBook = (book: Book) => {
-    console.log("Borrowing", book.bookName);
+  const onBorrowBook = () => {
+    setBorrowForm(true);
   };
 
   const onBackToHome = () => {
@@ -107,7 +109,7 @@ const Product = () => {
           <div className='d-flex gap-2'>
             <button
               className='btn btn-primary btn-lg'
-              onClick={() => onBorrowBook(book)}>
+              onClick={onBorrowBook}>
               <i className='fas fa-bookmark me-2'></i>Borrow Book
             </button>
             <button
@@ -118,8 +120,20 @@ const Product = () => {
           </div>
         </Col>
       </Row>
+      {showBorrowForm && (
+        <BorrowForm
+          book={book}
+          userId="2001230753"
+          onSuccess={() => {
+            setBorrowForm(false);
+          }}
+          onClose={() => setBorrowForm(false)}
+        />
+      )}
     </Container>
   );
 };
 
+
 export default Product;
+
