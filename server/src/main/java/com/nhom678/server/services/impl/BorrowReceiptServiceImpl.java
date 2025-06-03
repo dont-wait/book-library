@@ -37,25 +37,19 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
     public BorrowReceiptResponse createBorrowReceipt(BorrowReceiptCreationRequest dto){
         // Validate thời gian
         LocalDate borrowDate = dto.getBorrowDate();
-       LocalDate dueDate = dto.getDueDate();
+        LocalDate dueDate = dto.getDueDate();
 
-        if (borrowDate.isAfter(dueDate) ||
-                ChronoUnit.DAYS.between(borrowDate, dueDate) > 10 ||
-               borrowDate.isBefore(LocalDate.of(2020, 1, 1)))
-       {
-
-            throw new AppException(ErrorCode.INVALID_BORROW_DATE);
-      }
-
-
-
-//        UserAccount userAccount=userAccountRepository.findByUserId("defaultUserId")
-//                .orElseThrow(()-> new AppException(ErrorCode.ID_NOT_FOUND));
 
         Book book=bookRepository.findById(dto.getBookId())
                 .orElseThrow(()-> new AppException(ErrorCode.BOOK_ID_NOT_FOUND));
-        //        BorrowReceiptET entity = mapper.toEntity(dto);
 
+        if (borrowDate.isAfter(dueDate) ||
+                ChronoUnit.DAYS.between(borrowDate, dueDate) > 10 ||
+                borrowDate.isBefore(LocalDate.of(2020, 1, 1)))
+            throw new AppException(ErrorCode.INVALID_BORROW_DATE);
+
+        if(dto.getQuantity() > 5)
+            throw new AppException(ErrorCode.QUANTITY_CANNOT_GREATER_THAN_FIVE);
 
         UserAccount userAccount = userAccountRepository.findByUserId(dto.getUserId())
                 .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));

@@ -16,6 +16,7 @@ public enum ErrorCode {
     AUTHOR_NAME_EXISTED(1002, "Author Name already existed", HttpStatus.CONFLICT),
     BOOK_NAME_EXISTED(1002, "Book Name already existed", HttpStatus.CONFLICT),
     ID_EXISTED(1002, "Id already existed", HttpStatus.CONFLICT),
+    QUANTITY_CANNOT_GREATER_THAN_FIVE(1002, "Quantity can't greater than five", HttpStatus.CONFLICT),
 
     CATEGORYNAME_NOT_FOUND(1003, "Category Name not found", HttpStatus.NOT_FOUND),
     CATEGORYID_NOT_FOUND(1003, "Category Id not found", HttpStatus.NOT_FOUND),
