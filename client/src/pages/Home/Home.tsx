@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { apiClient } from "../../api/axios";
 import { Book, BorrowBook, Member } from "../../type";
 import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 interface UserData {
   data: Member;
@@ -16,14 +17,14 @@ interface BorrowedBookData {
 }
 
 const defaultUser = {
-  adminId: "123",
-  firstName: "admin",
-  lastName: "admin",
-  email: "example@gmail.com",
+  memberId: "2001230753",
+  firstName: "Sang",
+  lastName: "Nguyen",
+  email: "sangnguyen@gmail.com",
   phone: "1234567890",
   userAccount: {
     isActivated: true,
-    roles: ["Admin"],
+    roles: ["Member"],
   },
 };
 
@@ -36,6 +37,7 @@ const Home = () => {
   const [borrowBooks, setBorrowBooks] = useState<BorrowBook[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedBooks, setPaginatedBooks] = useState<Book[]>([]);
+  const navigate = useNavigate();
 
   // Tính tổng số trang
 
@@ -64,13 +66,13 @@ const Home = () => {
     }
 
     async function getBorrowedBooks() {
-      if (!user?.memberId) return;
+      //const member = user?.memberId;
       const borrowedBooks: BorrowedBookData = await apiClient.get(
-        `/borrow-receipts/user/${admin00001}`
+        `/borrow-receipts/user/${defaultUser.memberId}`
 
       );
       console.log("booo: ", borrowedBooks.data.result)
-      if (borrowBooks?.data?.result) {
+      if (borrowedBooks?.data) {
         setBorrowBooks(borrowedBooks.data.result);
       }
     }

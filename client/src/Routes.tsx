@@ -7,6 +7,7 @@ const AppRoutes = () => {
       <Route path='/' element={<pages.Home />} />
       <Route path='/admin' element={<pages.Admin />} />
       <Route path='/product' element={<pages.Product />} />
+      <Route path='/borrowed-books' element={<pages.BorrowedBooksPage />} />
     </Routes>
   );
 };
