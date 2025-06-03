@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AdminCreationRequest {
+public class    AdminCreationRequest {
     @NotBlank
     @Size(min = 10, max = 10, message = "ID_MUST_BE_10_CHARACTERS")
     String adminId;

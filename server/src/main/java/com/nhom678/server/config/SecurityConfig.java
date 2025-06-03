@@ -35,6 +35,11 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/webjars/**",
+            "/borrow-receipts/**",
+            "/return_receipts/**",
+            "/status/**",
+            "/books/**",
+            "/books"
     };
 
     @Value("${JWT_SECRET}")
@@ -52,7 +57,7 @@ public class SecurityConfig {
                         oauth2.jwt(jwtConfigurer ->
                                 jwtConfigurer
                                         .decoder(customJwtDecoder) //verify token
-                                            .jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                                        .jwtAuthenticationConverter(jwtAuthenticationConverter()))
                                         .authenticationEntryPoint(new JwtAuthenticationEntryPoint()) //Dieu huong Filter Spring xu li
                 )
                 .authorizeHttpRequests(request -> request

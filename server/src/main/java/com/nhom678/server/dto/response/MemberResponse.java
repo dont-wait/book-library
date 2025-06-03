@@ -1,12 +1,12 @@
 package com.nhom678.server.dto.response;
 
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
-@Getter
+@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MemberResponse {
     String memberId;
@@ -14,5 +14,5 @@ public class MemberResponse {
     String lastName;
     String email;
     String phone;
-    UserAccountResponse userAccountResponse;
+    UserAccountResponse userAccount;
 }
