@@ -55,12 +55,12 @@ const BorrowedBooks = ({
                   Trạng thái sách:
                   <span
                     className={`badge ms-2 ${borrow.name === "AVAILABLE"
-                        ? "bg-success"
-                        : borrow.name === "BORROWED"
-                          ? "bg-primary"
-                          : borrow.name === "LOST"
-                            ? "bg-danger"
-                            : "bg-secondary"
+                      ? "bg-success"
+                      : borrow.name === "BORROWED"
+                        ? "bg-primary"
+                        : borrow.name === "LOST"
+                          ? "bg-danger"
+                          : "bg-secondary"
                       }`}
                   >
                     {borrow.name}
@@ -71,25 +71,20 @@ const BorrowedBooks = ({
                 <small>Trạng thái phiếu mượn: </small>
                 <span
                   className={`badge ${borrow.statusReceiptName === "CANCELED"
-                      ? "bg-danger"
-                      : borrow.statusReceiptName === "RETURNED"
-                        ? "bg-success"
-                        : borrow.statusReceiptName === "BORROWED"
-                          ? "bg-primary"
-                          : borrow.statusReceiptName === "PENDING"
-                            ? "bg-warning text-dark"
-                            : "bg-secondary"
+                    ? "bg-danger"
+                    : borrow.statusReceiptName === "RETURNED"
+                      ? "bg-success"
+                      : borrow.statusReceiptName === "BORROWED"
+                        ? "bg-primary"
+                        : borrow.statusReceiptName === "PENDING"
+                          ? "bg-warning text-dark"
+                          : "bg-secondary"
                     }`}
                 >
                   {borrow.statusReceiptName}
                 </span>
               </div>
 
-              {isOverdue && (
-                <div className="mt-2">
-                  <span className="badge bg-danger">Quá hạn</span>
-                </div>
-              )}
             </div>
           );
         })}

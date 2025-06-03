@@ -3,6 +3,7 @@ import { useState } from "react";
 import { apiClient } from "../api/axios";
 import { Book } from "../type";
 import { useToast } from "../hooks/useToast";
+import { FaPaperPlane, FaTimes } from "react-icons/fa";
 
 interface BorrowFormProps {
     book: Book;
@@ -27,33 +28,30 @@ const BorrowForm = ({ book, userId, onSuccess, onClose }: BorrowFormProps) => {
             dueDate,
             quantity,
             bookId: book.bookId,
-            userId: userId,
-            name: "Available",           // Trạng thái sách mặc định
-            statusReceiptName: "PENDING" // Trạng thái phiếu mượn mặc định
+            userId,
+            name: "Available",
+            statusReceiptName: "UNPAID",
         };
-
-        console.log("Payload gửi lên API:", payload);
 
         try {
             const response = await apiClient.post("/borrow-receipts", payload);
-            console.log("Response từ API:", response.data);
-
-            showToast("Tạo phiếu mượn thành công!", "success");
+            showToast("Phiếu mượn đã được tạo thành công!", "success");
             onSuccess?.();
             onClose?.();
         } catch (error: any) {
             console.error("Lỗi khi tạo phiếu mượn:", error.response || error.message || error);
-            showToast("Lỗi khi tạo phiếu mượn. Vui lòng kiểm tra lại dữ liệu và thử lại.", "error");
+            showToast("Có lỗi xảy ra. Vui lòng kiểm tra lại thông tin!", "error");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="border rounded p-3 mt-4">
-            <h5>Nhập thông tin mượn sách</h5>
-            <div className="mb-2">
-                <label className="form-label">Ngày mượn</label>
+        <form onSubmit={handleSubmit} className="border rounded p-4 mt-4 bg-light shadow-sm">
+            <h5 className="mb-3 text-primary">📘 Mượn sách: <strong>{book.bookName}</strong></h5>
+
+            <div className="mb-3">
+                <label className="form-label">📅 Ngày mượn</label>
                 <input
                     type="date"
                     className="form-control"
@@ -62,8 +60,9 @@ const BorrowForm = ({ book, userId, onSuccess, onClose }: BorrowFormProps) => {
                     required
                 />
             </div>
-            <div className="mb-2">
-                <label className="form-label">Hạn trả</label>
+
+            <div className="mb-3">
+                <label className="form-label">📆 Hạn trả</label>
                 <input
                     type="date"
                     className="form-control"
@@ -72,8 +71,9 @@ const BorrowForm = ({ book, userId, onSuccess, onClose }: BorrowFormProps) => {
                     required
                 />
             </div>
-            <div className="mb-3">
-                <label className="form-label">Số lượng</label>
+
+            <div className="mb-4">
+                <label className="form-label">🔢 Số lượng (Tối đa: {book.quantity})</label>
                 <input
                     type="number"
                     className="form-control"
@@ -84,19 +84,25 @@ const BorrowForm = ({ book, userId, onSuccess, onClose }: BorrowFormProps) => {
                     required
                 />
             </div>
-            <button type="submit" className="btn btn-success" disabled={loading}>
-                {loading ? "Đang gửi..." : "Tạo phiếu mượn"}
-            </button>
-            {onClose && (
-                <button
-                    type="button"
-                    className="btn btn-secondary ms-2"
-                    onClick={onClose}
-                    disabled={loading}
-                >
-                    Hủy
+
+            <div className="d-flex">
+                <button type="submit" className="btn btn-success" disabled={loading}>
+                    <FaPaperPlane className="me-2" />
+                    {loading ? "Đang xử lý..." : "Xác nhận mượn"}
                 </button>
-            )}
+
+                {onClose && (
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary ms-3"
+                        onClick={onClose}
+                        disabled={loading}
+                    >
+                        <FaTimes className="me-2" />
+                        Hủy bỏ
+                    </button>
+                )}
+            </div>
         </form>
     );
 };
