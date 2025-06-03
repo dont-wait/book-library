@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,20 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
 
     @Override
     public BorrowReceiptResponse createBorrowReceipt(BorrowReceiptCreationRequest dto){
+        // Validate thời gian
+        LocalDate borrowDate = dto.getBorrowDate();
+       LocalDate dueDate = dto.getDueDate();
+
+        if (borrowDate.isAfter(dueDate) ||
+                ChronoUnit.DAYS.between(borrowDate, dueDate) > 10 ||
+               borrowDate.isBefore(LocalDate.of(2020, 1, 1)))
+       {
+
+            throw new AppException(ErrorCode.INVALID_BORROW_DATE);
+      }
+
+
+
 //        UserAccount userAccount=userAccountRepository.findByUserId("defaultUserId")
 //                .orElseThrow(()-> new AppException(ErrorCode.ID_NOT_FOUND));
 
@@ -50,7 +66,7 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
         StatusReceipt statusReceipt = statusReceiptRepository.findById(dto.getStatusReceiptName())
                 .orElseThrow(() -> new AppException(ErrorCode.STATUS_RECEIPT_NOT_FOUND));
 
-        Double costBorrow = statusBook.getFinePercent() * book.getCost() - book.getQuantity();
+        Double costBorrow = statusBook.getFinePercent() * book.getCost() * dto.getQuantity();
 
         BorrowReceipt borrowReceipt = BorrowReceipt.builder()
                 .borrowDate(dto.getBorrowDate())

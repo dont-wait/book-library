@@ -29,6 +29,7 @@ public enum ErrorCode {
     STATUS_NAME_NOT_FOUND(1003, "Status name not found", HttpStatus.NOT_FOUND),
     BORROW_ID_NOT_FOUND(1003, "Borrow id not found", HttpStatus.NOT_FOUND),
     STATUS_RECEIPT_NOT_FOUND(1003,"Status receipt not found", HttpStatus.NOT_FOUND),
+    INVALID_BORROW_DATE(1003,"Ngày mượn phải từ năm 2020, kết thúc sau ngày bắt đầu và không vượt quá 10 ngày.",HttpStatus.NOT_FOUND),
 
     BOOK_IMAGE_URL_REQUIRED(1004, "Book image url is required", HttpStatus.BAD_REQUEST),
     AUTHOR_IDS_REQUIRED(1004, "Author ids is required", HttpStatus.BAD_REQUEST),
@@ -52,6 +53,7 @@ public enum ErrorCode {
 
     UNAUTHENTICATED(1007, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "You do not permission", HttpStatus.FORBIDDEN),
+
 
     UNCATEGORIZED(6789, "Uncategorized Exception", HttpStatus.INTERNAL_SERVER_ERROR);
     private final int code;
