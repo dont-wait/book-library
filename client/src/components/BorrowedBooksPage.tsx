@@ -3,7 +3,8 @@ import { apiClient } from "../api/axios";
 import { BorrowBook, Book } from "../type";
 import { Container, Table, Image, Button } from "react-bootstrap";
 import { format } from "date-fns";
-import EditBorrowModal from "./EditBorrowModal"; // import modal sửa
+import EditBorrowModal from "../components/EditBorrowModal";
+import { useToast } from "../hooks/useToast";
 
 const defaultUserId = "2001230753";
 
@@ -38,16 +39,21 @@ const receiptStatusColor = (status: string) => {
 };
 
 const BorrowedBooksPage = () => {
+    const { showToast } = useToast();
     const [borrowedBooks, setBorrowedBooks] = useState<BorrowBook[]>([]);
     const [allBooks, setAllBooks] = useState<Book[]>([]);
-    const [editModalShow, setEditModalShow] = useState(false);
-    const [selectedBorrow, setSelectedBorrow] = useState<BorrowBook | null>(null);
+    const [editingBorrow, setEditingBorrow] = useState<BorrowBook | null>(null);
+    const [showModal, setShowModal] = useState(false);
 
     const fetchData = async () => {
-        const borrowRes = await apiClient.get(`/borrow-receipts/user/${defaultUserId}`);
-        const booksRes = await apiClient.get(`/books?page=0&size=1000`);
-        setBorrowedBooks(borrowRes.data.result);
-        setAllBooks(booksRes.data.result);
+        try {
+            const borrowRes = await apiClient.get(`/borrow-receipts/user/${defaultUserId}`);
+            const booksRes = await apiClient.get(`/books?page=0&size=1000`);
+            setBorrowedBooks(borrowRes.data.result);
+            setAllBooks(booksRes.data.result);
+        } catch (error) {
+            showToast("Không thể tải dữ liệu", "error");
+        }
     };
 
     useEffect(() => {
@@ -55,14 +61,20 @@ const BorrowedBooksPage = () => {
     }, []);
 
     const handleEditClick = (borrow: BorrowBook) => {
-        setSelectedBorrow(borrow);
-        setEditModalShow(true);
+        const status = borrow.statusReceiptName.toUpperCase();
+        if (status === "APPROVED" || status === "CANCELED") return;
+        setEditingBorrow(borrow);
+        setShowModal(true);
     };
 
-    const handleUpdateSuccess = () => {
-        setEditModalShow(false);
-        setSelectedBorrow(null);
-        fetchData(); // reload dữ liệu sau khi cập nhật
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setEditingBorrow(null);
+    };
+
+    const handleSuccessModal = () => {
+        fetchData();
+        handleCloseModal();
     };
 
     return (
@@ -86,18 +98,13 @@ const BorrowedBooksPage = () => {
                         const book = allBooks.find((b) => b.bookName === borrow.bookName);
                         const isOverdue = new Date(borrow.dueDate) < new Date();
                         const imageUrl = book?.bookImageURL || "https://via.placeholder.com/60x80?text=No+Image";
-
                         const formattedBorrowDate = borrow.borrowDate
                             ? format(new Date(borrow.borrowDate), "dd/MM/yyyy")
                             : "-";
                         const formattedDueDate = borrow.dueDate
                             ? format(new Date(borrow.dueDate), "dd/MM/yyyy")
                             : "-";
-
-                        // Chỉ cho phép chỉnh sửa khi trạng thái chưa APPROVED hoặc CANCELED
-                        const canEdit =
-                            borrow.statusReceiptName.toUpperCase() !== "APPROVED" &&
-                            borrow.statusReceiptName.toUpperCase() !== "CANCELED";
+                        const canEdit = !["APPROVED", "CANCELED"].includes(borrow.statusReceiptName.toUpperCase());
 
                         return (
                             <tr key={borrow.borrowReceiptId}>
@@ -136,14 +143,14 @@ const BorrowedBooksPage = () => {
                                     </span>
                                 </td>
                                 <td className="text-center">
-                                    {canEdit && (
-                                        <Button
-                                            variant="warning"
-                                            size="sm"
-                                            onClick={() => handleEditClick(borrow)}
-                                        >
-                                            Sửa
+                                    {canEdit ? (
+                                        <Button size="sm" variant="warning" onClick={() => handleEditClick(borrow)}>
+                                            Chỉnh sửa
                                         </Button>
+                                    ) : (
+                                        <span className="text-muted" style={{ fontSize: "0.9rem" }}>
+                                            Không thể chỉnh
+                                        </span>
                                     )}
                                 </td>
                             </tr>
@@ -152,12 +159,12 @@ const BorrowedBooksPage = () => {
                 </tbody>
             </Table>
 
-            {selectedBorrow && (
+            {editingBorrow && (
                 <EditBorrowModal
-                    show={editModalShow}
-                    borrow={selectedBorrow}
-                    onClose={() => setEditModalShow(false)}
-                    onSuccess={handleUpdateSuccess}
+                    show={showModal}
+                    borrow={editingBorrow}
+                    onClose={handleCloseModal}
+                    onSuccess={handleSuccessModal}
                 />
             )}
         </Container>
