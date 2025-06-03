@@ -5,6 +5,7 @@ import { Container, Table, Image, Button, Dropdown } from "react-bootstrap";
 import { format } from "date-fns";
 import EditBorrowModal from "../components/EditBorrowModal";
 import { useToast } from "../hooks/useToast";
+import priceFormat from "../util/formatNumber";
 
 const defaultUserId = "2001230753";
 
@@ -60,8 +61,8 @@ const BorrowedBooksPage = () => {
     };
 
     const handleDelete = async (borrow: BorrowBook) => {
-        if (borrow.statusReceiptName.toUpperCase() !== "PENDING") {
-            showToast("Chỉ được phép xóa khi trạng thái là PENDING", "info");
+        if (borrow.statusReceiptName.toUpperCase() !== "UNPAID") {
+            showToast("Chỉ được phép xóa khi trạng thái là UNPAID", "error");
             return;
         }
         try {
@@ -125,11 +126,9 @@ const BorrowedBooksPage = () => {
                 <tbody>
                     {borrowedBooks.map((borrow) => {
                         const book = allBooks.find((b) => b.bookName === borrow.bookName);
-                        const isOverdue = new Date(borrow.dueDate) < new Date();
                         const imageUrl = book?.bookImageURL || "https://via.placeholder.com/60x80?text=No+Image";
                         const formattedBorrowDate = borrow.borrowDate ? format(new Date(borrow.borrowDate), "dd/MM/yyyy") : "-";
                         const formattedDueDate = borrow.dueDate ? format(new Date(borrow.dueDate), "dd/MM/yyyy") : "-";
-                        const cost = borrow || 0;
 
                         return (
                             <tr key={borrow.borrowReceiptId}>
@@ -144,12 +143,11 @@ const BorrowedBooksPage = () => {
                                 <td className="text-center">{formattedBorrowDate}</td>
                                 <td className="text-center">{formattedDueDate}</td>
                                 <td className="text-center">{borrow.quantity}</td>
-                                <td className="text-center">{borrow.costBorrow}</td>
+                                <td className="text-center">{priceFormat(borrow.costBorrow)}</td>
                                 <td className="text-center">
                                     <span className={`badge ${receiptStatusColor(borrow.statusReceiptName)}`}>
                                         {borrow.statusReceiptName}
                                     </span>
-                                    {isOverdue && <span className="badge bg-danger ms-2">Quá hạn</span>}
                                 </td>
                                 <td className="text-center">
                                     <span className={`badge ${bookStatusColor(borrow.name)}`}>
