@@ -17,6 +17,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +66,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @PreAuthorize("hasRole('MEMBER') or  hasRole('ADMIN') or hasRole('LIBRARIAN')")
     public List<BookResponse> getAllBooks(int page, int size, Integer categoryId) {
         Pageable pageable = PageRequest.of(page, size);
 

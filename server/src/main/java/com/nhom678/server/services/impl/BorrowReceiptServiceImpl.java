@@ -13,6 +13,7 @@ import com.nhom678.server.services.BorrowReceiptService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,6 +35,7 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
 
 
     @Override
+    @PreAuthorize("hasRole('MEMBER')")
     public BorrowReceiptResponse createBorrowReceipt(BorrowReceiptCreationRequest dto){
         // Validate thời gian
         LocalDate borrowDate = dto.getBorrowDate();
@@ -82,6 +84,7 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
 
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'LIBRARIAN')")
     public List<BorrowReceiptResponse> getAll(){
         List<BorrowReceipt> list= borrowReceiptRepository.findAll();
         return list.stream()
@@ -89,9 +92,8 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
                 .collect(Collectors.toList());
     }
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'LIBRARIAN')")
     public List<BorrowReceiptResponse> getByUserId(String userId){
-
-
         List<BorrowReceipt> list=borrowReceiptRepository.findByUserId(userId);
         return list.stream()
                 .map(mapper::toBorrowReceiptResponse)
@@ -99,12 +101,10 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'LIBRARIAN')")
     public BorrowReceiptResponse updateBorrowReceipt(String borrowReceiptId, BorrowReceiptUpdateRequest dto) {
         BorrowReceipt borrowReceipt = borrowReceiptRepository.findById(borrowReceiptId)
                 .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));
-
-
-
         if (dto.getStatusName() != null) {
             StatusBook statusBook = statusBookRepository.findByName(dto.getStatusName())
                     .orElseThrow(() -> new AppException(ErrorCode.STATUS_NAME_NOT_FOUND));
@@ -127,6 +127,7 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'LIBRARIAN')")
     public void deleteBorrowReceipt(String borrowReceiptId) {
         BorrowReceipt borrowReceipt = borrowReceiptRepository.findById(borrowReceiptId)
                 .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));

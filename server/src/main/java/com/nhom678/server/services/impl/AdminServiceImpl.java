@@ -71,6 +71,7 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
+    @PreAuthorize( "hasRole('ADMIN') or hasRole('LIBRARIAN')")
     public List<AdminResponse> getAllAdmin() {
         return adminRepository.findAll()
                 .stream()
@@ -88,6 +89,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @PreAuthorize( "hasRole('ADMIN')or hasRole('LIBRARIAN')")
     public AdminResponse getAdminById(String adminId) {
         Admin admin = adminRepository.findByAdminId(adminId)
                 .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
@@ -97,6 +99,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public AdminResponse updateAdmin(String adminId, AdminUpdateRequest updateRequest) {
 
         Admin existingAdmin = adminRepository.findByAdminId(adminId)
@@ -116,6 +119,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteAdmin(String adminId) {
         if (!adminRepository.existsByAdminId(adminId))
             throw new AppException(ErrorCode.ID_NOT_FOUND);
