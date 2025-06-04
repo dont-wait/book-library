@@ -4,7 +4,6 @@ import { Author } from '../type';
 import { apiClient } from '../api/axios';
 import { useToast } from '../hooks/useToast';
 
-
 const Authors: React.FC = () => {
     const showToast = useToast();
     const [authors, setAuthors] = useState<Author[]>([]);
@@ -37,6 +36,7 @@ const Authors: React.FC = () => {
             }
         } catch (error) {
             console.error('Lỗi khi gọi API:', error);
+            showToast.showToast("Lỗi khi gọi API", "error");
         } finally {
             setLoading(false);
         }
@@ -50,94 +50,86 @@ const Authors: React.FC = () => {
         });
     };
 
+    // Thêm tác giả
     const handleAddAuthor = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:6969/api/v1/authors', {
-                method: 'POST',
+            const response = await apiClient.post('/authors', formData, {
                 headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData),
-                credentials: 'include'
+                    Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                }
             });
 
-            const result = await response.json();
-            if (response.ok) {
+            if (response.data.code === 1000) {
                 setShowAddModal(false);
-                setFormData({
-                    authorName: ''
-                });
-                fetchAuthors();
+                setFormData({ authorName: '' });
+                fetchAuthors(); // Tải lại danh sách tác giả sau khi thêm
+                showToast.showToast("Thêm tác giả thành công", "success");
             } else {
-                alert(`Thêm tác giả thất bại: ${result.message}`);
+                showToast.showToast(`Thêm tác giả thất bại: ${response.data.message}`, "error");
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Lỗi khi thêm tác giả:', error);
-            alert(`Lỗi khi thêm tác giả: ${(error as Error).message}`);
+            showToast.showToast(`Lỗi khi thêm tác giả: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
-    const handleEditAuthor = (author: Author) => {
-        setSelectedAuthor(author);
-        setFormData({
-            authorName: author.authorName
-        });
-        setShowEditModal(true);
-    };
-
+    // Cập nhật tác giả
     const handleUpdateAuthor = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!selectedAuthor) return;
 
         try {
-            const response = await fetch(`http://localhost:6969/api/v1/authors/${selectedAuthor.authorId}`, {
-                method: 'PUT',
+            const response = await apiClient.put(`/authors/${selectedAuthor.authorId}`, formData, {
                 headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData),
-                credentials: 'include'
+                    Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                }
             });
 
-            const result = await response.json();
-            if (response.ok) {
+            if (response.data.code === 1000) {
                 setShowEditModal(false);
-                fetchAuthors();
+                fetchAuthors(); // Tải lại danh sách tác giả sau khi cập nhật
+                showToast.showToast("Cập nhật tác giả thành công", "success");
             } else {
-                alert(`Cập nhật tác giả thất bại: ${result.message}`);
+                showToast.showToast(`Cập nhật tác giả thất bại: ${response.data.message}`, "error");
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Lỗi khi cập nhật tác giả:', error);
-            alert(`Lỗi khi cập nhật tác giả: ${(error as Error).message}`);
+            showToast.showToast(`Lỗi khi cập nhật tác giả: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
+    // Xóa tác giả
     const handleDeleteAuthor = (author: Author) => {
         setSelectedAuthor(author);
         setShowDeleteModal(true);
     };
 
+    // Xác nhận xóa tác giả
     const confirmDeleteAuthor = async () => {
         if (!selectedAuthor) return;
 
         try {
-            const response = await apiClient.get('/authors', {
+            const response = await apiClient.delete(`/authors/${selectedAuthor.authorId}`, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
                 }
             });
+
             if (response.data.code === 1000) {
-                setAuthors(response.data.result);
+                setShowDeleteModal(false);
+                fetchAuthors(); // Tải lại danh sách sau khi xóa
+                showToast.showToast("Xóa tác giả thành công", "success");
             } else {
-                showToast.showToast("Lỗi khi lấy dữ liệu tác giả", "error");
+                showToast.showToast(`Xóa tác giả thất bại: ${response.data.message}`, "error");
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Lỗi khi xóa tác giả:', error);
-            alert(`Lỗi khi xóa tác giả: ${(error as Error).message}`);
+            showToast.showToast(`Lỗi khi xóa tác giả: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
+    // Lọc tác giả theo tên
     const filteredAuthors = authors.filter(author =>
         author.authorName.toLowerCase().includes(searchTerm.toLowerCase())
     );
