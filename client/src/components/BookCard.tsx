@@ -17,7 +17,7 @@ const BookCard = ({ book }: { book: Book }) => {
   };
 
   return (
-    <Col lg={3} md={4} sm={6} className='mb-4' onClick={handleClick}>
+    <Col lg={6} sm={12} className='mb-4' onClick={handleClick}>
       <Card className='book-card h-100'>
         <img
           src={book.bookImageURL}

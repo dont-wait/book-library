@@ -1,9 +1,5 @@
 import React from "react";
-
-interface Category {
-    id: number;
-    name: string;
-}
+import { Category } from "../type";
 
 interface CategorySidebarProps {
     categories: Category[];
@@ -30,7 +26,7 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
 
                 {categories.map((cat) => (
                     <li
-                        key={cat.id}
+                        key={cat.categoryId}
                         className={`list-group-item list-group-item-action ${selectedCategory === cat.id.toString() ? "active" : ""}`}
                         style={{ cursor: "pointer" }}
                         onClick={() => onSelectCategory(cat.id.toString())}

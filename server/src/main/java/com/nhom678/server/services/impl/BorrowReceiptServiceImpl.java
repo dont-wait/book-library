@@ -62,6 +62,10 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
 
         Double costBorrow = statusBook.getFinePercent() * book.getCost() * dto.getQuantity();
 
+        // Tru so luong trong kho con lai
+        book.setQuantity(book.getQuantity() - dto.getQuantity());
+        bookRepository.save(book);
+
         BorrowReceipt borrowReceipt = BorrowReceipt.builder()
                 .borrowDate(dto.getBorrowDate())
                 .dueDate(dto.getDueDate())

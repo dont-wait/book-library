@@ -1,3 +1,10 @@
+
+export interface AuthData {
+  userId: string;
+  role?: string[];
+  auth_token: string;
+}
+
 export interface Book {
   bookId: number;
   bookName: string;
@@ -13,11 +20,37 @@ export interface Book {
   categoryName: string;
   authorName: string;
 }
+export interface Publisher {
+  publisherId: number;
+  publisherName: string;
+}
 
-export interface AuthData {
+export interface Category {
+  categoryId: number;
+  categoryName: string;
+}
+export interface Author {
+  authorId: number;
+  authorName: string;
+}
+
+export interface BorrowBook {
+  borrowReceiptId: string;
+  borrowDate: string;
+  dueDate: string;
+  quantity: number;
   userId: string;
-  role?: string[];
-  auth_token: string;
+  name: string; //status book
+  statusReceiptName: string;
+  bookName: string;
+  costBorrow: number;
+}
+
+export interface ReturnBook {
+  returnReceiptId: string;
+  returnDate: string;
+  borrowReceiptId: string;
+  statusBookName: string;
 }
 
 export interface UserAccount {
@@ -51,14 +84,4 @@ export interface Member {
   userAccount: UserAccount;
 }
 
-export interface BorrowBook {
-  borrowReceiptId: string;
-  borrowDate: string;
-  dueDate: string;
-  quantity: number;
-  userId: string;
-  name: string; //status book
-  statusReceiptName: string;
-  bookName: string;
-  costBorrow: number;
-}
+

@@ -2,6 +2,7 @@ package com.nhom678.server.services.impl;
 
 import com.nhom678.server.dto.request.returnReceipt.ReturnReceiptRequest;
 import com.nhom678.server.dto.response.ReturnReceiptResponse;
+import com.nhom678.server.entity.Book;
 import com.nhom678.server.entity.BorrowReceipt;
 import com.nhom678.server.entity.ReturnReceipt;
 import com.nhom678.server.entity.StatusBook;

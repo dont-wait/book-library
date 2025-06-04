@@ -12,7 +12,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <nav className="navbar navbar-expand-lg  bg-white shadow-sm sticky-top">
       <Container>
         <NavLink className="navbar-brand" to="/">
           <i className="fas fa-book me-2"></i>Library Management

@@ -5,8 +5,11 @@ import Pagination from "../../components/Pagination";
 import CategorySidebar from "../../components/CategorySidebar";
 import { useState, useEffect } from "react";
 import { apiClient } from "../../api/axios";
-import { Book, Member } from "../../type";
+import { Book, Category, Member } from "../../type";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import Navigation from "../../components/Navigation";
+import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const defaultUser = {
   memberId: "2001230753",
@@ -22,7 +25,9 @@ const defaultUser = {
 
 const totalPages = 10;
 const itemsPerPage = 50;
-
+interface categoryApiResponse {
+  data: { result: Category[] }
+}
 const Home = () => {
   const [user, setUser] = useState<Member>();
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,16 +37,20 @@ const Home = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchCategories() {
       setLoadingCategories(true);
       try {
-        const res = await apiClient.get<Category[]>("/categories");
-        const categoriesApi = res.data.result.map((item: any) => ({
-          id: item.categoryId.toString(),
-          name: item.categoryName,
-        }));
-        setCategories(categoriesApi);
+        const res: categoryApiResponse = await apiClient.get<Category[]>("/categories");
+        if (res) {
+          const categoriesApi = res.data.result.map((item: any) => ({
+            id: item.categoryId.toString(),
+            name: item.categoryName,
+          }));
+          setCategories(categoriesApi);
+        }
       } catch (err) {
         console.error("Không tải được danh sách thể loại");
       } finally {
@@ -61,9 +70,6 @@ const Home = () => {
 
       if (selectedCategory) {
         url += `&categoryId=${selectedCategory}`;
-        console.log(`Fetching books for category: ${selectedCategory}`);
-      } else {
-        console.log("Fetching all books without category filter");
       }
 
       try {
@@ -96,8 +102,14 @@ const Home = () => {
     }
   };
 
+  const handleBrowseBooksClick = () => {
+    navigate("/browse-books");
+  }
+
   return (
     <>
+      <Navigation />
+
       <Container className="mt-4">
         {/* User Info + Borrowed Books */}
         <Row>
@@ -125,7 +137,7 @@ const Home = () => {
           </Col>
 
           <Col md={9}>
-            <h2 className="mb-4">
+            <h2 className="mb-4" onClick={handleBrowseBooksClick}>
               <i className="fas fa-books me-2"></i>Browse Books
             </h2>
 
@@ -160,6 +172,8 @@ const Home = () => {
       >
         <i className="fas fa-arrow-up"></i>
       </Button>
+      <Footer />
+
     </>
   );
 };

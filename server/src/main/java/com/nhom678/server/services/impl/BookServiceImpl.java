@@ -65,10 +65,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookResponse> getAllBooks(int page, int size) {
+    public List<BookResponse> getAllBooks(int page, int size, Integer categoryId) {
         Pageable pageable = PageRequest.of(page, size);
 
-        return bookRepository.findAll(pageable)
+        List<Book> books;
+        if(categoryId != null)
+            books = bookRepository.findBookByCategory(pageable, categoryRepository.findById(categoryId)
+                    .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_ID_NOT_FOUND))
+            );
+        else
+            books = bookRepository.findAll(pageable).getContent();
+
+        return  books
                 .stream()
                 .map(bookMapper::toBookResponse)
                 .toList();
