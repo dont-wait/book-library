@@ -126,7 +126,6 @@ const Home = () => {
   return (
     <>
       <Navigation />
-
       <Container className="mt-4">
         {/* User Info + Borrowed Books */}
         <Row>
