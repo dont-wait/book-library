@@ -1,3 +1,10 @@
+
+export interface AuthData {
+  userId: string;
+  role?: string[];
+  auth_token: string;
+}
+
 export interface Book {
   bookId: number;
   bookName: string;
@@ -13,42 +20,18 @@ export interface Book {
   categoryName: string;
   authorName: string;
 }
-
-export interface AuthData {
-  userId: string;
-  role?: string[];
-  auth_token: string;
+export interface Publisher {
+  publisherId: number;
+  publisherName: string;
 }
 
-export interface UserAccount {
-  isActivated: boolean;
-  roles: string[];
+export interface Category {
+  categoryId: number;
+  categoryName: string;
 }
-
-export interface Admin {
-  adminId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  userAccount: UserAccount;
-}
-
-export interface Librarian {
-  librarianId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  userAccount: UserAccount;
-}
-export interface Member {
-  memberId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  userAccount: UserAccount;
+export interface Author {
+  authorId: number;
+  authorName: string;
 }
 
 export interface BorrowBook {
@@ -62,3 +45,52 @@ export interface BorrowBook {
   bookName: string;
   costBorrow: number;
 }
+
+export interface ReturnBook {
+  returnReceiptId: string;
+  returnDate: string;
+  borrowReceiptId: string;
+  statusBookName: string;
+}
+
+export interface UserAccount {
+  isActivated: boolean;
+  roles: string[];
+}
+
+export interface Admin {
+  adminId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  userAccount: {
+    isActivated: boolean;
+    roles: string[];
+  };
+}
+
+export interface Librarian {
+  librarianId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  userAccount: {
+    isActivated: boolean;
+    roles: string[];
+  };
+}
+export interface Member {
+  memberId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  userAccount: {
+    isActivated: boolean;
+    roles: string[];
+  };
+}
+
+

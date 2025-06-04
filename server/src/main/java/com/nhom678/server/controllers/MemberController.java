@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class MemberController {
     MemberService memberService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     ApiResponse<List<MemberResponse>> getAllMembers() {
         return ApiResponse.<List<MemberResponse>>builder()
                 .result(memberService.getAllMember())
@@ -32,6 +34,7 @@ public class MemberController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     ApiResponse<MemberResponse> createMember(@Valid @RequestBody MemberCreationRequest request) {
         return ApiResponse.<MemberResponse>builder()
                 .result(memberService.createMember(request))
@@ -40,6 +43,7 @@ public class MemberController {
     }
 
     @GetMapping("/myInfo")
+    //@PreAuthorize("hasRole('MEMBER')")
     ApiResponse<MemberResponse> getMyInfo() {
         return ApiResponse.<MemberResponse>builder()
                 .result(memberService.getMyInfo())

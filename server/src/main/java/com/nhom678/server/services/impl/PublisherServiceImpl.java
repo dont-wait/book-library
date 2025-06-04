@@ -12,6 +12,7 @@ import com.nhom678.server.services.PublisherService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ public class PublisherServiceImpl implements PublisherService {
     PublisherMapper publisherMapper;
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public PublisherResponse createPublisher(PublisherCreateRequest request) {
         if(publisherRepository.existsPublisherByPublisherName(request.getPublisherName()))
             throw new AppException(ErrorCode.PUBLISHERNAME_EXISTED);
@@ -35,6 +37,7 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public PublisherResponse getPublisherById(Integer id) {
         return publisherMapper.toPublisherResponse(publisherRepository
                 .findPublisherByPublisherId(id)
@@ -42,6 +45,7 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public List<PublisherResponse> getAllPublisher() {
         return publisherRepository.findAll()
                 .stream()
@@ -50,6 +54,7 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     @Transactional
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public void deletePublisherById(Integer id) {
         if (publisherRepository.findPublisherByPublisherId(id).isEmpty()) {
             throw new AppException(ErrorCode.PUBLISHER_NOT_FOUND);

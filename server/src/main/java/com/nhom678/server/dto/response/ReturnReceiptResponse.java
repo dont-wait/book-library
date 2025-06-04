@@ -15,6 +15,7 @@ import java.util.Date;
 public class ReturnReceiptResponse
 {
     String returnReceiptId;
+    String bookName;
     Date returnDate;
     String borrowReceiptId;
     String statusBookName;

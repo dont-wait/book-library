@@ -19,5 +19,5 @@ public class ReturnReceiptRequest
     Date returnDate;
     String borrowReceiptId;
     String statusBookName;
-
+e
 }

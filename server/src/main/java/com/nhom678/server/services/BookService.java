@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface BookService {
     BookResponse createBook(BookCreationRequest request);
-    List<BookResponse> getAllBooks(int page, int size);
+    List<BookResponse> getAllBooks(int page, int size, Integer categoryId);
     BookResponse updateBook(Integer bookId, BookUpdateRequest request);
     void deleteBook(String bookName);
     List<BookResponse> searchBooks(BookSearchCriteria request);

@@ -17,6 +17,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,10 +66,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookResponse> getAllBooks(int page, int size) {
+    @PreAuthorize("hasRole('MEMBER') or  hasRole('ADMIN') or hasRole('LIBRARIAN')")
+    public List<BookResponse> getAllBooks(int page, int size, Integer categoryId) {
         Pageable pageable = PageRequest.of(page, size);
 
-        return bookRepository.findAll(pageable)
+        List<Book> books;
+        if(categoryId != null)
+            books = bookRepository.findBookByCategory(pageable, categoryRepository.findById(categoryId)
+                    .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_ID_NOT_FOUND))
+            );
+        else
+            books = bookRepository.findAll(pageable).getContent();
+
+        return  books
                 .stream()
                 .map(bookMapper::toBookResponse)
                 .toList();

@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@keyframes move {
+
+    0%,
+    49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+.login-page * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.login-page body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background: url('/background.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.login-page .container {
+    background-color: rgba(0, 79, 155, 0.85);
+    /* Xanh nước biển đậm */
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 10px 10px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+    width: 900px;
+    max-width: 100%;
+    min-height: 600px;
+    padding: 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-page .container h1,
+.login-page .container h2 {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 1px;
+    color: #d0e8f7;
+    /* Màu sáng của xanh dương */
+    margin-bottom: 15px;
+}
+
+.login-page .container p {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+    margin: 20px 0;
+    color: #f0f8ff;
+    /* Xanh nhạt */
+}
+
+.login-page .container span {
+    font-size: 13px;
+    color: #a0c8e8;
+    /* Màu xám sáng */
+}
+
+.login-page .container a {
+    color: #d0e8f7;
+    font-size: 13px;
+    text-decoration: none;
+    margin: 15px 0 10px;
+    transition: color 0.3s ease;
+}
+
+.login-page .container a:hover {
+    color: #ffffff;
+}
+
+.login-page .container button {
+    background: linear-gradient(to right, #d0e8f7, #b1cce1);
+    color: #003f6b;
+    /* Màu xanh nước biển đậm */
+    font-size: 14px;
+    padding: 12px 45px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.login-page .container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to right, #b1cce1, #ffffff);
+}
+
+.login-page .container button.hidden {
+    background: transparent;
+    border: 2px solid #d0e8f7;
+    color: #d0e8f7;
+}
+
+.login-page .container button.hidden:hover {
+    background: rgba(208, 232, 247, 0.1);
+}
+
+.login-page .container form {
+    background-color: rgba(0, 53, 106, 0.7);
+    /* Xanh biển đậm */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+}
+
+.login-page .container input {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    margin: 10px 0;
+    padding: 12px 15px;
+    font-size: 14px;
+    border-radius: 50px;
+    width: 100%;
+    outline: none;
+    transition: all 0.3s ease;
+    color: #003f6b;
+    /* Màu xanh đậm */
+}
+
+.login-page .container input::placeholder {
+    color: #6c88a6;
+    /* Xanh nhạt */
+}
+
+.login-page .container input:focus {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    color: #003f6b;
+}
+
+.login-page .form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.login-page .sign-in {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.login-page .container.active .sign-in {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1;
+}
+
+.login-page .sign-up {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.login-page .container.active .sign-up {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: move 0.6s;
+}
+
+.login-page .social-icons {
+    margin: 20px 0;
+}
+
+.login-page .social-icons a {
+    border: 2px solid #d0e8f7;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    width: 45px;
+    height: 45px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #d0e8f7;
+}
+
+.login-page .social-icons a:hover {
+    background-color: rgba(208, 232, 247, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.login-page .toggle-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+    border-radius: 0;
+    z-index: 1000;
+}
+
+.login-page .container.active .toggle-container {
+    transform: translateX(-100%);
+}
+
+.login-page .toggle {
+    background: linear-gradient(to right, #003f6b, #004e7b);
+    /* Màu xanh biển */
+    height: 100%;
+    color: #fff;
+    position: relative;
+    left: -100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+}
+
+.login-page .container.active .toggle {
+    transform: translateX(50%);
+}
+
+.login-page .toggle-panel {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+}
+
+.login-page .toggle-left {
+    transform: translateX(-200%);
+}
+
+.login-page .container.active .toggle-left {
+    transform: translateX(0);
+}
+
+.login-page .toggle-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.login-page .container.active .toggle-right {
+    transform: translateX(200%);
+}
+
+.login-page .error-message {
+    color: #d0e8f7;
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background-color: rgba(0, 79, 155, 0.8);
+    border-radius: 50px;
+    font-size: 13px;
+    width: 100%;
+    border: 1px solid rgba(208, 232, 247, 0.3);
+}
+
+/* Thêm các quy tắc mới để sửa lỗi chữ đè lên nhau */
+.login-page .form-container {
+    visibility: visible;
+    transition: all 0.6s ease-in-out, visibility 0.6s ease-in-out;
+}
+
+.login-page .container.active .sign-in {
+    visibility: hidden;
+}
+
+.login-page .sign-up {
+    visibility: hidden;
+}
+
+.login-page .container.active .sign-up {
+    visibility: visible;
+}

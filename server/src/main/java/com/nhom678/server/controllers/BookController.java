@@ -24,10 +24,13 @@ public class BookController {
     BookService bookService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'LIBRARIAN')")
     ApiResponse<List<BookResponse>> getAllBooks(@RequestParam(defaultValue = "0") int page,
-                                                @RequestParam(defaultValue = "50") int size) {
+                                                @RequestParam(defaultValue = "50") int size,
+                                                @RequestParam(required = false) Integer categoryId
+                                                ) {
         return ApiResponse.<List<BookResponse>>builder()
-                .result(bookService.getAllBooks(page, size))
+                .result(bookService.getAllBooks(page, size, categoryId))
                 .message("Success")
                 .build();
     }
@@ -51,6 +54,7 @@ public class BookController {
     }
 
     @PostMapping("/search")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public ApiResponse<List<BookResponse>> searchBooks(@RequestBody BookSearchCriteria criteria) {
         List<BookResponse> result = bookService.searchBooks(criteria);
         return ApiResponse.<List<BookResponse>>builder()

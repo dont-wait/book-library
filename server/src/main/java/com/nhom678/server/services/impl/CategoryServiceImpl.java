@@ -11,6 +11,7 @@ import com.nhom678.server.services.CategoryService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryMapper categoryMapper;
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public CategoryResponse createCategory(CategoryCreationRequest request) {
         if(categoryRepository.existsCategoryByCategoryName(request.getCategoryName()))
             throw new AppException(ErrorCode.CATEGORYNAME_EXISTED);
@@ -33,6 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public CategoryResponse getCategoryByCategoryId(Integer categoryId) {
         Optional<Category> category = categoryRepository.findCategoryByCategoryId(categoryId);
         if(category.isEmpty())
@@ -41,6 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public List<CategoryResponse> getAllCategory() {
         return categoryRepository.findAll()
                 .stream()
@@ -50,6 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public void deleteCategoryByCategoryId(Integer categoryId) {
         if(categoryRepository.findCategoryByCategoryId(categoryId).isEmpty())
             throw new AppException(ErrorCode.CATEGORYNAME_NOT_FOUND);
