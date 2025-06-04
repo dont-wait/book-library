@@ -64,7 +64,10 @@ export interface Admin {
   lastName: string;
   email: string;
   phone: string;
-  userAccount: UserAccount;
+  userAccount: {
+    isActivated: boolean;
+    roles: string[];
+  };
 }
 
 export interface Librarian {
@@ -73,7 +76,10 @@ export interface Librarian {
   lastName: string;
   email: string;
   phone: string;
-  userAccount: UserAccount;
+  userAccount: {
+    isActivated: boolean;
+    roles: string[];
+  };
 }
 export interface Member {
   memberId: string;
@@ -81,7 +87,10 @@ export interface Member {
   lastName: string;
   email: string;
   phone: string;
-  userAccount: UserAccount;
+  userAccount: {
+    isActivated: boolean;
+    roles: string[];
+  };
 }
 
 

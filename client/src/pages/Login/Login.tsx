@@ -21,14 +21,10 @@ const Login = () => {
         e.preventDefault();
         setError('');
         try {
-            console.log('Attempting user login...');
-
             const response = await apiClient.post("/auth/log-in", {
                 userId: signInData.userId,
                 password: signInData.password
             });
-
-            console.log('User login response:', response.data);
 
             if (response.data.code === 1000 && response.data.result?.token) {
                 // Set token in cookie from server response
@@ -54,7 +50,6 @@ const Login = () => {
         e.preventDefault();
         setError('');
         try {
-            console.log('Attempting admin login...');
 
             const response = await apiClient.post("/auth/log-in", {
                 userId: adminData.userId,
@@ -70,7 +65,6 @@ const Login = () => {
                 // Store the token in sessionStorage on the client side
                 sessionStorage.setItem('authToken', response.data.result.token);
 
-                console.log('Admin login successful, token saved, attempting redirect...');
                 window.location.href = '/admin'; // Redirect after successful admin login
             } else {
                 console.error('Admin login failed:', response.data);
@@ -84,7 +78,6 @@ const Login = () => {
 
     return (
         <div className='login-page'>
-
             <div className={`container ${isActive ? 'active' : ''}`} id="container">
                 <div className="form-container sign-up">
                     <form onSubmit={handleAdminSignIn}>
@@ -161,6 +154,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
+
     );
 };
 

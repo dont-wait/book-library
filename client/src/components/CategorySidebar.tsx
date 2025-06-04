@@ -26,12 +26,12 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
 
                 {categories.map((cat) => (
                     <li
-                        key={cat.id}
-                        className={`list-group-item list-group-item-action ${selectedCategory === cat.id.toString() ? "active" : ""}`}
+                        key={cat?.categoryId || `category-${Math.random()}`}
+                        className={`list-group-item list-group-item-action ${selectedCategory === (cat?.categoryId?.toString() || "") ? "active" : ""}`}
                         style={{ cursor: "pointer" }}
-                        onClick={() => onSelectCategory(cat.id.toString())}
+                        onClick={() => onSelectCategory(cat?.categoryId?.toString() || "")}
                     >
-                        {cat.name}
+                        {cat?.categoryName || "Không có tên"}
                     </li>
                 ))}
             </ul>

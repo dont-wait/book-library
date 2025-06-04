@@ -11,28 +11,18 @@ import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
 
-const defaultUser = {
-  memberId: "2001230753",
-  firstName: "Sang",
-  lastName: "Nguyen",
-  email: "sangnguyen@gmail.com",
-  phone: "1234567890",
-  userAccount: {
-    isActivated: true,
-    roles: ["Member"],
-  },
-};
-
 const totalPages = 10;
 const itemsPerPage = 50;
 interface categoryApiResponse {
   data: { result: Category[] }
 }
+
 const Home = () => {
-  const [user, setUser] = useState<Member>();
+  const [user, setUser] = useState<Member | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedBooks, setPaginatedBooks] = useState<Book[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
@@ -43,7 +33,11 @@ const Home = () => {
     async function fetchCategories() {
       setLoadingCategories(true);
       try {
-        const res: categoryApiResponse = await apiClient.get<{ result: Category[] }>("/categories");
+        const res: categoryApiResponse = await apiClient.get<{ result: Category[] }>("/categories", {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+          }
+        });
         if (res) {
           const categoriesApi = res.data.result.map((item: any) => ({
             categoryId: item.categoryId,
@@ -64,7 +58,6 @@ const Home = () => {
   useEffect(() => {
     async function getBooks() {
       const token = sessionStorage.getItem("authToken");
-
 
       let url = `/books?page=${currentPage - 1}&size=${itemsPerPage}`;
 
@@ -90,15 +83,26 @@ const Home = () => {
 
   useEffect(() => {
     async function getUserInfo() {
-      const userInfo = await apiClient.get("/members/myInfo",
-        {
+      setLoading(true);
+      try {
+        const response = await apiClient.get("/members/myInfo", {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
           },
+        });
+
+        // Lấy dữ liệu từ response.data.result thay vì response.data
+        if (response && response.data && response.data.result) {
+          setUser(response.data.result);
+          console.log("User data fetched:", response.data.result);
         }
-      );
-      if (userInfo?.data) setUser(userInfo.data);
+      } catch (error) {
+        console.error("Lỗi khi lấy thông tin người dùng:", error);
+      } finally {
+        setLoading(false);
+      }
     }
+
     getUserInfo();
   }, []);
 
@@ -126,7 +130,15 @@ const Home = () => {
         {/* User Info + Borrowed Books */}
         <Row>
           <Col md={8}>
-            <UserInfo user={user ?? defaultUser} />
+            {loading ? (
+              <div className="text-center p-4">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            ) : (
+              <UserInfo user={user} />
+            )}
           </Col>
           <Col md={4}>
             <BorrowedBooks />
@@ -144,12 +156,11 @@ const Home = () => {
                 handleScrollTop();
               }}
               categories={categories}
-
             />
           </Col>
 
           <Col md={9}>
-            <h2 className="mb-4" onClick={handleBrowseBooksClick}>
+            <h2 className="mb-4" onClick={handleBrowseBooksClick} style={{ cursor: "pointer" }}>
               <i className="fas fa-books me-2"></i>Browse Books
             </h2>
 
@@ -160,7 +171,6 @@ const Home = () => {
               totalPages={totalPages}
               onPageChange={handlePageChange}
               maxDisplayedPages={5}
-
             />
           </Col>
         </Row>
@@ -185,7 +195,6 @@ const Home = () => {
         <i className="fas fa-arrow-up"></i>
       </Button>
       <Footer />
-
     </>
   );
 };
