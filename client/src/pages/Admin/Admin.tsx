@@ -7,7 +7,7 @@ import Publishers from '../../components/Publishers';
 import Authors from '../../components/Authors';
 import Categories from '../../components/Categories';
 import ManageBorrowReceipts from '../../components/ManageBorrowReceipts';
-//import Administration from '../../components/Administration';
+// import Administration from '../../components/Administration';
 //import Settings from '../../components/Settings';
 
 
@@ -52,7 +52,7 @@ const Admin: React.FC = () => {
           <ManageBorrowReceipts showNotification={showNotification} />
         )}
         {/* {activeMenu === 'manage-punish' && <ManagePunish />} */}
-        {/* {activeMenu === 'manage-administration' && <Administration />} */}
+        {activeMenu === 'manage-administration' && <Administration />}
         {/* {activeMenu === 'manage-setting' && <Settings />} */}
       </div>
 

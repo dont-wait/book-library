@@ -1,5 +1,6 @@
 import React from 'react';
 import './AdminSidebar.css'; // Tạo file CSS riêng cho sidebar
+import { Button } from 'react-bootstrap';
 
 interface AdminSidebarProps {
     activeMenu: string;
@@ -60,7 +61,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeMenu, onMenuClick }) 
                 <i className="bi bi-card-checklist"></i> Quản lý mượn trả sách
             </a>
 
-            <a
+            {/* <a
                 href="#"
                 className={`admin-sidebar-item ${activeMenu === 'manage-administration' ? 'active' : ''}`}
                 onClick={(e) => {
@@ -69,7 +70,11 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeMenu, onMenuClick }) 
                 }}
             >
                 <i className="bi bi-person-badge"></i> Quản trị
-            </a>
+            </a> */}
+            {/* Đăng xuất Button */}
+            <Button variant="danger" className="mt-4" onClick={() => window.location.href = '/login'}>
+                Đăng xuất
+            </Button>
         </div>
     );
 };
