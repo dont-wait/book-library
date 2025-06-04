@@ -66,17 +66,35 @@ const Admin = () => {
     };
 
     const fetchBooks = async () => {
-      const response: bookApiResponse = await apiClient.get('/books');
+      const response: bookApiResponse = await apiClient.get('/books',
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
+          }
+        }
+      );
       setBooks(response.data.result);
     };
 
     const fetchBorrowedBooks = async () => {
-      const response: borrowBookApiResponse = await apiClient.get('/borrow-receipts');
+      const response: borrowBookApiResponse = await apiClient.get('/borrow-receipts',
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
+          }
+        }
+      );
       setBorrowedBooks(response.data.result);
     };
 
     const fetchReturnedBooks = async () => {
-      const response: returnBookApiResponse = await apiClient.get('/return-receipts');
+      const response: returnBookApiResponse = await apiClient.get('/return-receipts',
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
+          }
+        }
+      );
       setReturnedBooks(response.data.result);
     };
 

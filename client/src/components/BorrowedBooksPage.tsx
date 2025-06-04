@@ -45,8 +45,18 @@ const BorrowedBooksPage = () => {
 
     const fetchData = async () => {
         try {
-            const borrowRes = await apiClient.get(`/borrow-receipts/user/${defaultUserId}`);
-            const booksRes = await apiClient.get(`/books?page=0&size=1000`);
+            const borrowRes = await apiClient.get(`/borrow-receipts/user/${defaultUserId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                    },
+                }
+            );
+            const booksRes = await apiClient.get(`/books?page=0&size=1000`, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                },
+            });
             setBorrowedBooks(borrowRes.data.result);
             setAllBooks(booksRes.data.result);
         } catch {

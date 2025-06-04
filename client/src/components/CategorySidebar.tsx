@@ -26,7 +26,7 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
 
                 {categories.map((cat) => (
                     <li
-                        key={cat.categoryId}
+                        key={cat.id}
                         className={`list-group-item list-group-item-action ${selectedCategory === cat.id.toString() ? "active" : ""}`}
                         style={{ cursor: "pointer" }}
                         onClick={() => onSelectCategory(cat.id.toString())}

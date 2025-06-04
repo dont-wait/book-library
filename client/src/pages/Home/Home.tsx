@@ -43,11 +43,11 @@ const Home = () => {
     async function fetchCategories() {
       setLoadingCategories(true);
       try {
-        const res: categoryApiResponse = await apiClient.get<Category[]>("/categories");
+        const res: categoryApiResponse = await apiClient.get<{ result: Category[] }>("/categories");
         if (res) {
           const categoriesApi = res.data.result.map((item: any) => ({
-            id: item.categoryId.toString(),
-            name: item.categoryName,
+            categoryId: item.categoryId,
+            categoryName: item.categoryName,
           }));
           setCategories(categoriesApi);
         }
@@ -63,8 +63,8 @@ const Home = () => {
 
   useEffect(() => {
     async function getBooks() {
-      // Nếu chưa chọn thể loại thì gọi API lấy sách tất cả với phân trang
-      // Nếu có chọn thể loại thì gọi API lấy sách theo thể loại + phân trang
+      const token = sessionStorage.getItem("authToken");
+
 
       let url = `/books?page=${currentPage - 1}&size=${itemsPerPage}`;
 
@@ -73,7 +73,13 @@ const Home = () => {
       }
 
       try {
-        const res = await apiClient.get(url);
+        const res = await apiClient.get(url,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setPaginatedBooks(res.data.result);
       } catch (error) {
         console.error("Lỗi khi fetch sách:", error);
@@ -84,7 +90,13 @@ const Home = () => {
 
   useEffect(() => {
     async function getUserInfo() {
-      const userInfo = await apiClient.get("/members");
+      const userInfo = await apiClient.get("/members/myInfo",
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+          },
+        }
+      );
       if (userInfo?.data) setUser(userInfo.data);
     }
     getUserInfo();
