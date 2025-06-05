@@ -38,7 +38,10 @@ public class SecurityConfig {
             "/status/**",
             "/categories/**",
             "/publishers/**",
-            "/authors/**"
+            "/authors/**",
+            "/books/**",
+            "/borrow-receipts/**",
+            "/return-receipts/**"
     };
 
     @Value("${JWT_SECRET}")

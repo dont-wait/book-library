@@ -39,7 +39,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')or hasRole('LIBRARIAN')")
     public MemberResponse createMember(MemberCreationRequest request) {
         if(memberRepository.existsByMemberId(request.getMemberId()))
             throw new AppException(ErrorCode.ID_EXISTED);
@@ -69,7 +68,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @PreAuthorize( "hasRole('MEMBER')")
     public MemberResponse getMyInfo() {
         var context = SecurityContextHolder.getContext();
         String memberId = context.getAuthentication().getName();

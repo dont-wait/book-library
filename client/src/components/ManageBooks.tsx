@@ -3,6 +3,7 @@ import { Table, Button, Modal, Form, Spinner, InputGroup, FormControl } from 're
 import { Book, Publisher, Category, Author } from '../type';
 import { apiClient } from '../api/axios';
 import { useToast } from '../hooks/useToast';
+import Pagination from './Pagination'; // Đảm bảo đường dẫn đúng với file Pagination của bạn
 
 const ManageBooks: React.FC = () => {
     const showToast = useToast();
@@ -16,19 +17,27 @@ const ManageBooks: React.FC = () => {
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [selectedBook, setSelectedBook] = useState<Book | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [formData, setFormData] = useState<Partial<Book>>({
+    // PHÂN TRANG
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [pageSize, setPageSize] = useState<number>(10);
+
+    const [formData, setFormData] = useState<Partial<Book & {
+        authorId?: number;
+        publisherId?: number;
+        categoryId?: number;
+    }>>({
         bookName: '',
         cost: 0,
         description: '',
         bookImageURL: '',
         quantity: 1,
         isbn: '',
-        publicationDate: null,
+        publicationDate: '',
         rating: 0,
-        floorPosition: null,
-        publisherName: '',
-        categoryName: '',
-        authorName: ''
+        floorPosition: '',
+        authorId: undefined,
+        publisherId: undefined,
+        categoryId: undefined,
     });
 
     useEffect(() => {
@@ -44,6 +53,9 @@ const ManageBooks: React.FC = () => {
             const response = await apiClient.get(`/books`, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                },
+                params: {
+                    size: 1000
                 }
             });
             if (response.data.code === 1000) {
@@ -113,19 +125,31 @@ const ManageBooks: React.FC = () => {
         const { name, value, type } = e.target;
         setFormData({
             ...formData,
-            [name]: type === 'number' ? Number(value) : value
+            [name]: type === 'number' || name === 'cost' || name === 'quantity' || name === 'rating'
+                ? Number(value)
+                : value
         });
     };
 
     const handleAddBook = async (e: React.FormEvent) => {
         e.preventDefault();
+        const requestData = {
+            ...formData,
+            cost: Number(formData.cost),
+            quantity: Number(formData.quantity),
+            rating: Number(formData.rating),
+            publicationDate: formData.publicationDate ? formData.publicationDate : null,
+            floorPosition: formData.floorPosition ? formData.floorPosition : null,
+        };
+        console.log("Adding book with data:", requestData); // Log request data
         try {
-            const response = await apiClient.post('/books', formData, {
+            const response = await apiClient.post(`/books`, requestData, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
                 }
             });
 
+            console.log("Add response:", response.data); // Log response data
             if (response.data.code === 1000) {
                 setShowAddModal(false);
                 setFormData({
@@ -135,14 +159,14 @@ const ManageBooks: React.FC = () => {
                     bookImageURL: '',
                     quantity: 1,
                     isbn: '',
-                    publicationDate: null,
+                    publicationDate: '',
                     rating: 0,
-                    floorPosition: null,
-                    publisherName: '',
-                    categoryName: '',
-                    authorName: ''
+                    floorPosition: '',
+                    authorId: undefined,
+                    publisherId: undefined,
+                    categoryId: undefined,
                 });
-                fetchBooks();
+                fetchBooks(); // Cập nhật danh sách sách
                 showToast.showToast("Thêm sách thành công", "success");
             } else {
                 showToast.showToast(`Thêm sách thất bại: ${response.data.message}`, "error");
@@ -161,12 +185,12 @@ const ManageBooks: React.FC = () => {
             bookImageURL: book.bookImageURL,
             quantity: book.quantity,
             isbn: book.isbn,
-            publicationDate: book.publicationDate,
+            publicationDate: book.publicationDate ? book.publicationDate.slice(0, 10) : '',
             rating: book.rating,
             floorPosition: book.floorPosition,
-            publisherName: book.publisherName,
-            categoryName: book.categoryName,
-            authorName: book.authorName
+            authorId: book.authorId,
+            publisherId: book.publisherId,
+            categoryId: book.categoryId,
         });
         setShowEditModal(true);
     };
@@ -174,17 +198,26 @@ const ManageBooks: React.FC = () => {
     const handleUpdateBook = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!selectedBook) return;
-
+        const requestData = {
+            ...formData,
+            cost: Number(formData.cost),
+            quantity: Number(formData.quantity),
+            rating: Number(formData.rating),
+            publicationDate: formData.publicationDate ? formData.publicationDate : null,
+            floorPosition: formData.floorPosition ? formData.floorPosition : null,
+        };
+        console.log("Updating book with data:", requestData); // Log request data
         try {
-            const response = await apiClient.put(`/books/${selectedBook.bookId}`, formData, {
+            const response = await apiClient.put(`/books/${selectedBook.bookId}`, requestData, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
                 }
             });
 
+            console.log("Update response:", response.data); // Log response data
             if (response.data.code === 1000) {
                 setShowEditModal(false);
-                fetchBooks();
+                fetchBooks(); // Cập nhật danh sách sách
                 showToast.showToast("Cập nhật sách thành công", "success");
             } else {
                 showToast.showToast(`Cập nhật sách thất bại: ${response.data.message}`, "error");
@@ -203,15 +236,16 @@ const ManageBooks: React.FC = () => {
         if (!selectedBook) return;
 
         try {
-            const response = await apiClient.delete(`/books/${selectedBook.bookName}`, {
+            const response = await apiClient.delete(`/books/${selectedBook.bookId}`, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
                 }
             });
 
+            console.log("Delete response:", response.data); // Log response data
             if (response.data.code === 1000) {
                 setShowDeleteModal(false);
-                fetchBooks();
+                fetchBooks(); // Cập nhật danh sách sách
                 showToast.showToast("Xóa sách thành công", "success");
             } else {
                 showToast.showToast(`Xóa sách thất bại: ${response.data.message}`, "error");
@@ -221,12 +255,29 @@ const ManageBooks: React.FC = () => {
         }
     };
 
+    // PHÂN TRANG: Tính toán danh sách sách theo trang
     const filteredBooks = books.filter(book =>
         book.bookName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.authorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.publisherName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.categoryName.toLowerCase().includes(searchTerm.toLowerCase())
+        book.authorName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.publisherName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.categoryName?.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const totalPages = Math.ceil(filteredBooks.length / pageSize);
+
+    const paginatedBooks = filteredBooks.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+    );
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm]);
+
     return (
         <div className="container">
             <div className="d-flex justify-content-between align-items-center mb-4">
@@ -256,52 +307,57 @@ const ManageBooks: React.FC = () => {
                     </Spinner>
                 </div>
             ) : (
-                <Table striped bordered hover responsive>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tên sách</th>
-                            <th>Tác giả</th>
-                            <th>Nhà xuất bản</th>
-                            <th>Thể loại</th>
-                            <th>Giá</th>
-                            <th>Số lượng</th>
-                            <th>ISBN</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredBooks.length > 0 ? (
-                            filteredBooks.map((book) => (
-                                <tr key={book.bookId}>
-                                    <td>{book.bookId}</td>
-                                    <td>{book.bookName}</td>
-                                    <td>{book.authorName}</td>
-                                    <td>{book.publisherName}</td>
-                                    <td>{book.categoryName}</td>
-                                    <td>{book.cost.toLocaleString('vi-VN')} VNĐ</td>
-                                    <td>{book.quantity}</td>
-                                    <td>{book.isbn}</td>
-                                    <td>
-                                        <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
-                                            <i className="bi bi-pencil"></i>
-                                        </Button>
-                                        <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book)}>
-                                            <i className="bi bi-trash"></i>
-                                        </Button>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
+                <>
+                    <Table striped bordered hover responsive>
+                        <thead>
                             <tr>
-                                <td colSpan={9} className="text-center">Không có dữ liệu</td>
+                                <th>ID</th>
+                                <th>Tên sách</th>
+                                <th>Tác giả</th>
+                                <th>Nhà xuất bản</th>
+                                <th>Thể loại</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>ISBN</th>
+                                <th>Hành động</th>
                             </tr>
-                        )}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {paginatedBooks.length > 0 ? (
+                                paginatedBooks.map((book) => (
+                                    <tr key={book.bookId}>
+                                        <td>{book.bookId}</td>
+                                        <td>{book.bookName}</td>
+                                        <td>{book.authorName}</td>
+                                        <td>{book.publisherName}</td>
+                                        <td>{book.categoryName}</td>
+                                        <td>{book.cost.toLocaleString('vi-VN')} VNĐ</td>
+                                        <td>{book.quantity}</td>
+                                        <td>{book.isbn}</td>
+                                        <td>
+                                            <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
+                                                <i className="bi bi-pencil"></i>
+                                            </Button>
+                                            <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book)}>
+                                                <i className="bi bi-trash"></i>
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan={9} className="text-center">Không có dữ liệu</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </Table>
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                </>
             )}
-
-
 
             {/* Modal Thêm Sách */}
             <Modal show={showAddModal} onHide={() => setShowAddModal(false)} size="lg">
@@ -326,14 +382,14 @@ const ManageBooks: React.FC = () => {
                                 <Form.Group className="mb-3">
                                     <Form.Label>Tác giả</Form.Label>
                                     <Form.Select
-                                        name="authorName"
-                                        value={formData.authorName}
+                                        name="authorId"
+                                        value={formData.authorId || ''}
                                         onChange={handleInputChange}
                                         required
                                     >
                                         <option value="">-- Chọn tác giả --</option>
                                         {authors.map(author => (
-                                            <option key={author.authorId} value={author.authorName}>
+                                            <option key={author.authorId} value={author.authorId}>
                                                 {author.authorName}
                                             </option>
                                         ))}
@@ -345,14 +401,14 @@ const ManageBooks: React.FC = () => {
                                 <Form.Group className="mb-3">
                                     <Form.Label>Nhà xuất bản</Form.Label>
                                     <Form.Select
-                                        name="publisherName"
-                                        value={formData.publisherName}
+                                        name="publisherId"
+                                        value={formData.publisherId || ''}
                                         onChange={handleInputChange}
                                         required
                                     >
                                         <option value="">-- Chọn nhà xuất bản --</option>
                                         {publishers.map(publisher => (
-                                            <option key={publisher.publisherId} value={publisher.publisherName}>
+                                            <option key={publisher.publisherId} value={publisher.publisherId}>
                                                 {publisher.publisherName}
                                             </option>
                                         ))}
@@ -366,14 +422,14 @@ const ManageBooks: React.FC = () => {
                                 <Form.Group className="mb-3">
                                     <Form.Label>Thể loại</Form.Label>
                                     <Form.Select
-                                        name="categoryName"
-                                        value={formData.categoryName}
+                                        name="categoryId"
+                                        value={formData.categoryId || ''}
                                         onChange={handleInputChange}
                                         required
                                     >
                                         <option value="">-- Chọn thể loại --</option>
                                         {categories.map(category => (
-                                            <option key={category.categoryId} value={category.categoryName}>
+                                            <option key={category.categoryId} value={category.categoryId}>
                                                 {category.categoryName}
                                             </option>
                                         ))}
@@ -522,14 +578,14 @@ const ManageBooks: React.FC = () => {
                                 <Form.Group className="mb-3">
                                     <Form.Label>Tác giả</Form.Label>
                                     <Form.Select
-                                        name="authorName"
-                                        value={formData.authorName}
+                                        name="authorId"
+                                        value={formData.authorId || ''}
                                         onChange={handleInputChange}
                                         required
                                     >
                                         <option value="">-- Chọn tác giả --</option>
                                         {authors.map(author => (
-                                            <option key={author.authorId} value={author.authorName}>
+                                            <option key={author.authorId} value={author.authorId}>
                                                 {author.authorName}
                                             </option>
                                         ))}
@@ -541,14 +597,14 @@ const ManageBooks: React.FC = () => {
                                 <Form.Group className="mb-3">
                                     <Form.Label>Nhà xuất bản</Form.Label>
                                     <Form.Select
-                                        name="publisherName"
-                                        value={formData.publisherName}
+                                        name="publisherId"
+                                        value={formData.publisherId || ''}
                                         onChange={handleInputChange}
                                         required
                                     >
                                         <option value="">-- Chọn nhà xuất bản --</option>
                                         {publishers.map(publisher => (
-                                            <option key={publisher.publisherId} value={publisher.publisherName}>
+                                            <option key={publisher.publisherId} value={publisher.publisherId}>
                                                 {publisher.publisherName}
                                             </option>
                                         ))}
@@ -562,14 +618,14 @@ const ManageBooks: React.FC = () => {
                                 <Form.Group className="mb-3">
                                     <Form.Label>Thể loại</Form.Label>
                                     <Form.Select
-                                        name="categoryName"
-                                        value={formData.categoryName}
+                                        name="categoryId"
+                                        value={formData.categoryId || ''}
                                         onChange={handleInputChange}
                                         required
                                     >
                                         <option value="">-- Chọn thể loại --</option>
                                         {categories.map(category => (
-                                            <option key={category.categoryId} value={category.categoryName}>
+                                            <option key={category.categoryId} value={category.categoryId}>
                                                 {category.categoryName}
                                             </option>
                                         ))}
@@ -711,9 +767,7 @@ const ManageBooks: React.FC = () => {
                         Xóa
                     </Button>
                 </Modal.Footer>
-
             </Modal>
-
         </div>
     );
 };

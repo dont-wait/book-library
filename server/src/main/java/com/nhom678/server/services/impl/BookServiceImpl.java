@@ -61,12 +61,12 @@ public class BookServiceImpl implements BookService {
 
         Book book = bookMapper.toBook(request, publisher, category, author);
 
+        bookRepository.save(book);
 
         return bookMapper.toBookResponse(bookRepository.save(book));
     }
 
     @Override
-    @PreAuthorize("hasRole('MEMBER') or  hasRole('ADMIN') or hasRole('LIBRARIAN')")
     public List<BookResponse> getAllBooks(int page, int size, Integer categoryId) {
         Pageable pageable = PageRequest.of(page, size);
 
@@ -104,6 +104,7 @@ public class BookServiceImpl implements BookService {
         }
 
         bookMapper.updateBook(bookUpdate, request);
+        bookRepository.save(bookUpdate);
 
         return bookMapper.toBookResponse(bookUpdate);
     }
@@ -111,6 +112,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void deleteBook(String bookName) {
+
         bookRepository.deleteBookByBookName(bookName);
     }
 

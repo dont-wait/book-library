@@ -39,7 +39,6 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
-    @PreAuthorize( "hasRole('ADMIN')")
     public AdminResponse createAdmin(AdminCreationRequest request) {
         if(adminRepository.existsByAdminId(request.getAdminId()))
             throw new AppException(ErrorCode.ID_EXISTED);

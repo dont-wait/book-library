@@ -35,7 +35,6 @@ public class ReturnReceiptServiceImpl implements ReturnReceiptService
     ReturnReceiptMapper returnReceiptMapper;
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public ReturnReceiptResponse createReturnReceipt(ReturnReceiptRequest request)
     {
         BorrowReceipt borrowReceipt = borrowReceiptRepository.findByBorrowReceiptId(request.getBorrowReceiptId())
@@ -52,14 +51,12 @@ public class ReturnReceiptServiceImpl implements ReturnReceiptService
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public List<ReturnReceiptResponse> getAllReturnReceipts()
     {
         return returnReceiptRepository.findAll().stream().map(returnReceiptMapper::toDto).toList();
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public ReturnReceiptResponse getByIdReturnReceipt(String id)
     {
         ReturnReceipt returnReceipt = returnReceiptRepository.findById(id)
@@ -68,7 +65,6 @@ public class ReturnReceiptServiceImpl implements ReturnReceiptService
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public ReturnReceiptResponse updateReturnReceipt(String id, ReturnReceiptRequest request)
     {
         ReturnReceipt returnReceipt = returnReceiptRepository.findById(id)
@@ -89,7 +85,6 @@ public class ReturnReceiptServiceImpl implements ReturnReceiptService
 
     @Override
     @Transactional
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public void deleteReturnReceipt(String id) {
         ReturnReceipt receipt = returnReceiptRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));

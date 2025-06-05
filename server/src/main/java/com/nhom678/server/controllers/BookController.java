@@ -64,8 +64,8 @@ public class BookController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
-    @DeleteMapping
-    ApiResponse<String> deleteBook(@RequestParam String BookName) {
+    @DeleteMapping("{BookName}")
+    ApiResponse<String> deleteBook(@PathVariable String BookName) {
         bookService.deleteBook(BookName);
         return ApiResponse.<String>builder()
                 .result("Deleted successfully")

@@ -37,7 +37,6 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     @Transactional
-    @PreAuthorize( "hasRole('ADMIN')")
     public LibrarianResponse createLibrarian(LibrarianCreationRequest request) {
         if (librarianRepository.existsByLibrarianId(request.getLibrarianId()))
             throw new AppException(ErrorCode.ID_EXISTED);
@@ -65,7 +64,6 @@ public class LibrarianServiceImpl implements LibrarianService {
     }
 
     @Override
-    @PreAuthorize( "hasRole('ADMIN')")
     public List<LibrarianResponse> getAllLibrarian() {
         return librarianRepository.findAll()
                 .stream()
@@ -82,7 +80,6 @@ public class LibrarianServiceImpl implements LibrarianService {
         return librarianMapper.toLibrarianResponse(librarian);
     }
     @Override
-    @PreAuthorize( "hasRole('ADMIN')")
     public LibrarianResponse getLibrarianById(String librarianId) {
         Librarian librarian = librarianRepository.findByLibrarianId(librarianId)
                 .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
@@ -92,7 +89,6 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     @Transactional
-    @PreAuthorize( "hasRole('ADMIN')")
     public LibrarianResponse updateLibrarian(String librarianId, LibrarianUpdateRequest updateRequest) {
         Librarian existingLibrarian = librarianRepository.findByLibrarianId(librarianId)
                 .orElseThrow(() -> new AppException(ErrorCode.ID_NOT_FOUND));
@@ -112,7 +108,6 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     @Transactional
-    @PreAuthorize( "hasRole('ADMIN')")
     public void deleteLibrarian(String librarianId) {
         if (!librarianRepository.existsByLibrarianId(librarianId))
             throw new AppException(ErrorCode.ID_NOT_FOUND);

@@ -21,6 +21,14 @@ public class AdminController {
 
     AdminService adminService;
 
+//    @GetMapping("/all-info")
+//    ApiResponse<List<UserResponse>> getAllUserInfo() {
+//        return ApiResponse.<List<UserResponse>>builder()
+//                .result()
+//                .message("Success")
+//                .build();
+//    }
+
     @GetMapping
     ApiResponse<List<AdminResponse>> getAllAdmins() {
         return ApiResponse.<List<AdminResponse>>builder()
