@@ -178,9 +178,6 @@ const Authors: React.FC = () => {
                                     <td>{author.authorId}</td>
                                     <td>{author.authorName}</td>
                                     <td>
-                                        <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditAuthor(author)}>
-                                            <i className="bi bi-pencil"></i>
-                                        </Button>
                                         <Button variant="outline-danger" size="sm" onClick={() => handleDeleteAuthor(author)}>
                                             <i className="bi bi-trash"></i>
                                         </Button>

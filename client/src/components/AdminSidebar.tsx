@@ -1,6 +1,7 @@
 import React from 'react';
 import './AdminSidebar.css'; // Tạo file CSS riêng cho sidebar
 import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 interface AdminSidebarProps {
     activeMenu: string;
@@ -8,6 +9,7 @@ interface AdminSidebarProps {
 }
 
 const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeMenu, onMenuClick }) => {
+    const navigate = useNavigate()
     return (
         <div className="admin-sidebar">
             <a
@@ -72,7 +74,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeMenu, onMenuClick }) 
                 <i className="bi bi-person-badge"></i> Quản trị
             </a> */}
             {/* Đăng xuất Button */}
-            <Button variant="danger" className="mt-4" onClick={() => window.location.href = '/login'}>
+            <Button variant="danger" className="mt-4" onClick={() => navigate('/')}>
                 Đăng xuất
             </Button>
         </div>

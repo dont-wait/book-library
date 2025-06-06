@@ -1,15 +1,52 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
+import useAuth from "../hooks/useAuth";
+import { apiClient } from "../api/axios";
+import { useToast } from "../hooks/useToast.ts"
 
 const Navigation = () => {
   const navigate = useNavigate();
+  const showToast = useToast();
+  const { setAuth } = useAuth();
 
-  const handleLogout = () => {
-    // Xử lý logout (xóa token, gọi API, v.v)
-    // Ví dụ: localStorage.removeItem("token");
-    // Sau đó chuyển về trang login:
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      // Lấy token từ sessionStorage
+      const token = sessionStorage.getItem("authToken");
+
+      if (!token) {
+        showToast.showToast("No token found. User is not authenticated.", "error");
+        return;
+      }
+
+      // Gửi yêu cầu API đăng xuất
+      const response: {
+        data: {
+          code: number
+        }
+      } = await apiClient.post(
+        "/auth/log-out",
+        { token });
+
+      if (response.data.code === 1000) {
+        showToast.showToast(" Đăng xuất thành công", "success");
+
+        setAuth({
+          userId: "",  // Xóa userId
+          roles: "",    // Xóa roles
+        });
+
+        sessionStorage.removeItem("authToken");
+
+        navigate("/");
+      } else {
+        showToast.showToast("Đăng xuất thất bại. Vui lòng thử lại.", "error");
+      }
+    } catch (error) {
+      showToast.showToast("Đã xảy ra lỗi khi đăng xuất.", "error");
+    }
   };
+
 
   return (
     <nav className="navbar navbar-expand-lg  bg-white shadow-sm sticky-top">

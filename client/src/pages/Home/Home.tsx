@@ -10,7 +10,6 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
-import BookSearchModal from "../../components/BookSearchModel";
 
 const totalPages = 10;
 const itemsPerPage = 50;

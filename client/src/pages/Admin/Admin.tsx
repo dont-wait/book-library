@@ -48,12 +48,7 @@ const Admin: React.FC = () => {
         {activeMenu === 'publishers' && <Publishers />}
         {activeMenu === 'authors' && <Authors />}
         {activeMenu === 'category' && <Categories />}
-        {activeMenu === 'manage-borrow' && (
-          <ManageBorrowReceipts showNotification={showNotification} />
-        )}
-        {/* {activeMenu === 'manage-punish' && <ManagePunish />} */}
-        {activeMenu === 'manage-administration' && <Administration />}
-        {/* {activeMenu === 'manage-setting' && <Settings />} */}
+        {activeMenu === 'manage-borrow' && <ManageBorrowReceipts />}
       </div>
 
       {notification.show && (

@@ -1,3 +1,4 @@
+// AuthProvider.tsx
 import { createContext, ReactNode, useState } from "react";
 import { AuthData } from "../type";
 
