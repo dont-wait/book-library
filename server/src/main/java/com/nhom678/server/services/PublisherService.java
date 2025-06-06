@@ -1,6 +1,7 @@
 package com.nhom678.server.services;
 
 import com.nhom678.server.dto.request.publisher.PublisherCreateRequest;
+import com.nhom678.server.dto.request.publisher.PublisherUpdateRequest;
 import com.nhom678.server.dto.response.PublisherResponse;
 
 
@@ -11,4 +12,5 @@ public interface PublisherService {
     PublisherResponse getPublisherById(Integer id);
     List<PublisherResponse> getAllPublisher();
     void deletePublisherById(Integer id);
+    PublisherResponse updatePublisher(Integer publisherId, PublisherUpdateRequest request);
 }

@@ -50,12 +50,13 @@ const Publishers: React.FC = () => {
         });
     };
 
+    // Thêm nhà xuất bản
     const handleAddPublisher = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const response = await apiClient.post('/publishers', formData, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
                 }
             });
 
@@ -74,6 +75,7 @@ const Publishers: React.FC = () => {
         }
     };
 
+    // Cập nhật nhà xuất bản
     const handleEditPublisher = (publisher: Publisher) => {
         setSelectedPublisher(publisher);
         setFormData({
@@ -89,7 +91,7 @@ const Publishers: React.FC = () => {
         try {
             const response = await apiClient.put(`/publishers/${selectedPublisher.publisherId}`, formData, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
                 }
             });
 
@@ -105,18 +107,26 @@ const Publishers: React.FC = () => {
         }
     };
 
+    // Xử lý xóa nhà xuất bản
     const handleDeletePublisher = (publisher: Publisher) => {
         setSelectedPublisher(publisher);
         setShowDeleteModal(true);
     };
 
+    // Xác nhận xóa nhà xuất bản
     const confirmDeletePublisher = async () => {
         if (!selectedPublisher) return;
 
         try {
+            const token = sessionStorage.getItem('authToken');
+            if (!token) {
+                showToast("Vui lòng đăng nhập để thực hiện hành động này.", "error");
+                return;
+            }
+
             const response = await apiClient.delete(`/publishers/${selectedPublisher.publisherId}`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    Authorization: `Bearer ${token}`
                 }
             });
 
@@ -132,6 +142,7 @@ const Publishers: React.FC = () => {
         }
     };
 
+    // Lọc nhà xuất bản theo tên
     const filteredPublishers = publishers.filter(publisher =>
         publisher.publisherName.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -180,7 +191,7 @@ const Publishers: React.FC = () => {
                                     <td>{publisher.publisherId}</td>
                                     <td>{publisher.publisherName}</td>
                                     <td>
-                                        <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditPublisher(publisher)}>
+                                        <Button variant="outline-primary" size="sm" onClick={() => handleEditPublisher(publisher)}>
                                             <i className="bi bi-pencil"></i>
                                         </Button>
                                         <Button variant="outline-danger" size="sm" onClick={() => handleDeletePublisher(publisher)}>
@@ -230,7 +241,7 @@ const Publishers: React.FC = () => {
             {/* Modal Sửa Nhà xuất bản */}
             <Modal show={showEditModal} onHide={() => setShowEditModal(false)} size="lg">
                 <Modal.Header closeButton>
-                    <Modal.Title>Sửa thông tin nhà xuất bản</Modal.Title>
+                    <Modal.Title>Cập nhật nhà xuất bản</Modal.Title>
                 </Modal.Header>
                 <Form onSubmit={handleUpdatePublisher}>
                     <Modal.Body>

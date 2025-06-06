@@ -21,6 +21,8 @@ public enum ErrorCode {
 
     CATEGORYNAME_NOT_FOUND(1003, "Category Name not found", HttpStatus.NOT_FOUND),
     CATEGORYID_NOT_FOUND(1003, "Category Id not found", HttpStatus.NOT_FOUND),
+    PUBLISHER_ID_NOT_FOUND(1003, "Publisher Id not found", HttpStatus.NOT_FOUND),
+    AUTHOR_ID_NOT_FOUND(1003, "Author Id not found", HttpStatus.NOT_FOUND),
     AUTHOR_NOT_FOUND(1003, "Author id not found", HttpStatus.NOT_FOUND),
     ISBN_NOT_FOUND(1003, "ISBN not found", HttpStatus.NOT_FOUND),
     BOOK_ID_NOT_FOUND(1003, "Book id not found", HttpStatus.NOT_FOUND),

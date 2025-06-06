@@ -2,6 +2,7 @@ package com.nhom678.server.controllers;
 
 import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.publisher.PublisherCreateRequest;
+import com.nhom678.server.dto.request.publisher.PublisherUpdateRequest;
 import com.nhom678.server.dto.response.PublisherResponse;
 import com.nhom678.server.services.PublisherService;
 import lombok.AccessLevel;
@@ -53,4 +54,11 @@ public class PublisherController {
                 .build();
     }
 
+    @PutMapping("/{publisherId}")
+    ApiResponse<PublisherResponse> updatePublisher(@PathVariable Integer publisherId, @RequestBody PublisherUpdateRequest request) {
+        return ApiResponse.<PublisherResponse>builder()
+                .result(publisherService.updatePublisher(publisherId, request))
+                .message("Success")
+                .build();
+    }
 }

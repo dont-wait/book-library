@@ -2,6 +2,7 @@ package com.nhom678.server.controllers;
 
 import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.category.CategoryCreationRequest;
+import com.nhom678.server.dto.request.category.CategoryUpdateRequest;
 import com.nhom678.server.dto.response.CategoryResponse;
 import com.nhom678.server.services.CategoryService;
 import jakarta.validation.Valid;
@@ -40,6 +41,14 @@ public class CategoryController {
         categoryService.deleteCategoryByCategoryId(categoryId);
         return ApiResponse.<String>builder()
                 .result("Category successfully deleted")
+                .message("Success")
+                .build();
+    }
+
+    @PutMapping("/{categoryId}")
+    ApiResponse<CategoryResponse> updateCategory(@PathVariable Integer categoryId,  @RequestBody CategoryUpdateRequest request) {
+        return ApiResponse.<CategoryResponse>builder()
+                .result(categoryService.updateCategory(categoryId, request))
                 .message("Success")
                 .build();
     }

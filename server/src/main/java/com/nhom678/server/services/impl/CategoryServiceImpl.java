@@ -1,6 +1,7 @@
 package com.nhom678.server.services.impl;
 
 import com.nhom678.server.dto.request.category.CategoryCreationRequest;
+import com.nhom678.server.dto.request.category.CategoryUpdateRequest;
 import com.nhom678.server.dto.response.CategoryResponse;
 import com.nhom678.server.entity.Category;
 import com.nhom678.server.exceptions.AppException;
@@ -57,5 +58,12 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.deleteCategoryByCategoryId(categoryId);
     }
 
+    @Override
+    public CategoryResponse updateCategory(Integer categoryId, CategoryUpdateRequest request) {
+        Category categoryUpdate = categoryRepository.findCategoryByCategoryId(categoryId)
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_ID_NOT_FOUND));
+        categoryMapper.updateCategory(categoryUpdate, request);
+        return categoryMapper.toCategoryResponse(categoryRepository.save(categoryUpdate));
+    }
 
 }
