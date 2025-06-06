@@ -117,9 +117,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public void deleteBook(String bookName) {
+    public void deleteBook(Integer bookId) {
 
-        bookRepository.deleteBookByBookName(bookName);
+        bookRepository.deleteBookByBookId(bookId);
+
     }
 
     @Override
