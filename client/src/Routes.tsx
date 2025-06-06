@@ -18,10 +18,10 @@ const AppRoutes = () => {
 
       <Route element={<RequireAuth allowedRole={ROLES.MEMBER} />}>
         <Route path='/home' element={<pages.Home />} />
+        <Route path='/product' element={<pages.Product />} />
+        <Route path='/borrowed-books' element={<pages.BorrowedBooksPage />} />
       </Route>
 
-      <Route path='/product' element={<pages.Product />} />
-      <Route path='/borrowed-books' element={<pages.BorrowedBooksPage />} />
     </Routes>
   );
 };

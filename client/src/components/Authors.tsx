@@ -5,7 +5,7 @@ import { apiClient } from '../api/axios';
 import { useToast } from '../hooks/useToast';
 
 const Authors: React.FC = () => {
-    const showToast = useToast();
+    const { showToast } = useToast();
     const [authors, setAuthors] = useState<Author[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [showAddModal, setShowAddModal] = useState<boolean>(false);
@@ -32,11 +32,11 @@ const Authors: React.FC = () => {
             if (response.data.code === 1000) {
                 setAuthors(response.data.result);
             } else {
-                showToast.showToast("Lỗi khi lấy dữ liệu tác giả", "error");
+                showToast("Lỗi khi lấy dữ liệu tác giả", "error");
             }
         } catch (error) {
             console.error('Lỗi khi gọi API:', error);
-            showToast.showToast("Lỗi khi gọi API", "error");
+            showToast("Lỗi khi gọi API", "error");
         } finally {
             setLoading(false);
         }
@@ -64,13 +64,13 @@ const Authors: React.FC = () => {
                 setShowAddModal(false);
                 setFormData({ authorName: '' });
                 fetchAuthors(); // Tải lại danh sách tác giả sau khi thêm
-                showToast.showToast("Thêm tác giả thành công", "success");
+                showToast("Thêm tác giả thành công", "success");
             } else {
-                showToast.showToast(`Thêm tác giả thất bại: ${response.data.message}`, "error");
+                showToast(`Thêm tác giả thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
             console.error('Lỗi khi thêm tác giả:', error);
-            showToast.showToast(`Lỗi khi thêm tác giả: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi thêm tác giả: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -89,13 +89,13 @@ const Authors: React.FC = () => {
             if (response.data.code === 1000) {
                 setShowEditModal(false);
                 fetchAuthors(); // Tải lại danh sách tác giả sau khi cập nhật
-                showToast.showToast("Cập nhật tác giả thành công", "success");
+                showToast("Cập nhật tác giả thành công", "success");
             } else {
-                showToast.showToast(`Cập nhật tác giả thất bại: ${response.data.message}`, "error");
+                showToast(`Cập nhật tác giả thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
             console.error('Lỗi khi cập nhật tác giả:', error);
-            showToast.showToast(`Lỗi khi cập nhật tác giả: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi cập nhật tác giả: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -119,13 +119,13 @@ const Authors: React.FC = () => {
             if (response.data.code === 1000) {
                 setShowDeleteModal(false);
                 fetchAuthors(); // Tải lại danh sách sau khi xóa
-                showToast.showToast("Xóa tác giả thành công", "success");
+                showToast("Xóa tác giả thành công", "success");
             } else {
-                showToast.showToast(`Xóa tác giả thất bại: ${response.data.message}`, "error");
+                showToast(`Xóa tác giả thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
             console.error('Lỗi khi xóa tác giả:', error);
-            showToast.showToast(`Lỗi khi xóa tác giả: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi xóa tác giả: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 

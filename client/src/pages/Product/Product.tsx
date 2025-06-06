@@ -32,7 +32,7 @@ const Product = () => {
   };
 
   const onBackToHome = () => {
-    navigate("/");
+    navigate("/home");
   };
 
   return (
@@ -40,7 +40,7 @@ const Product = () => {
       <nav aria-label='breadcrumb'>
         <ol className='breadcrumb'>
           <li className='breadcrumb-item'>
-            <NavLink to='/'>Home</NavLink>
+            <NavLink to='/home'>Home</NavLink>
           </li>
           <li className='breadcrumb-item active' aria-current='page'>
             {book.bookName}

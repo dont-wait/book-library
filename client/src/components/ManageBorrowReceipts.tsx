@@ -6,7 +6,7 @@ import { useToast } from '../hooks/useToast';
 import Pagination from './Pagination';
 
 const ManageBorrowReceipts: React.FC = () => {
-    const showToast = useToast();
+    const { showToast } = useToast();
     const [key, setKey] = useState<string>('request');
     const [borrowReceipts, setBorrowReceipts] = useState<BorrowBook[]>([]);
     const [returnReceipts, setReturnReceipts] = useState<ReturnBook[]>([]);
@@ -28,7 +28,7 @@ const ManageBorrowReceipts: React.FC = () => {
         dueDate: '',
         quantity: 1,
         userId: '',
-        name: 'BINH-THUONG',
+        name: 'Available',
         statusReceiptName: 'PENDING',
         bookName: '',
         costBorrow: 0
@@ -80,10 +80,10 @@ const ManageBorrowReceipts: React.FC = () => {
                     setTotalPages(Math.ceil(response.data.totalElements / size));
                 }
             } else {
-                showToast.showToast("Lỗi khi lấy dữ liệu phiếu mượn", "error");
+                showToast("Lỗi khi lấy dữ liệu phiếu mượn", "error");
             }
         } catch (error) {
-            showToast.showToast("Lỗi khi gọi API", "error");
+            showToast("Lỗi khi gọi API", "error");
             console.error("Lỗi tải dữ liệu phiếu mượn:", error);
         } finally {
             setLoading(false);
@@ -109,10 +109,10 @@ const ManageBorrowReceipts: React.FC = () => {
                     setReturnTotalPages(Math.ceil(response.data.totalElements / size));
                 }
             } else {
-                showToast.showToast("Lỗi khi lấy dữ liệu phiếu trả", "error");
+                showToast("Lỗi khi lấy dữ liệu phiếu trả", "error");
             }
         } catch (error) {
-            showToast.showToast("Lỗi khi gọi API", "error");
+            showToast("Lỗi khi gọi API", "error");
             console.error("Lỗi tải dữ liệu phiếu trả:", error);
         } finally {
             setLoading(false);
@@ -187,12 +187,12 @@ const ManageBorrowReceipts: React.FC = () => {
             if (response.data.code === 1000) {
                 setShowEditModal(false);
                 loadBorrowData(currentPage, itemsPerPage);
-                showToast.showToast("Cập nhật thành công!", "success");
+                showToast("Cập nhật thành công!", "success");
             } else {
-                showToast.showToast(`Cập nhật thất bại: ${response.data.message}`, "error");
+                showToast(`Cập nhật thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi gửi dữ liệu: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi gửi dữ liệu: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -211,12 +211,12 @@ const ManageBorrowReceipts: React.FC = () => {
                 // Cập nhật cả hai danh sách
                 loadBorrowData(currentPage, itemsPerPage);
                 loadReturnData(returnCurrentPage, itemsPerPage);
-                showToast.showToast("Thêm phiếu trả thành công!", "success");
+                showToast("Thêm phiếu trả thành công!", "success");
             } else {
-                showToast.showToast(`Thêm phiếu trả thất bại: ${response.data.message}`, "error");
+                showToast(`Thêm phiếu trả thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi gửi dữ liệu: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi gửi dữ liệu: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -234,12 +234,12 @@ const ManageBorrowReceipts: React.FC = () => {
 
             if (response.data.code === 1000) {
                 loadBorrowData(currentPage, itemsPerPage);
-                showToast.showToast("Xóa bản ghi thành công!", "success");
+                showToast("Xóa bản ghi thành công!", "success");
             } else {
-                showToast.showToast(`Xóa thất bại: ${response.data.message}`, "error");
+                showToast(`Xóa thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi xóa: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi xóa: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -255,12 +255,12 @@ const ManageBorrowReceipts: React.FC = () => {
 
             if (response.data.code === 1000) {
                 loadBorrowData(currentPage, itemsPerPage);
-                showToast.showToast("Phê duyệt thành công!", "success");
+                showToast("Phê duyệt thành công!", "success");
             } else {
-                showToast.showToast(`Phê duyệt thất bại: ${response.data.message}`, "error");
+                showToast(`Phê duyệt thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi phê duyệt: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi phê duyệt: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -276,12 +276,12 @@ const ManageBorrowReceipts: React.FC = () => {
 
             if (response.data.code === 1000) {
                 loadBorrowData(currentPage, itemsPerPage);
-                showToast.showToast("Từ chối thành công!", "success");
+                showToast("Từ chối thành công!", "success");
             } else {
-                showToast.showToast(`Từ chối thất bại: ${response.data.message}`, "error");
+                showToast(`Từ chối thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi từ chối: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi từ chối: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 

@@ -5,7 +5,7 @@ import { apiClient } from '../api/axios';
 import { useToast } from '../hooks/useToast';
 
 const Publishers: React.FC = () => {
-    const showToast = useToast();
+    const { showToast } = useToast();
     const [publishers, setPublishers] = useState<Publisher[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [showAddModal, setShowAddModal] = useState<boolean>(false);
@@ -33,10 +33,10 @@ const Publishers: React.FC = () => {
             if (response.data.code === 1000) {
                 setPublishers(response.data.result);
             } else {
-                showToast.showToast("Lỗi khi lấy dữ liệu nhà xuất bản", "error");
+                showToast("Lỗi khi lấy dữ liệu nhà xuất bản", "error");
             }
         } catch (error) {
-            showToast.showToast("Lỗi khi gọi API", "error");
+            showToast("Lỗi khi gọi API", "error");
         } finally {
             setLoading(false);
         }
@@ -65,12 +65,12 @@ const Publishers: React.FC = () => {
                     publisherName: ''
                 });
                 fetchPublishers();  // Tải lại dữ liệu sau khi thêm nhà xuất bản
-                showToast.showToast("Thêm nhà xuất bản thành công", "success");
+                showToast("Thêm nhà xuất bản thành công", "success");
             } else {
-                showToast.showToast(`Thêm nhà xuất bản thất bại: ${response.data.message}`, "error");
+                showToast(`Thêm nhà xuất bản thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi thêm nhà xuất bản: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi thêm nhà xuất bản: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -96,12 +96,12 @@ const Publishers: React.FC = () => {
             if (response.data.code === 1000) {
                 setShowEditModal(false);
                 fetchPublishers();  // Tải lại dữ liệu sau khi cập nhật
-                showToast.showToast("Cập nhật nhà xuất bản thành công", "success");
+                showToast("Cập nhật nhà xuất bản thành công", "success");
             } else {
-                showToast.showToast(`Cập nhật nhà xuất bản thất bại: ${response.data.message}`, "error");
+                showToast(`Cập nhật nhà xuất bản thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi cập nhật nhà xuất bản: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi cập nhật nhà xuất bản: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -123,12 +123,12 @@ const Publishers: React.FC = () => {
             if (response.data.code === 1000) {
                 setShowDeleteModal(false);
                 fetchPublishers();  // Tải lại dữ liệu sau khi xóa
-                showToast.showToast("Xóa nhà xuất bản thành công", "success");
+                showToast("Xóa nhà xuất bản thành công", "success");
             } else {
-                showToast.showToast(`Xóa nhà xuất bản thất bại: ${response.data.message}`, "error");
+                showToast(`Xóa nhà xuất bản thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi xóa nhà xuất bản: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi xóa nhà xuất bản: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 

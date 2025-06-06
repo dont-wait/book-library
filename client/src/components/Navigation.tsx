@@ -6,7 +6,7 @@ import { useToast } from "../hooks/useToast.ts"
 
 const Navigation = () => {
   const navigate = useNavigate();
-  const showToast = useToast();
+  const { showToast } = useToast();
   const { setAuth } = useAuth();
 
   const handleLogout = async () => {
@@ -15,7 +15,7 @@ const Navigation = () => {
       const token = sessionStorage.getItem("authToken");
 
       if (!token) {
-        showToast.showToast("No token found. User is not authenticated.", "error");
+        showToast("No token found. User is not authenticated.", "error");
         return;
       }
 
@@ -29,7 +29,7 @@ const Navigation = () => {
         { token });
 
       if (response.data.code === 1000) {
-        showToast.showToast(" Đăng xuất thành công", "success");
+        showToast(" Đăng xuất thành công", "success");
 
         setAuth({
           userId: "",  // Xóa userId
@@ -40,10 +40,10 @@ const Navigation = () => {
 
         navigate("/");
       } else {
-        showToast.showToast("Đăng xuất thất bại. Vui lòng thử lại.", "error");
+        showToast("Đăng xuất thất bại. Vui lòng thử lại.", "error");
       }
     } catch (error) {
-      showToast.showToast("Đã xảy ra lỗi khi đăng xuất.", "error");
+      showToast("Đã xảy ra lỗi khi đăng xuất.", "error");
     }
   };
 

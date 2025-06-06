@@ -6,12 +6,13 @@ import { useToast } from '../hooks/useToast';
 import Pagination from './Pagination'; // Đảm bảo đường dẫn đúng với file Pagination của bạn
 
 const ManageBooks: React.FC = () => {
-    const showToast = useToast();
+    const { showToast } = useToast();
     const [books, setBooks] = useState<Book[]>([]);
     const [publishers, setPublishers] = useState<Publisher[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [authors, setAuthors] = useState<Author[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [showViewModal, setShowViewModal] = useState<boolean>(false);
     const [showAddModal, setShowAddModal] = useState<boolean>(false);
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
@@ -19,7 +20,7 @@ const ManageBooks: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     // PHÂN TRANG
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [pageSize, setPageSize] = useState<number>(10);
+    const [pageSize, setPageSize] = useState<number>(100);
 
     const [formData, setFormData] = useState<Partial<Book & {
         authorId?: number;
@@ -61,10 +62,10 @@ const ManageBooks: React.FC = () => {
             if (response.data.code === 1000) {
                 setBooks(response.data.result);
             } else {
-                showToast.showToast("Lỗi khi lấy dữ liệu sách", "error");
+                showToast("Lỗi khi lấy dữ liệu sách", "error");
             }
         } catch (error) {
-            showToast.showToast("Lỗi khi gọi API", "error");
+            showToast("Lỗi khi gọi API", "error");
         } finally {
             setLoading(false);
         }
@@ -80,10 +81,10 @@ const ManageBooks: React.FC = () => {
             if (response.data.code === 1000) {
                 setPublishers(response.data.result);
             } else {
-                showToast.showToast("Lỗi khi lấy dữ liệu nhà xuất bản", "error");
+                showToast("Lỗi khi lấy dữ liệu nhà xuất bản", "error");
             }
         } catch (error) {
-            showToast.showToast("Lỗi khi gọi API nhà xuất bản", "error");
+            showToast("Lỗi khi gọi API nhà xuất bản", "error");
         }
     };
 
@@ -97,10 +98,10 @@ const ManageBooks: React.FC = () => {
             if (response.data.code === 1000) {
                 setCategories(response.data.result);
             } else {
-                showToast.showToast("Lỗi khi lấy dữ liệu thể loại", "error");
+                showToast("Lỗi khi lấy dữ liệu thể loại", "error");
             }
         } catch (error) {
-            showToast.showToast("Lỗi khi gọi API thể loại", "error");
+            showToast("Lỗi khi gọi API thể loại", "error");
         }
     };
 
@@ -114,10 +115,10 @@ const ManageBooks: React.FC = () => {
             if (response.data.code === 1000) {
                 setAuthors(response.data.result);
             } else {
-                showToast.showToast("Lỗi khi lấy dữ liệu tác giả", "error");
+                showToast("Lỗi khi lấy dữ liệu tác giả", "error");
             }
         } catch (error) {
-            showToast.showToast("Lỗi khi gọi API tác giả", "error");
+            showToast("Lỗi khi gọi API tác giả", "error");
         }
     };
 
@@ -141,7 +142,6 @@ const ManageBooks: React.FC = () => {
             publicationDate: formData.publicationDate ? formData.publicationDate : null,
             floorPosition: formData.floorPosition ? formData.floorPosition : null,
         };
-        console.log("Adding book with data:", requestData); // Log request data
         try {
             const response = await apiClient.post(`/books`, requestData, {
                 headers: {
@@ -149,7 +149,6 @@ const ManageBooks: React.FC = () => {
                 }
             });
 
-            console.log("Add response:", response.data); // Log response data
             if (response.data.code === 1000) {
                 setShowAddModal(false);
                 setFormData({
@@ -167,14 +166,19 @@ const ManageBooks: React.FC = () => {
                     categoryId: undefined,
                 });
                 fetchBooks(); // Cập nhật danh sách sách
-                showToast.showToast("Thêm sách thành công", "success");
+                showToast("Thêm sách thành công", "success");
             } else {
-                showToast.showToast(`Thêm sách thất bại: ${response.data.message}`, "error");
+                showToast(`Thêm sách thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi thêm sách: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi thêm sách: ${error.response?.data?.message || error.message}`, "error");
         }
     };
+
+    const handleViewBook = (book: Book) => {
+        setSelectedBook(book);
+        setShowViewModal(true);
+    }
 
     const handleEditBook = (book: Book) => {
         setSelectedBook(book);
@@ -206,7 +210,6 @@ const ManageBooks: React.FC = () => {
             publicationDate: formData.publicationDate ? formData.publicationDate : null,
             floorPosition: formData.floorPosition ? formData.floorPosition : null,
         };
-        console.log("Updating book with data:", requestData); // Log request data
         try {
             const response = await apiClient.put(`/books/${selectedBook.bookId}`, requestData, {
                 headers: {
@@ -214,18 +217,18 @@ const ManageBooks: React.FC = () => {
                 }
             });
 
-            console.log("Update response:", response.data); // Log response data
             if (response.data.code === 1000) {
                 setShowEditModal(false);
                 fetchBooks(); // Cập nhật danh sách sách
-                showToast.showToast("Cập nhật sách thành công", "success");
+                showToast("Cập nhật sách thành công", "success");
             } else {
-                showToast.showToast(`Cập nhật sách thất bại: ${response.data.message}`, "error");
+                showToast(`Cập nhật sách thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi cập nhật sách: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi cập nhật sách: ${error.response?.data?.message || error.message}`, "error");
         }
     };
+
 
     const handleDeleteBook = (book: Book) => {
         setSelectedBook(book);
@@ -242,16 +245,15 @@ const ManageBooks: React.FC = () => {
                 }
             });
 
-            console.log("Delete response:", response.data); // Log response data
             if (response.data.code === 1000) {
                 setShowDeleteModal(false);
                 fetchBooks(); // Cập nhật danh sách sách
-                showToast.showToast("Xóa sách thành công", "success");
+                showToast("Xóa sách thành công", "success");
             } else {
-                showToast.showToast(`Xóa sách thất bại: ${response.data.message}`, "error");
+                showToast(`Xóa sách thất bại: ${response.data.message}`, "error");
             }
         } catch (error: any) {
-            showToast.showToast(`Lỗi khi xóa sách: ${error.response?.data?.message || error.message}`, "error");
+            showToast(`Lỗi khi xóa sách: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -335,6 +337,9 @@ const ManageBooks: React.FC = () => {
                                         <td>{book.quantity}</td>
                                         <td>{book.isbn}</td>
                                         <td>
+                                            <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleViewBook(book)}>
+                                                <i className="bi bi-eye"></i>
+                                            </Button>
                                             <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
                                                 <i className="bi bi-pencil"></i>
                                             </Button>
@@ -358,6 +363,168 @@ const ManageBooks: React.FC = () => {
                     />
                 </>
             )}
+            {/* Modal Xem Chi Tiết Sách */}
+            <Modal show={showViewModal} onHide={() => setShowViewModal(false)} size="lg" centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Chi tiết sách</Modal.Title>
+                </Modal.Header>
+                <Form>
+                    <Modal.Body>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Tên sách</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="bookName"
+                                value={selectedBook?.bookName || ''}
+                                disabled
+                            />
+                        </Form.Group>
+
+                        <div className="row">
+                            <div className="col-md-6">
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Tác giả</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="authorName"
+                                        value={selectedBook?.authorName || ''}
+                                        disabled
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-md-6">
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Nhà xuất bản</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="publisherName"
+                                        value={selectedBook?.publisherName || ''}
+                                        disabled
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-6">
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Thể loại</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="categoryName"
+                                        value={selectedBook?.categoryName || ''}
+                                        disabled
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-md-6">
+                                <Form.Group className="mb-3">
+                                    <Form.Label>ISBN</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="isbn"
+                                        value={selectedBook?.isbn || ''}
+                                        disabled
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-4">
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Giá</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="cost"
+                                        value={selectedBook?.cost.toLocaleString('vi-VN') || ''}
+                                        disabled
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-md-4">
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Số lượng</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="quantity"
+                                        value={selectedBook?.quantity || ''}
+                                        disabled
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-md-4">
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Ngày xuất bản</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="publicationDate"
+                                        value={selectedBook?.publicationDate ? new Date(selectedBook.publicationDate).toLocaleDateString() : ''}
+                                        disabled
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-6">
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Vị trí</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="floorPosition"
+                                        value={selectedBook?.floorPosition || ''}
+                                        disabled
+                                    />
+                                </Form.Group>
+                            </div>
+
+                            <div className="col-md-6">
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Đánh giá</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="rating"
+                                        value={selectedBook?.rating || ''}
+                                        disabled
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>URL Hình ảnh</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="bookImageURL"
+                                value={selectedBook?.bookImageURL || ''}
+                                disabled
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Mô tả</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                name="description"
+                                value={selectedBook?.description || ''}
+                                disabled
+                            />
+                        </Form.Group>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowViewModal(false)}>
+                            Đóng
+                        </Button>
+                    </Modal.Footer>
+                </Form>
+            </Modal>
 
             {/* Modal Thêm Sách */}
             <Modal show={showAddModal} onHide={() => setShowAddModal(false)} size="lg">
@@ -554,7 +721,6 @@ const ManageBooks: React.FC = () => {
                     </Modal.Footer>
                 </Form>
             </Modal>
-
             {/* Modal Sửa Sách */}
             <Modal show={showEditModal} onHide={() => setShowEditModal(false)} size="lg">
                 <Modal.Header closeButton>
@@ -581,7 +747,6 @@ const ManageBooks: React.FC = () => {
                                         name="authorId"
                                         value={formData.authorId || ''}
                                         onChange={handleInputChange}
-                                        required
                                     >
                                         <option value="">-- Chọn tác giả --</option>
                                         {authors.map(author => (
@@ -600,7 +765,6 @@ const ManageBooks: React.FC = () => {
                                         name="publisherId"
                                         value={formData.publisherId || ''}
                                         onChange={handleInputChange}
-                                        required
                                     >
                                         <option value="">-- Chọn nhà xuất bản --</option>
                                         {publishers.map(publisher => (
@@ -621,7 +785,6 @@ const ManageBooks: React.FC = () => {
                                         name="categoryId"
                                         value={formData.categoryId || ''}
                                         onChange={handleInputChange}
-                                        required
                                     >
                                         <option value="">-- Chọn thể loại --</option>
                                         {categories.map(category => (
@@ -641,6 +804,7 @@ const ManageBooks: React.FC = () => {
                                         name="isbn"
                                         value={formData.isbn}
                                         onChange={handleInputChange}
+                                        disabled
                                     />
                                 </Form.Group>
                             </div>
