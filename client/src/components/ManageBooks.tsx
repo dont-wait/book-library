@@ -337,15 +337,21 @@ const ManageBooks: React.FC = () => {
                                         <td>{book.quantity}</td>
                                         <td>{book.isbn}</td>
                                         <td>
-                                            <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleViewBook(book)}>
-                                                <i className="bi bi-eye"></i>
-                                            </Button>
-                                            <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
-                                                <i className="bi bi-pencil"></i>
-                                            </Button>
-                                            <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book)}>
-                                                <i className="bi bi-trash"></i>
-                                            </Button>
+                                            <div style={{
+                                                display: 'flex',
+                                                justifyContent: 'flex-start',
+                                                gap: '3px'
+                                            }}>
+                                                <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleViewBook(book)}>
+                                                    <i className="bi bi-eye"></i>
+                                                </Button>
+                                                <Button variant="outline-success" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
+                                                    <i className="bi bi-pencil"></i>
+                                                </Button>
+                                                <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book)}>
+                                                    <i className="bi bi-trash"></i>
+                                                </Button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
@@ -362,7 +368,8 @@ const ManageBooks: React.FC = () => {
                         onPageChange={handlePageChange}
                     />
                 </>
-            )}
+            )
+            }
             {/* Modal Xem Chi Tiết Sách */}
             <Modal show={showViewModal} onHide={() => setShowViewModal(false)} size="lg" centered>
                 <Modal.Header closeButton>
@@ -932,7 +939,7 @@ const ManageBooks: React.FC = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </div >
     );
 };
 
