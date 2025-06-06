@@ -11,6 +11,7 @@ public enum ErrorCode {
     PHONE_EXISTED(1002, "Your input phone number is existed", HttpStatus.CONFLICT),
     EMAIL_EXISTED(1002, "Your input email is existed", HttpStatus.CONFLICT),
     ISBN_EXISTED(1002, "ISBN already existed", HttpStatus.CONFLICT),
+    EXISTED_BORROW_RECEIPT_HAVE_BOOKID(1002, "Borrow Receipt have book id, You cannot delete that book", HttpStatus.CONFLICT),
     PUBLISHERNAME_EXISTED(1002, "Publisher Name already existed", HttpStatus.CONFLICT),
     CATEGORYNAME_EXISTED(1002, "Category Name already existed", HttpStatus.CONFLICT),
     AUTHOR_NAME_EXISTED(1002, "Author Name already existed", HttpStatus.CONFLICT),

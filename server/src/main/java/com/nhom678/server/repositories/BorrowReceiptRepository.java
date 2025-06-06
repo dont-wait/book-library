@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface BorrowReceiptRepository extends JpaRepository<BorrowReceipt, String> {
     Optional<BorrowReceipt> findByBorrowReceiptId(String borrowReceiptId); //Optional
     Boolean existsByBorrowReceiptId(String borrowReceiptId);
+    Boolean existsByBook_BookId(Integer bookId);
     void deleteByBorrowReceiptId(String borrowReceiptId);
 
     @Query("SELECT br FROM BorrowReceipt br WHERE br.userAccount.userId = :userId")

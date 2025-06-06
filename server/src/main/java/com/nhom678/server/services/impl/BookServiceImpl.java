@@ -34,6 +34,8 @@ public class BookServiceImpl implements BookService {
     PublisherRepository publisherRepository;
     CategoryRepository categoryRepository;
     AuthorRepository authorRepository;
+    BorrowReceiptRepository borrowReceiptRepository;
+    ReturnReceiptRepository returnReceiptRepository;
 
     @Override
     @Transactional
@@ -118,9 +120,10 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void deleteBook(Integer bookId) {
-
+        if(borrowReceiptRepository.existsByBook_BookId(bookId)) {
+            throw new AppException(ErrorCode.EXISTED_BORROW_RECEIPT_HAVE_BOOKID);
+        }
         bookRepository.deleteBookByBookId(bookId);
-
     }
 
     @Override
