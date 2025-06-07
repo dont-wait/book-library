@@ -3,8 +3,8 @@ import { apiClient } from '../../api/axios'; // Adjust the path according to you
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-
 import { jwtDecode } from 'jwt-decode'
+import { useUserId } from '../../contexts/UserContext';
 
 const Login = () => {
     const [isAdminMode, setIsAdminMode] = useState(false);
@@ -12,6 +12,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { auth, setAuth } = useAuth();
+    const { setUserId } = useUserId();
 
 
 
@@ -39,6 +40,8 @@ const Login = () => {
                     userId: signInData.userId,  // Lấy thông tin userId từ token
                     roles: decodedToken?.scope ?? "",     // Lấy thông tin roles từ token
                 });
+
+                setUserId(signInData.userId)
 
                 if (auth) {
 

@@ -1,6 +1,7 @@
 import { Member } from "../type";
 import { Card, Row, Col } from "react-bootstrap";
 import { Avatar } from "flowbite-react";
+import './UserInfo.css';
 
 // User Info Component
 const UserInfo = ({ user }: { user: Member | null }) => {
@@ -22,26 +23,26 @@ const UserInfo = ({ user }: { user: Member | null }) => {
       <Card.Body>
         <Row className="align-items-center">
           <Col md={8}>
-            <Card.Title className="mb-1">Welcome back!</Card.Title>
-            <h5 className="mb-2">
+            <Card.Title className="mb-1 userInfo-title">Welcome back!</Card.Title>
+            <h5 className="mb-2 userInfo-name">
               {user.firstName} {user.lastName}
             </h5>
-            <p className="mb-1">
+            <p className="mb-1 userInfo-detail">
               <i className="fas fa-envelope me-2"></i>
               {user.email || "Not provided"}
             </p>
-            <p className="mb-1">
+            <p className="mb-1 userInfo-detail">
               <i className="fas fa-phone me-2"></i>
               {user.phone || "Not provided"}
             </p>
-            <span className="badge bg-light text-primary">
+            <span className="userInfo-badge">
               {user.userAccount?.roles?.join(", ") || "Member"}
             </span>
           </Col>
           <Col md={4} className="text-center">
-            <div className="w-40 h-40 mx-auto opacity-80">
+            <div className="userInfo-avatar-wrapper">
               <Avatar
-                img="/avatar.png"
+                img={"/avatar.png"}
                 rounded
                 bordered
                 color="pink"

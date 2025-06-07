@@ -17,7 +17,7 @@ const Footer = () => {
             <ul className='list-unstyled'>
               <li>
                 <a href='#' className='text-light text-decoration-none'>
-                  Browse Books
+                  Borrowed Books
                 </a>
               </li>
               <li>

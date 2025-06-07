@@ -1,5 +1,6 @@
 import React from "react";
 import { Category } from "../type";
+import './CategorySidebar.css'
 
 interface CategorySidebarProps {
     categories: Category[];
@@ -13,9 +14,9 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
     onSelectCategory,
 }) => {
     return (
-        <div className="sticky-top" style={{ top: "80px" }}>
-            <h5 className="mb-3">Lọc thể loại</h5>
-            <ul className="list-group">
+        <div className="category-sidebar sticky-top" style={{ top: "80px" }}>
+            <h5 className="mb-3 category-sidebar-title">Lọc thể loại</h5>
+            <ul className="list-group category-sidebar-list">
                 <li
                     className={`list-group-item list-group-item-action ${selectedCategory === "" ? "active" : ""}`}
                     style={{ cursor: "pointer" }}

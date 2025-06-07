@@ -2,25 +2,29 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BorrowBook } from "../type";
 import { apiClient } from "../api/axios";
+import { useUserId } from "../contexts/UserContext";
 
-const defaultMemberId = "2001230753";
 
 const BorrowedBooks = () => {
   const [borrowedBooks, setBorrowedBooks] = useState<BorrowBook[]>([]);
   const [loading, setLoading] = useState(false);
+  const { userId } = useUserId();
+
   const navigate = useNavigate();
+
 
   useEffect(() => {
     async function fetchBorrowedBooks() {
       setLoading(true);
       try {
-        const res = await apiClient.get(`/borrow-receipts/user/${defaultMemberId}`,
+        const res = await apiClient.get(`/borrow-receipts/user/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
             }
           }
         );
+        console.log(res.data)
         if (res?.data) setBorrowedBooks(res.data.result);
       } catch (error) {
         console.error("Fetch borrowed books error", error);
@@ -67,7 +71,6 @@ const BorrowedBooks = () => {
         }}
       >
         {borrowedBooks.map((borrow) => {
-          const isOverdue = new Date(borrow.dueDate) < new Date();
 
           return (
             <div

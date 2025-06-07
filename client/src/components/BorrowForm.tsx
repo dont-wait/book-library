@@ -7,7 +7,7 @@ import { FaPaperPlane, FaTimes } from "react-icons/fa";
 
 interface BorrowFormProps {
     book: Book;
-    userId: string;
+    userId: string | null;
     onSuccess?: () => void;
     onClose?: () => void;
 }

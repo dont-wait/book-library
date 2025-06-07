@@ -66,12 +66,12 @@ const Navigation = () => {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="navbar-nav me-auto">
-            <NavLink to="/" className="nav-link">
+            <NavLink to="/home" className="nav-link">
               Home
             </NavLink>
-            <a className="nav-link" href="#books-section">
-              Browse Books
-            </a>
+            <NavLink to="/borrowed-books" className="nav-link">
+              Borrowed Books
+            </NavLink>
           </div>
 
           <div className="d-flex align-items-center">
