@@ -178,7 +178,11 @@ const Authors: React.FC = () => {
                                     <td>{author.authorId}</td>
                                     <td>{author.authorName}</td>
                                     <td>
-                                        <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditAuthor(author)}>
+                                        <Button variant="outline-primary" size="sm" onClick={() => {
+                                            setSelectedAuthor(author);
+                                            setFormData({ authorName: author.authorName });
+                                            setShowEditModal(true);
+                                        }}>
                                             <i className="bi bi-pencil"></i>
                                         </Button>
                                         <Button variant="outline-danger" size="sm" onClick={() => handleDeleteAuthor(author)}>

@@ -1,8 +1,17 @@
+export const ROLES = {
+  "ADMIN": "ADMIN",
+  "MEMBER": "MEMBER",
+  "LIBRARIAN": "LIBRARIAN"
+}
 
 export interface AuthData {
-  userId: string;
-  role?: string[];
-  auth_token: string;
+  userId: string,
+  roles: string
+}
+
+export interface AuthContextType {
+  auth: AuthData | null;
+  setAuth: (auth: AuthData | null) => void;
 }
 
 export interface Book {

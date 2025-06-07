@@ -23,7 +23,6 @@ public class BookCreationRequest {
 
     String description;
 
-    @NotNull(message = "BOOK_IMAGE_URL_REQUIRED")
     String bookImageURL;
 
     @Min(value = 0, message = "QUANTITY_CANNOT_BE_NEGATIVE")
@@ -40,13 +39,13 @@ public class BookCreationRequest {
 
     String floorPosition;
 
-    @NotNull(message = "PUBLISHER_REQUIRED")
+    @NotNull(message = "Publisher can not null")
     Integer publisherId;
 
-    @NotNull(message = "CATEGORY_REQUIRED")
+    @NotNull(message = "category can not null")
     Integer categoryId;
 
-    @NotNull(message = "AUTHOR_IDS_REQUIRED")
+    @NotNull(message = "Author can not null")
     Integer authorId;
 
 }

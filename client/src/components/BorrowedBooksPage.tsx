@@ -8,8 +8,9 @@ import { useToast } from "../hooks/useToast";
 import priceFormat from "../util/formatNumber";
 import PaymentInfo from "./PaymentInfo";
 import { FaCreditCard } from "react-icons/fa";
-
-const defaultUserId = "2001230753";
+import { useUserId } from "../contexts/UserContext";
+import Navigation from "./Navigation";
+import { Footer } from "flowbite-react";
 
 const bookStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -33,6 +34,7 @@ const receiptStatusColor = (status: string) => {
 };
 
 const BorrowedBooksPage = () => {
+    const { userId } = useUserId();
     const { showToast } = useToast();
     const [borrowedBooks, setBorrowedBooks] = useState<BorrowBook[]>([]);
     const [allBooks, setAllBooks] = useState<Book[]>([]);
@@ -45,7 +47,7 @@ const BorrowedBooksPage = () => {
 
     const fetchData = async () => {
         try {
-            const borrowRes = await apiClient.get(`/borrow-receipts/user/${defaultUserId}`,
+            const borrowRes = await apiClient.get(`/borrow-receipts/user/${userId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
@@ -63,7 +65,6 @@ const BorrowedBooksPage = () => {
             showToast("Không thể tải dữ liệu", "error");
         }
     };
-
     useEffect(() => {
         fetchData();
     }, []);
@@ -152,6 +153,7 @@ const BorrowedBooksPage = () => {
 
     return (
         <Container className="mt-4">
+            <Navigation />
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2 className="mb-0">Tất cả phiếu mượn của bạn</h2>
                 {unpaidReceipts.length > 0 && (
@@ -298,6 +300,7 @@ const BorrowedBooksPage = () => {
                     selectedIds={selectedUnpaidIds} // truyền id các phiếu thanh toán cho PaymentInfo xử lý
                 />
             )}
+            <Footer />
         </Container>
     );
 };

@@ -8,11 +8,13 @@ import formatNumberCost from "../../util/formatNumber";
 import { useState } from "react";
 import BorrowForm from "../../components/BorrowForm";
 import { useToast } from "../../hooks/useToast";
+import { useUserId } from "../../contexts/UserContext";
 
 // Product Page Component
 const Product = () => {
   const { selectedBook: book } = useBookContext();
   const navigate = useNavigate();
+  const { userId } = useUserId();
   const [showBorrowForm, setBorrowForm] = useState(false);
   if (!book) {
     return (
@@ -32,7 +34,7 @@ const Product = () => {
   };
 
   const onBackToHome = () => {
-    navigate("/");
+    navigate("/home");
   };
 
   return (
@@ -40,7 +42,7 @@ const Product = () => {
       <nav aria-label='breadcrumb'>
         <ol className='breadcrumb'>
           <li className='breadcrumb-item'>
-            <NavLink to='/'>Home</NavLink>
+            <NavLink to='/home'>Home</NavLink>
           </li>
           <li className='breadcrumb-item active' aria-current='page'>
             {book.bookName}
@@ -123,7 +125,7 @@ const Product = () => {
       {showBorrowForm && (
         <BorrowForm
           book={book}
-          userId="2001230753"
+          userId={userId}
           onSuccess={() => {
             setBorrowForm(false);
           }}

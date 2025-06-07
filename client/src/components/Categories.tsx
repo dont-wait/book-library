@@ -5,7 +5,7 @@ import { apiClient } from '../api/axios';
 import { useToast } from '../hooks/useToast';
 
 const Categories: React.FC = () => {
-    const showToast = useToast();
+    const { showToast } = useToast();
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [showAddModal, setShowAddModal] = useState<boolean>(false);
@@ -30,12 +30,15 @@ const Categories: React.FC = () => {
                 }
             });
             if (response.data.code === 1000) {
-                setCategories(response.data.result);
+                // Sắp xếp dữ liệu theo categoryId tăng dần
+                const sortedCategories = response.data.result.sort((a: Category, b: Category) => a.categoryId - b.categoryId);
+                setCategories(sortedCategories);
             } else {
-                showToast.showToast("Lỗi khi lấy dữ liệu thể loại", "error");
+                showToast("Lỗi khi lấy dữ liệu thể loại", "error");
             }
         } catch (error) {
             console.error('Lỗi khi gọi API:', error);
+            showToast("Lỗi khi gọi API", "error");
         } finally {
             setLoading(false);
         }
@@ -52,37 +55,23 @@ const Categories: React.FC = () => {
     const handleAddCategory = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:6969/api/v1/categories', {
-                method: 'POST',
+            const response = await apiClient.post('/categories', formData, {
                 headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData),
-                credentials: 'include'
+                    Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                }
             });
 
-            const result = await response.json();
-            if (response.ok) {
+            if (response.data.code === 1000) {
                 setShowAddModal(false);
-                setFormData({
-                    categoryName: ''
-                });
-                fetchCategories();
+                setFormData({ categoryName: '' });
+                fetchCategories(); // Tải lại danh sách sau khi thêm
+                showToast("Thêm thể loại thành công", "success");
             } else {
-                alert(`Thêm thể loại thất bại: ${result.message}`);
+                showToast(`Thêm thể loại thất bại: ${response.data.message}`, "error");
             }
-        } catch (error) {
-            console.error('Lỗi khi thêm thể loại:', error);
-            alert(`Lỗi khi thêm thể loại: ${(error as Error).message}`);
+        } catch (error: any) {
+            showToast(`Lỗi khi thêm thể loại: ${error.response?.data?.message || error.message}`, "error");
         }
-    };
-
-    const handleEditCategory = (category: Category) => {
-        setSelectedCategory(category);
-        setFormData({
-            categoryName: category.categoryName
-        });
-        setShowEditModal(true);
     };
 
     const handleUpdateCategory = async (e: React.FormEvent) => {
@@ -90,25 +79,21 @@ const Categories: React.FC = () => {
         if (!selectedCategory) return;
 
         try {
-            const response = await fetch(`http://localhost:6969/api/v1/categories/${selectedCategory.categoryId}`, {
-                method: 'PUT',
+            const response = await apiClient.put(`/categories/${selectedCategory.categoryId}`, formData, {
                 headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData),
-                credentials: 'include'
+                    Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                }
             });
 
-            const result = await response.json();
-            if (response.ok) {
+            if (response.data.code === 1000) {
                 setShowEditModal(false);
-                fetchCategories();
+                fetchCategories(); // Tải lại danh sách sau khi cập nhật
+                showToast("Cập nhật thể loại thành công", "success");
             } else {
-                alert(`Cập nhật thể loại thất bại: ${result.message}`);
+                showToast(`Cập nhật thể loại thất bại: ${response.data.message}`, "error");
             }
-        } catch (error) {
-            console.error('Lỗi khi cập nhật thể loại:', error);
-            alert(`Lỗi khi cập nhật thể loại: ${(error as Error).message}`);
+        } catch (error: any) {
+            showToast(`Lỗi khi cập nhật thể loại: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -121,21 +106,21 @@ const Categories: React.FC = () => {
         if (!selectedCategory) return;
 
         try {
-            const response = await fetch(`http://localhost:6969/api/v1/categories/${selectedCategory.categoryId}`, {
-                method: 'DELETE',
-                credentials: 'include'
+            const response = await apiClient.delete(`/categories/${selectedCategory.categoryId}`, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                }
             });
 
-            if (response.ok) {
+            if (response.data.code === 1000) {
                 setShowDeleteModal(false);
-                fetchCategories();
+                fetchCategories(); // Tải lại danh sách sau khi xóa
+                showToast("Xóa thể loại thành công", "success");
             } else {
-                const result = await response.json();
-                alert(`Xóa thể loại thất bại: ${result.message}`);
+                showToast(`Xóa thể loại thất bại: ${response.data.message}`, "error");
             }
-        } catch (error) {
-            console.error('Lỗi khi xóa thể loại:', error);
-            alert(`Lỗi khi xóa thể loại: ${(error as Error).message}`);
+        } catch (error: any) {
+            showToast(`Lỗi khi xóa thể loại: ${error.response?.data?.message || error.message}`, "error");
         }
     };
 
@@ -187,7 +172,11 @@ const Categories: React.FC = () => {
                                     <td>{category.categoryId}</td>
                                     <td>{category.categoryName}</td>
                                     <td>
-                                        <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditCategory(category)}>
+                                        <Button variant="outline-primary" size="sm" className="me-2" onClick={() => {
+                                            setSelectedCategory(category);
+                                            setFormData({ categoryName: category.categoryName });
+                                            setShowEditModal(true);
+                                        }}>
                                             <i className="bi bi-pencil"></i>
                                         </Button>
                                         <Button variant="outline-danger" size="sm" onClick={() => handleDeleteCategory(category)}>

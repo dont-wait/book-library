@@ -32,6 +32,8 @@ public class BookUpdateRequest {
 
     String floorPosition;
 
+    Integer authorId;
+
     Integer publisherId;
 
     Integer categoryId;

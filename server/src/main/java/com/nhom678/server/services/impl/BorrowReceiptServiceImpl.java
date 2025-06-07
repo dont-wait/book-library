@@ -35,7 +35,6 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
 
 
     @Override
-    @PreAuthorize("hasRole('MEMBER')")
     public BorrowReceiptResponse createBorrowReceipt(BorrowReceiptCreationRequest dto){
         // Validate thời gian
         LocalDate borrowDate = dto.getBorrowDate();
@@ -84,7 +83,6 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
 
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'LIBRARIAN')")
     public List<BorrowReceiptResponse> getAll(){
         List<BorrowReceipt> list= borrowReceiptRepository.findAll();
         return list.stream()
@@ -92,7 +90,6 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
                 .collect(Collectors.toList());
     }
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'LIBRARIAN')")
     public List<BorrowReceiptResponse> getByUserId(String userId){
         List<BorrowReceipt> list=borrowReceiptRepository.findByUserId(userId);
         return list.stream()
@@ -101,7 +98,6 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'LIBRARIAN')")
     public BorrowReceiptResponse updateBorrowReceipt(String borrowReceiptId, BorrowReceiptUpdateRequest dto) {
         BorrowReceipt borrowReceipt = borrowReceiptRepository.findById(borrowReceiptId)
                 .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));
@@ -127,7 +123,6 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'LIBRARIAN')")
     public void deleteBorrowReceipt(String borrowReceiptId) {
         BorrowReceipt borrowReceipt = borrowReceiptRepository.findById(borrowReceiptId)
                 .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));

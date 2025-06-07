@@ -1,7 +1,9 @@
 package com.nhom678.server.services.impl;
 
 import com.nhom678.server.dto.request.publisher.PublisherCreateRequest;
+import com.nhom678.server.dto.request.publisher.PublisherUpdateRequest;
 import com.nhom678.server.dto.response.PublisherResponse;
+import com.nhom678.server.entity.Category;
 import com.nhom678.server.entity.Publisher;
 import com.nhom678.server.exceptions.AppException;
 import com.nhom678.server.enums.ErrorCode;
@@ -28,7 +30,6 @@ public class PublisherServiceImpl implements PublisherService {
     PublisherMapper publisherMapper;
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public PublisherResponse createPublisher(PublisherCreateRequest request) {
         if(publisherRepository.existsPublisherByPublisherName(request.getPublisherName()))
             throw new AppException(ErrorCode.PUBLISHERNAME_EXISTED);
@@ -37,7 +38,6 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public PublisherResponse getPublisherById(Integer id) {
         return publisherMapper.toPublisherResponse(publisherRepository
                 .findPublisherByPublisherId(id)
@@ -45,7 +45,6 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public List<PublisherResponse> getAllPublisher() {
         return publisherRepository.findAll()
                 .stream()
@@ -54,11 +53,18 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public void deletePublisherById(Integer id) {
         if (publisherRepository.findPublisherByPublisherId(id).isEmpty()) {
             throw new AppException(ErrorCode.PUBLISHER_NOT_FOUND);
         }
         publisherRepository.deletePublishersByPublisherId(id);
+    }
+
+    @Override
+    public PublisherResponse updatePublisher(Integer publisherId, PublisherUpdateRequest request) {
+        Publisher publisherUpdate = publisherRepository.findPublisherByPublisherId(publisherId)
+                .orElseThrow(() -> new AppException(ErrorCode.PUBLISHER_ID_NOT_FOUND));
+        publisherMapper.updatePublisher(publisherUpdate, request);
+        return publisherMapper.toPublisherResponse(publisherRepository.save(publisherUpdate));
     }
 }

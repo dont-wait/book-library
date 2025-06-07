@@ -1,0 +1,44 @@
+.user-info-card {
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.userInfo-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.userInfo-name {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+.userInfo-detail {
+    font-size: 0.95rem;
+    color: #e0e0e0;
+}
+
+.userInfo-badge {
+    background-color: #ffffff;
+    color: #1e3c72;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.userInfo-avatar-wrapper {
+    width: 120px;
+    height: 120px;
+    margin: auto;
+    opacity: 0.9;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #f8f9fa;
+}

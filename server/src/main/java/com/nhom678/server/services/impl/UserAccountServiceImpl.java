@@ -21,7 +21,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     UserAccountMapper userAccountMapper;
 
     @Override
-    @PreAuthorize("hasRole('ADMIN')")
     public List<UserAccountResponse> findAll() {
         return userAccountRepository.findAll()
                 .stream()

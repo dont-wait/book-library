@@ -10,7 +10,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
-import BookSearchModal from "../../components/BookSearchModel";
+import { useToast } from "../../hooks/useToast";
 
 const totalPages = 10;
 const itemsPerPage = 50;
@@ -19,6 +19,7 @@ interface categoryApiResponse {
 }
 
 const Home = () => {
+  const { showToast } = useToast();
   const [user, setUser] = useState<Member | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedBooks, setPaginatedBooks] = useState<Book[]>([]);
@@ -47,7 +48,7 @@ const Home = () => {
           setCategories(categoriesApi);
         }
       } catch (err) {
-        console.error("Không tải được danh sách thể loại");
+        showToast("Không tải được danh sách thể loại", "error");
       } finally {
         setLoadingCategories(false);
       }
@@ -91,14 +92,12 @@ const Home = () => {
             Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
           },
         });
-
         // Lấy dữ liệu từ response.data.result thay vì response.data
         if (response && response.data && response.data.result) {
           setUser(response.data.result);
-          console.log("User data fetched:", response.data.result);
         }
       } catch (error) {
-        console.error("Lỗi khi lấy thông tin người dùng:", error);
+        showToast("Lỗi khi lấy thông tin người dùng", "error");
       } finally {
         setLoading(false);
       }
@@ -120,7 +119,7 @@ const Home = () => {
   };
 
   const handleBrowseBooksClick = () => {
-    navigate("/browse-books");
+    navigate("/borrowed-books");
   }
 
   return (
@@ -161,7 +160,7 @@ const Home = () => {
 
           <Col md={9}>
             <h2 className="mb-4" onClick={handleBrowseBooksClick} style={{ cursor: "pointer" }}>
-              <i className="fas fa-books me-2"></i>Browse Books
+              <i className="fas fa-books me-2"></i>Borrowed Books
             </h2>
 
             <BooksGrid books={paginatedBooks} />

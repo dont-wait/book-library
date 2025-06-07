@@ -38,7 +38,10 @@ public class SecurityConfig {
             "/status/**",
             "/categories/**",
             "/publishers/**",
-            "/authors/**"
+            "/authors/**",
+            "/books/**",
+            "/borrow-receipts/**",
+            "/return-receipts/**"
     };
 
     @Value("${JWT_SECRET}")
@@ -46,7 +49,6 @@ public class SecurityConfig {
 
     @Autowired
     private CustomJwtDecoder jwtDecoder;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, CustomJwtDecoder customJwtDecoder) throws Exception {
         httpSecurity

@@ -2,6 +2,7 @@ package com.nhom678.server.controllers;
 
 import com.nhom678.server.dto.ApiResponse;
 import com.nhom678.server.dto.request.author.AuthorCreationRequest;
+import com.nhom678.server.dto.request.author.AuthorUpdateRequest;
 import com.nhom678.server.dto.response.AuthorResponse;
 import com.nhom678.server.services.AuthorService;
 import lombok.AccessLevel;
@@ -37,6 +38,14 @@ public class AuthorController {
         authorService.deleteAuthor(authorId);
         return ApiResponse.<String>builder()
                 .result("Delete author has id: " + authorId)
+                .message("Success")
+                .build();
+    }
+
+    @PutMapping("/{authorId}")
+    ApiResponse<AuthorResponse> updateAuthor(@PathVariable Integer authorId, @RequestBody AuthorUpdateRequest request) {
+        return ApiResponse.<AuthorResponse>builder()
+                .result(authorService.updateAuthor(authorId, request))
                 .message("Success")
                 .build();
     }

@@ -20,7 +20,8 @@ public class CorsConfig {
         config.setAllowCredentials(true);
 
 
-        config.setAllowedOriginPatterns(List.of("*"));  // <-- allows all origins
+        config.addAllowedOriginPattern("*");
+
         // Allow specific origins
         config.addAllowedOrigin("http://localhost:5173");
         

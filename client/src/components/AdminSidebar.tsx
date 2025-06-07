@@ -1,13 +1,57 @@
 import React from 'react';
 import './AdminSidebar.css'; // Tạo file CSS riêng cho sidebar
 import { Button } from 'react-bootstrap';
-
+import useAuth from "../hooks/useAuth";
+import { apiClient } from "../api/axios";
+import { useToast } from "../hooks/useToast.ts"
+import { useNavigate } from 'react-router-dom';
 interface AdminSidebarProps {
     activeMenu: string;
     onMenuClick: (menuId: string) => void;
 }
 
 const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeMenu, onMenuClick }) => {
+    const { showToast } = useToast();
+    const { setAuth } = useAuth();
+    const navigate = useNavigate()
+    const handleLogout = async () => {
+        try {
+            // Lấy token từ sessionStorage
+            const token = sessionStorage.getItem("authToken");
+
+            if (!token) {
+                showToast("No token found. User is not authenticated.", "error");
+                return;
+            }
+
+            // Gửi yêu cầu API đăng xuất
+            const response: {
+                data: {
+                    code: number
+                }
+            } = await apiClient.post(
+                "/auth/log-out",
+                { token });
+
+            if (response.data.code === 1000) {
+                showToast(" Đăng xuất thành công", "success");
+
+                setAuth({
+                    userId: "",  // Xóa userId
+                    roles: "",    // Xóa roles
+                });
+
+                sessionStorage.removeItem("authToken");
+
+                navigate("/");
+            } else {
+                showToast("Đăng xuất thất bại. Vui lòng thử lại.", "error");
+            }
+        } catch (error) {
+            showToast("Đã xảy ra lỗi khi đăng xuất.", "error");
+        }
+    };
+
     return (
         <div className="admin-sidebar">
             <a
@@ -72,7 +116,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeMenu, onMenuClick }) 
                 <i className="bi bi-person-badge"></i> Quản trị
             </a> */}
             {/* Đăng xuất Button */}
-            <Button variant="danger" className="mt-4" onClick={() => window.location.href = '/login'}>
+            <Button variant="danger" className="mt-4" onClick={handleLogout}>
                 Đăng xuất
             </Button>
         </div>

@@ -1,6 +1,7 @@
 package com.nhom678.server.services.impl;
 
 import com.nhom678.server.dto.request.author.AuthorCreationRequest;
+import com.nhom678.server.dto.request.author.AuthorUpdateRequest;
 import com.nhom678.server.dto.response.AuthorResponse;
 import com.nhom678.server.entity.Author;
 import com.nhom678.server.exceptions.AppException;
@@ -26,7 +27,6 @@ public class AuthorServiceImpl implements AuthorService {
     AuthorMapper authorMapper;
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public AuthorResponse createAuthor(AuthorCreationRequest request) {
         if(authorRepository.existsAuthorByAuthorName(request.getAuthorName()))
             throw new AppException(ErrorCode.AUTHOR_NAME_EXISTED);
@@ -35,7 +35,6 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public AuthorResponse getAuthorById(Integer authorId) {
 
         return authorMapper.toAuthorResponse(authorRepository
@@ -45,7 +44,6 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public List<AuthorResponse> getAllAuthor() {
         return authorRepository.findAll()
                 .stream()
@@ -54,11 +52,18 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public void deleteAuthor(Integer authorId) {
         if (!authorRepository.existsById(authorId)) {
             throw new AppException(ErrorCode.AUTHOR_NOT_FOUND);
         }
         authorRepository.deleteAuthorByAuthorId(authorId);
+    }
+
+    @Override
+    public AuthorResponse updateAuthor(Integer authorId, AuthorUpdateRequest request) {
+        Author authorUpdate = authorRepository.findAuthorByAuthorId(authorId)
+                .orElseThrow(() -> new AppException(ErrorCode.AUTHOR_ID_NOT_FOUND));
+        authorMapper.updateAuthor(authorUpdate, request);
+        return authorMapper.toAuthorResponse(authorRepository.save(authorUpdate));
     }
 }

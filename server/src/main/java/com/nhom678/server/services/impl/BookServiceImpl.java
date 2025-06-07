@@ -34,6 +34,8 @@ public class BookServiceImpl implements BookService {
     PublisherRepository publisherRepository;
     CategoryRepository categoryRepository;
     AuthorRepository authorRepository;
+    BorrowReceiptRepository borrowReceiptRepository;
+    ReturnReceiptRepository returnReceiptRepository;
 
     @Override
     @Transactional
@@ -61,12 +63,12 @@ public class BookServiceImpl implements BookService {
 
         Book book = bookMapper.toBook(request, publisher, category, author);
 
+        bookRepository.save(book);
 
         return bookMapper.toBookResponse(bookRepository.save(book));
     }
 
     @Override
-    @PreAuthorize("hasRole('MEMBER') or  hasRole('ADMIN') or hasRole('LIBRARIAN')")
     public List<BookResponse> getAllBooks(int page, int size, Integer categoryId) {
         Pageable pageable = PageRequest.of(page, size);
 
@@ -89,6 +91,12 @@ public class BookServiceImpl implements BookService {
         Book bookUpdate = bookRepository.findBookByBookId(bookId)
                 .orElseThrow(() -> new AppException(ErrorCode.BOOK_ID_NOT_FOUND));
 
+        if(request.getAuthorId() != null) {
+            Author author = authorRepository.findById(request.getAuthorId())
+                    .orElseThrow(() -> new AppException(ErrorCode.AUTHOR_NOT_FOUND));
+            bookUpdate.setAuthor(author);
+        }
+
         // Check if publisher exists when publisherId is provided
         if (request.getPublisherId() != null) {
             Publisher publisher = publisherRepository.findById(request.getPublisherId())
@@ -104,14 +112,18 @@ public class BookServiceImpl implements BookService {
         }
 
         bookMapper.updateBook(bookUpdate, request);
+        bookRepository.save(bookUpdate);
 
         return bookMapper.toBookResponse(bookUpdate);
     }
 
     @Override
     @Transactional
-    public void deleteBook(String bookName) {
-        bookRepository.deleteBookByBookName(bookName);
+    public void deleteBook(Integer bookId) {
+        if(borrowReceiptRepository.existsByBook_BookId(bookId)) {
+            throw new AppException(ErrorCode.EXISTED_BORROW_RECEIPT_HAVE_BOOKID);
+        }
+        bookRepository.deleteBookByBookId(bookId);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.nhom678.server.services.impl;
 
 import com.nhom678.server.dto.request.category.CategoryCreationRequest;
+import com.nhom678.server.dto.request.category.CategoryUpdateRequest;
 import com.nhom678.server.dto.response.CategoryResponse;
 import com.nhom678.server.entity.Category;
 import com.nhom678.server.exceptions.AppException;
@@ -26,7 +27,6 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryMapper categoryMapper;
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public CategoryResponse createCategory(CategoryCreationRequest request) {
         if(categoryRepository.existsCategoryByCategoryName(request.getCategoryName()))
             throw new AppException(ErrorCode.CATEGORYNAME_EXISTED);
@@ -35,7 +35,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public CategoryResponse getCategoryByCategoryId(Integer categoryId) {
         Optional<Category> category = categoryRepository.findCategoryByCategoryId(categoryId);
         if(category.isEmpty())
@@ -44,7 +43,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     public List<CategoryResponse> getAllCategory() {
         return categoryRepository.findAll()
                 .stream()
@@ -54,12 +52,18 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public void deleteCategoryByCategoryId(Integer categoryId) {
         if(categoryRepository.findCategoryByCategoryId(categoryId).isEmpty())
             throw new AppException(ErrorCode.CATEGORYNAME_NOT_FOUND);
         categoryRepository.deleteCategoryByCategoryId(categoryId);
     }
 
+    @Override
+    public CategoryResponse updateCategory(Integer categoryId, CategoryUpdateRequest request) {
+        Category categoryUpdate = categoryRepository.findCategoryByCategoryId(categoryId)
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_ID_NOT_FOUND));
+        categoryMapper.updateCategory(categoryUpdate, request);
+        return categoryMapper.toCategoryResponse(categoryRepository.save(categoryUpdate));
+    }
 
 }
