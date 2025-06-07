@@ -1,8 +1,7 @@
 package com.nhom678.server.config;
 
 import com.nhom678.server.dto.request.authen.IntrospectRequest;
-import com.nhom678.server.exceptions.AppException;
-import com.nhom678.server.services.AuthenticationService;
+import com.nhom678.server.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

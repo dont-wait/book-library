@@ -45,6 +45,7 @@ const Login = () => {
 
                 if (auth) {
 
+                    console.log(auth)
                     switch (auth.roles) {
                         case "ADMIN":
                         case "LIBRARIAN":

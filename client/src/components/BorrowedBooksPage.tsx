@@ -65,7 +65,7 @@ const BorrowedBooksPage = () => {
             const statusPriority = ['UNPAID', 'PENDING', 'CANCELED', 'APPROVED'];
 
             // Sắp xếp danh sách phiếu mượn theo trạng thái
-            fetchedBorrowedBooks = fetchedBorrowedBooks.sort((a, b) => {
+            fetchedBorrowedBooks = fetchedBorrowedBooks.sort((a: any, b: any) => {
                 const aIndex = statusPriority.indexOf(a.statusReceiptName);
                 const bIndex = statusPriority.indexOf(b.statusReceiptName);
                 return aIndex - bIndex; // So sánh theo chỉ số trong mảng trạng thái ưu tiên
