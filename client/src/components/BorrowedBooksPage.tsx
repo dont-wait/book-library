@@ -26,8 +26,8 @@ const receiptStatusColor = (status: string) => {
     switch (status.toUpperCase()) {
         case "CANCELED": return "bg-danger";
         case "RETURNED": return "bg-success";
-        case "BORROWED": return "bg-primary";
-        case "PENDING": return "bg-warning text-dark";
+        case "APPROVED": return "bg-success";
+        case "PENDING": return "bg-warning";
         case "UNPAID": return "bg-danger";
         default: return "bg-secondary";
     }
@@ -59,7 +59,19 @@ const BorrowedBooksPage = () => {
                     Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
                 },
             });
-            setBorrowedBooks(borrowRes.data.result);
+            let fetchedBorrowedBooks = borrowRes.data.result;
+
+            // Mảng trạng thái ưu tiên theo thứ tự
+            const statusPriority = ['UNPAID', 'PENDING', 'CANCELED', 'APPROVED'];
+
+            // Sắp xếp danh sách phiếu mượn theo trạng thái
+            fetchedBorrowedBooks = fetchedBorrowedBooks.sort((a, b) => {
+                const aIndex = statusPriority.indexOf(a.statusReceiptName);
+                const bIndex = statusPriority.indexOf(b.statusReceiptName);
+                return aIndex - bIndex; // So sánh theo chỉ số trong mảng trạng thái ưu tiên
+            });
+
+            setBorrowedBooks(fetchedBorrowedBooks);
             setAllBooks(booksRes.data.result);
         } catch {
             showToast("Không thể tải dữ liệu", "error");
@@ -152,10 +164,10 @@ const BorrowedBooksPage = () => {
 
 
     return (
-        <Container className="mt-4">
+        <Container style={{ marginTop: "30px", backgroundColor: "#f8f9fa", padding: "20px", borderRadius: "8px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
             <Navigation />
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2 className="mb-0">Tất cả phiếu mượn của bạn</h2>
+                <h2 className="mb-0" style={{ fontSize: "24px", fontWeight: "600", color: "#343a40" }}>Tất cả phiếu mượn của bạn</h2>
                 {unpaidReceipts.length > 0 && (
                     <Button
                         variant="danger"
@@ -190,11 +202,10 @@ const BorrowedBooksPage = () => {
                 )}
             </div>
 
-            <Table bordered hover responsive className="align-middle">
+            <Table bordered hover responsive className="align-middle" style={{ borderRadius: "8px", border: "1px solid #ddd", boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)" }}>
                 <thead className="table-light text-center">
                     <tr>
                         <th>
-                            {/* Checkbox chọn tất cả chỉ với phiếu UNPAID */}
                             <Form.Check
                                 type="checkbox"
                                 disabled={unpaidReceipts.length === 0}
@@ -224,7 +235,6 @@ const BorrowedBooksPage = () => {
                         return (
                             <tr key={borrow.borrowReceiptId}>
                                 <td className="text-center">
-                                    {/* Checkbox chỉ hiển thị với phiếu UNPAID */}
                                     {isUnpaid ? (
                                         <Form.Check
                                             type="checkbox"

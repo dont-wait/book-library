@@ -46,7 +46,7 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
 
         if (borrowDate.isAfter(dueDate) ||
                 ChronoUnit.DAYS.between(borrowDate, dueDate) > 10 ||
-                borrowDate.isBefore(LocalDate.of(2020, 1, 1)))
+                borrowDate.isBefore(LocalDate.now()))
             throw new AppException(ErrorCode.INVALID_BORROW_DATE);
 
         if(dto.getQuantity() > 5)
@@ -101,6 +101,10 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
     public BorrowReceiptResponse updateBorrowReceipt(String borrowReceiptId, BorrowReceiptUpdateRequest dto) {
         BorrowReceipt borrowReceipt = borrowReceiptRepository.findById(borrowReceiptId)
                 .orElseThrow(() -> new AppException(ErrorCode.BORROW_ID_NOT_FOUND));
+
+        LocalDate borrowDate = dto.getBorrowDate();
+        LocalDate dueDate = dto.getDueDate();
+
         if (dto.getStatusName() != null) {
             StatusBook statusBook = statusBookRepository.findByName(dto.getStatusName())
                     .orElseThrow(() -> new AppException(ErrorCode.STATUS_NAME_NOT_FOUND));
@@ -112,7 +116,13 @@ public class BorrowReceiptServiceImpl implements BorrowReceiptService {
                     .orElseThrow(() -> new AppException(ErrorCode.STATUS_RECEIPT_NOT_FOUND));
             borrowReceipt.setStatusReceipt(statusReceipt);
         }
+        if (borrowDate.isAfter(dueDate) ||
+                ChronoUnit.DAYS.between(borrowDate, dueDate) > 10 ||
+                borrowDate.isBefore(LocalDate.now()))
+            throw new AppException(ErrorCode.INVALID_BORROW_DATE);
 
+        if(dto.getQuantity() > 5)
+            throw new AppException(ErrorCode.QUANTITY_CANNOT_GREATER_THAN_FIVE);
 
         // trường  còn lại
         mapper.updateBorrowReceipt(borrowReceipt, dto);

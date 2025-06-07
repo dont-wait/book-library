@@ -24,7 +24,6 @@ const BorrowedBooks = () => {
             }
           }
         );
-        console.log(res.data)
         if (res?.data) setBorrowedBooks(res.data.result);
       } catch (error) {
         console.error("Fetch borrowed books error", error);

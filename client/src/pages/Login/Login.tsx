@@ -30,22 +30,21 @@ const Login = () => {
                 const token = response.data.result.token;
 
                 sessionStorage.setItem('authToken', token);
-                console.log('Token saved to sessionStorage');
 
 
                 const decodedToken: { scope: string } = jwtDecode(token); // Giải mã token
-                console.log('Decoded Token:', decodedToken);
 
-                setAuth({
+                const authObj = {
                     userId: signInData.userId,  // Lấy thông tin userId từ token
-                    roles: decodedToken?.scope ?? "",     // Lấy thông tin roles từ token
-                });
+                    roles: decodedToken?.scope ?? "",
+                }
 
+                setAuth(authObj);
                 setUserId(signInData.userId)
+                sessionStorage.setItem("authData", JSON.stringify(authObj))
 
                 if (auth) {
 
-                    console.log(auth)
                     switch (auth.roles) {
                         case "ADMIN":
                         case "LIBRARIAN":
