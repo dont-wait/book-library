@@ -75,7 +75,20 @@ const ManageBorrowReceipts: React.FC = () => {
             });
 
             if (response.data.code === 1000) {
-                setBorrowReceipts(response.data.result);
+                let fetchedBorrowReceipts = response.data.result;
+
+                // Mảng trạng thái ưu tiên theo thứ tự
+                const statusPriority = ['UNPAID', 'PENDING', 'CANCELED', 'APPROVED'];
+
+                // Sắp xếp danh sách phiếu mượn theo trạng thái
+                fetchedBorrowReceipts = fetchedBorrowReceipts.sort((a: any, b: any) => {
+                    const aIndex = statusPriority.indexOf(a.statusReceiptName);
+                    const bIndex = statusPriority.indexOf(b.statusReceiptName);
+                    return aIndex - bIndex; // So sánh theo chỉ số trong mảng trạng thái ưu tiên
+                });
+
+                setBorrowReceipts(fetchedBorrowReceipts);
+
                 if (response.data.totalElements) {
                     setTotalPages(Math.ceil(response.data.totalElements / size));
                 }
@@ -89,6 +102,7 @@ const ManageBorrowReceipts: React.FC = () => {
             setLoading(false);
         }
     };
+
 
     const loadReturnData = async (page: number, size: number) => {
         setLoading(true);
@@ -288,7 +302,7 @@ const ManageBorrowReceipts: React.FC = () => {
     const getStatusClassReceipt = (statusReceiptName: string) => {
         switch (statusReceiptName) {
             case "PENDING": return "bg-warning";
-            case "APPROVED": return "bg-secondary";
+            case "APPROVED": return "bg-success";
             case "DENIED": return "bg-danger";
             case "PAID": return "bg-warning";
             case "UNPAID": return "bg-danger";
@@ -309,7 +323,7 @@ const ManageBorrowReceipts: React.FC = () => {
 
     const getStatusText = (statusReceiptName: string) => {
         switch (statusReceiptName) {
-            case "APPROVED": return "Đã mượn";
+            case "APPROVED": return "Chấp nhận";
             case "PENDING": return "Yêu cầu mượn";
             case "UNPAID": return "Chưa trả";
             case "DENIED": return "Từ chối";

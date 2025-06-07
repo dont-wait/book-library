@@ -4,6 +4,7 @@ import { BorrowBook } from "../type";
 import { apiClient } from "../api/axios";
 import { format } from "date-fns";
 import { useToast } from "../hooks/useToast";
+import { response } from "express";
 
 interface EditBorrowModalProps {
     show: boolean;
@@ -17,6 +18,9 @@ const EditBorrowModal = ({ show, borrow, onClose, onSuccess }: EditBorrowModalPr
     const [borrowDate, setBorrowDate] = useState<string>(
         borrow.borrowDate ? format(new Date(borrow.borrowDate), "yyyy-MM-dd") : ""
     );
+    const [dueDate, setDueDate] = useState<string>(
+        borrow.dueDate ? format(new Date(borrow.dueDate), "yyyy-MM-dd") : ""
+    );
     const [quantity, setQuantity] = useState<number>(borrow.quantity);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -25,6 +29,9 @@ const EditBorrowModal = ({ show, borrow, onClose, onSuccess }: EditBorrowModalPr
         if (!borrowDate) {
             showToast("Vui lòng chọn ngày mượn", "info");
             return;
+        }
+        if (!dueDate) {
+            showToast("Vui lòng chọn ngày trả", "info");
         }
         if (quantity <= 0) {
             showToast("Số lượng phải lớn hơn 0", "info");
@@ -35,14 +42,21 @@ const EditBorrowModal = ({ show, borrow, onClose, onSuccess }: EditBorrowModalPr
         setError(null);
 
         try {
-            await apiClient.put(`/borrow-receipts/${borrow.borrowReceiptId}`, {
+            const response = await apiClient.put(`/borrow-receipts/${borrow.borrowReceiptId}`, {
                 ...borrow,
                 borrowDate,
+                dueDate,
                 quantity,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
+                }
             });
             onSuccess();
+            if (response)
+                showToast("Cập nhật thành công", "success");
         } catch (err) {
-            showToast("Cập nhật thất bại, vui lòng thử lại", "error");
+            showToast(`Cập nhật thất bại, vui lòng thử lại ngày giờ theo quy định`, "error");
         } finally {
             setLoading(false);
         }
@@ -65,7 +79,15 @@ const EditBorrowModal = ({ show, borrow, onClose, onSuccess }: EditBorrowModalPr
                             max={format(new Date(), "yyyy-MM-dd")}
                         />
                     </Form.Group>
-
+                    <Form.Group controlId="dueDate" className="mb-3">
+                        <Form.Label>Ngày trả</Form.Label>
+                        <Form.Control
+                            type="date"
+                            value={dueDate}
+                            onChange={(e) => setDueDate(e.target.value)}
+                            min={borrowDate}  // Đảm bảo ngày trả không sớm hơn ngày mượn
+                        />
+                    </Form.Group>
                     <Form.Group controlId="quantity">
                         <Form.Label>Số lượng</Form.Label>
                         <Form.Control

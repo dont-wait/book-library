@@ -34,13 +34,16 @@ const BorrowForm = ({ book, userId, onSuccess, onClose }: BorrowFormProps) => {
         };
 
         try {
-            const response = await apiClient.post("/borrow-receipts", payload);
+            const response = await apiClient.post("/borrow-receipts", payload, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
+                }
+            });
             showToast("Phiếu mượn đã được tạo thành công!", "success");
             onSuccess?.();
             onClose?.();
         } catch (error: any) {
-            console.error("Lỗi khi tạo phiếu mượn:", error.response || error.message || error);
-            showToast("Có lỗi xảy ra. Vui lòng kiểm tra lại thông tin!", "error");
+            showToast(`Tạo phiếu mượn thất bại: ${error.response.data.message}`, "error");
         } finally {
             setLoading(false);
         }

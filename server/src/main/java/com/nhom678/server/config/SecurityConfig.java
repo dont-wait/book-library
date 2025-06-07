@@ -36,12 +36,6 @@ public class SecurityConfig {
             "/swagger-resources/**",
             "/webjars/**",
             "/status/**",
-            "/categories/**",
-            "/publishers/**",
-            "/authors/**",
-            "/books/**",
-            "/borrow-receipts/**",
-            "/return-receipts/**"
     };
 
     @Value("${JWT_SECRET}")
